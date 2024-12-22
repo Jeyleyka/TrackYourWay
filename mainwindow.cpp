@@ -1,5 +1,10 @@
 #include "mainwindow.h"
 
+const QPushButton* TaskItemWidget::getDeleteButton() const
+{
+    return this->buttonDelete;
+}
+
 void MainWindow::changeBackgroundColor()
 {
     static bool toggle = true;
@@ -42,17 +47,46 @@ void MainWindow::onCreateInputClicked()
     this->inputField->setFocus();
 }
 
-void MainWindow::onEnterPressed()
-{
-    QString enteredText = this->inputField->text();
-    this->posts.append(QString::number(this->countOfTasks) + QString::fromStdString(".") + enteredText);
+void MainWindow::onEnterPressed() {
+    QString enteredText = QString::number(this->countOfTasks) + QString::fromStdString(".") + this->inputField->text();
+    QLabel *text = new QLabel(enteredText, this);
+    TaskItemWidget* taskItemWidget = new TaskItemWidget(text->text(), this);
+    this->widgets.append(taskItemWidget);
+    widgetLayout->addWidget(taskItemWidget);
+    // widgetLayout->addWidget(taskItemWidget);
+
+    connect(taskItemWidget, &TaskItemWidget::deleteClicked, this, &MainWindow::onDeleteText);
+    // text.setText(enteredText);
+    // this->listWidget->addItem(text->text());
+
+    // this->listWidget->setGeometry(100,500,400,300);
+    // this->posts.append(new TaskItemWidget(text->text(), this));  // Добавляем задачу в список
+
+    // for (int i = 0; i < listWidget->count(); ++i) {
+    //     QListWidgetItem *item = listWidget->item(i);
+
+    //     item->setData(Qt::UserRole, QVariant(i)); // Сохраняем индекс элемента
+    // }
+
     updatePostsLabel();
-    // this->savedTextLabel->setText(QString::number(this->countOfTasks) + QString::fromStdString(".") + enteredText);
+
     this->inputField->clear();
     this->inputField->setVisible(false);
 
     this->countOfTasks++;
 }
+
+void MainWindow::onDeleteText(TaskItemWidget* item) {
+    this->widgets.removeAll(item);
+    delete item;
+    qDebug() << this->widgets.size();
+}
+
+// void MainWindow::showButton(QLabel* label) {
+//     QPoint labelPos = label->mapTo(this, QPoint(0,0));
+//     this->changePostBtn->move(labelPos.x() + label->width() + 10, labelPos.y());
+//     this->changePostBtn->setVisible(true);
+// }
 
 void MainWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
@@ -77,9 +111,14 @@ void MainWindow::paintEvent(QPaintEvent *event) {
 void MainWindow::updatePostsLabel()
 {
     QString allPosts;
+    QLabel qAll;
+    // transition.setText("\n");
 
-    for (const QString& post : posts)
-        allPosts += post + "\n";
+    for (const QLabel* post : posts)
+    {
+        allPosts += post->text() + "\n";
+        qAll.setText(allPosts);
+    }
 
     savedTextLabel->setText(allPosts);
 }
@@ -100,6 +139,21 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event) {
         move(event->globalPos() - offset);  // Перемещаем окно с учетом смещения
         event->accept();
     }
+
+    // for (int i = 0; i < listWidget->count(); ++i) {
+    //     QListWidgetItem *item = listWidget->item(i);
+    //     // Проверяем, находится ли курсор на элементе
+    //     QRect itemRect = listWidget->visualItemRect(item);
+    //     if (itemRect.contains(event->pos())) {
+    //         // Курсор находится на элементе
+    //         // Отображаем кнопку рядом с элементом
+    //         changePostBtn->move(itemRect.right() + 10, itemRect.top());
+    //         changePostBtn->setVisible(true);
+    //         return; // Завершаем обработку, так как кнопка уже показана
+    //     }
+    // }
+    // // Если курсор не на элементе, скрываем кнопку
+    // this->changePostBtn->setVisible(false);
 }
 
 // Обработчик отпускания кнопки мыши (завершение перетаскивания)
@@ -109,24 +163,55 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
         dragging = false;
         event->accept();
     }
+
+    QWidget::mouseMoveEvent(event);
 }
 
-// void MainWindow::enterEvent(QEvent *event) {
-//     // Когда курсор наводится на пост, показываем кнопку редактирования
-//     editButton->setVisible(true);
-//     QWidget::enterEvent(event);
-// }
+void MainWindow::enterEvent(QEvent *event) {
+    QWidget::enterEvent(event);
+    button->setVisible(true);
+}
 
 // void MainWindow::leaveEvent(QEvent *event) {
-//     // Когда курсор уходит, скрываем кнопку редактирования
-//     editButton->setVisible(false);
 //     QWidget::leaveEvent(event);
+//     this->changePostBtn->setVisible(false); // Прячем кнопку, когда курсор покидает виджет
+// }
+
+// bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
+//     for (int i = 0; i < posts.size(); ++i) {
+//         if (watched == taskLabels[i]) {
+//             if (event->type() == QEvent::Enter) {
+//                 showButton(i);
+//             } else if (event->type() == QEvent::Leave) {
+//                 hideButton(i);
+//             }
+//         }
+//     }
+//     return QWidget::eventFilter(watched, event);
+// }
+
+// void MainWindow::enterEvent(QEvent *event) {
+//     for (int i = 0; i < this->posts.size(); ++i) {
+//         // QLabel* label = this->posts[i];
+//         if (this->posts[i]->underMouse()) {
+//             showButton(this->posts[i]);
+//             break;
+//         } else {
+//             this->changePostBtn->setVisible(false);
+//         }
+//     }
 // }
 
 MainWindow::MainWindow()
 {
     setWindowTitle("Центрированный QLabel");
     setWindowFlags(Qt::FramelessWindowHint);
+
+    setMouseTracking(true);
+
+    // this->widgets = new QVBoxLayout(this);
+
+    // QVBoxLayout *tasks = new QVBoxLayout(this);
 
     QIcon redIcon("G:/Work/untitled1/Images/red_circle.png");
     this->closeBtn = new QPushButton(this);
@@ -170,9 +255,11 @@ MainWindow::MainWindow()
                                         "border: none;"
                                         "}").arg(52 / 2));
 
-
     // Обработчик для кнопки
     connect(this->button, &QPushButton::clicked, this, &MainWindow::changeBackgroundColor);
+
+    // connect(this->listWidget, &QListWidget::itemEntered, this, &MainWindow::onItemEntered);
+    // connect(this->listWidget, &QListWidget::itemClicked, this, &MainWindow::onItemClicked);
 
     this->tasks = new QLabel("Add tasks", this);
     this->tasks->setFont(this->basicFont);
@@ -186,6 +273,10 @@ MainWindow::MainWindow()
                                         "border-radius: %1px;"
                                         "border: none;"
                                         "}").arg(32 / 2));
+
+    // this->editTasksBtn = new QPushButton(this);
+    // this->editTasksBtn->setIcon(pencilIcon);
+    // this->addTasks->setIconSize(QSize(32,32));
 
     connect(this->addTasks, &QPushButton::clicked, this, &MainWindow::onCreateInputClicked);
 
@@ -201,14 +292,34 @@ MainWindow::MainWindow()
     this->savedTextLabel->setFont(this->basicFont);
 
 
+    // this->listWidget = new QListWidget(this);
+    // this->listWidget->setGeometry(0, 0, 400, 300);
+
+    // connect(this->listWidget, &QListWidget::itemEntered, this, &MainWindow::onItemEntered);
+
     connect(inputField, &QLineEdit::returnPressed, this, &MainWindow::onEnterPressed);
+
+    // for (int i = 0; i < this->posts.size(); i++) {
+    //     QString taskText = QString("Task %1").arg(i + 1);
+    //     HoverableLabel* newLabel = new HoverableLabel(taskText, this);
+    //     newLabel->move(10,30 + i*40);
+    //     newLabel->show();
+
+    //     this->posts.append(newLabel);
+    // }
+    // connect(listWidget, &QListWidget::itemClicked, this, &MainWindow::onItemClicked);
+
+    QIcon changeIco("G:/Work/untitled1/Images/pencil.png");
+    // this->changePostBtn = new QPushButton(this);
+    // this->changePostBtn->setIcon(changeIco);
+    // this->changePostBtn->setIconSize(QSize(52,52));
+    // this->changePostBtn->setVisible(true);
 
     // Создаем горизонтальный макет для кнопки, чтобы она была в правом верхнем углу
     QHBoxLayout *btnLayout = new QHBoxLayout;
     btnLayout->addStretch();
     btnLayout->addWidget(this->hideBtn);
     btnLayout->addWidget(this->closeBtn);
-
 
     QHBoxLayout *topLayout = new QHBoxLayout;
 
@@ -221,14 +332,25 @@ MainWindow::MainWindow()
     QHBoxLayout *inputsLayout = new QHBoxLayout;
     inputsLayout->addWidget(this->inputField);
     inputsLayout->addWidget(this->savedTextLabel);
+    // inputsLayout->addWidget(this->editTasksBtn);
     inputsLayout->setContentsMargins(15,0,0,0);
 
-    QHBoxLayout *tasksLayout = new QHBoxLayout;
+    tasksLayout = new QHBoxLayout;
     tasksLayout->addStretch();
     tasksLayout->addWidget(this->tasks);
     tasksLayout->addWidget(this->addTasks);
     tasksLayout->addStretch(2);
+    // tasksLayout->addWidget(new TaskItemWidget("Task 1", this));
+    // tasksLayout->addWidget(new TaskItemWidget("Task 2", this));
+    // tasksLayout->addWidget(new TaskItemWidget("Task 3", this));
     tasksLayout->setContentsMargins(15,30,0,0);
+
+    this->widgetLayout = new QVBoxLayout;
+    // widgetLayout->addWidget(new TaskItemWidget("Task 1", this));
+    // widgetLayout->addWidget(new TaskItemWidget("Task 2", this));
+    // widgetLayout->addWidget(new TaskItemWidget("Task 3", this));
+    // tasksLayout->addStretch(2);
+    // widgetLayout->setContentsMargins(0,50,0,50);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setAlignment(Qt::AlignTop);
@@ -236,9 +358,9 @@ MainWindow::MainWindow()
     mainLayout->addLayout(topLayout);
     mainLayout->addLayout(tasksLayout);
     mainLayout->addLayout(inputsLayout);
-
-
-
+    mainLayout->addLayout(widgetLayout);
+    // mainLayout->addLayout(this->widgetLayout);
+    // mainLayout->addLayout(listWidgetLayout);
 
     // Устанавливаем макет для окна
     setLayout(mainLayout);

@@ -19,5 +19,10 @@
 #include <QList>
 #include <QGroupBox>
 #include <QInputDialog>
+#include <QPoint>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include <QFrame>
+#include <QFontMetrics>
 
 #endif // LIBS_H
