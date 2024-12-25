@@ -11,14 +11,14 @@ TEMPLATE = app
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    hoverablelabel.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    taskwidget.cpp
 
 HEADERS += \
-    hoverablelabel.h \
     libs.h \
-    mainwindow.h
+    mainwindow.h \
+    taskwidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
