@@ -24,5 +24,6 @@
 #include <QListWidgetItem>
 #include <QFrame>
 #include <QFontMetrics>
+#include <QPalette>
 
 #endif // LIBS_H

@@ -5,6 +5,7 @@ void TaskWidget::initFont() {
 }
 
 void TaskWidget::initLabel() {
+    this->id->setStyleSheet("font-size: 19px; font-weight: 600;");
     this->label->setStyleSheet("font-size: 19px; font-weight: 600;");
 }
 
@@ -54,9 +55,16 @@ void TaskWidget::initDeleteButton() {
     connect(this->buttonDelete, &QPushButton::clicked, this, &TaskWidget::onDeleteClicked);
 }
 
+void TaskWidget::initPreTextLayout() {
+    this->preTextLayout = new QHBoxLayout();
+    this->preTextLayout->addWidget(this->id);
+    this->preTextLayout->addWidget(this->label);
+}
+
 void TaskWidget::initTextLayout() {
+    this->initPreTextLayout();
     this->textLayout = new QVBoxLayout();
-    this->textLayout->addWidget(this->label);
+    this->textLayout->addLayout(this->preTextLayout);
     this->textLayout->addWidget(this->line);
 }
 
@@ -75,8 +83,8 @@ void TaskWidget::initMainLayout() {
     this->mainLayout->addLayout(this->buttonsLayout);
 }
 
-TaskWidget::TaskWidget(const QString &text, int index, QWidget *parent)
-    : QWidget(parent), label(new QLabel(text, this)), buttonEdit(new QPushButton(this)), buttonDelete(new QPushButton(this)), line(new QFrame(this)),
+TaskWidget::TaskWidget(const QString& id, const QString &text, QWidget *parent)
+    : QWidget(parent), id(new QLabel(id)), label(new QLabel(text, this)), buttonEdit(new QPushButton(this)), buttonDelete(new QPushButton(this)), line(new QFrame(this)),
     input(new QLineEdit(this))    {
 
     this->initFont();
@@ -96,6 +104,16 @@ TaskWidget::TaskWidget(const QString &text, int index, QWidget *parent)
 const QPushButton* TaskWidget::getDeleteButton() const
 {
     return this->buttonDelete;
+}
+
+void TaskWidget::setId(const QString& _id) {
+    this->id->setText(_id);
+}
+
+void TaskWidget::setLabelColor(const QString& color)
+{
+    this->label->setStyleSheet("font-size: 19px; font-weight: 600;" + color);
+    this->line->setStyleSheet(color);
 }
 
 void TaskWidget::enterEvent(QEvent *event) {

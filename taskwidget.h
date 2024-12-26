@@ -7,12 +7,14 @@ class TaskWidget : public QWidget {
     Q_OBJECT
 
 private:
+    QLabel *id;
     QLabel *label;
     QPushButton *buttonEdit;
     QPushButton *buttonDelete;
     QFrame *line;
     QLineEdit *input;
     QFont font;
+    QHBoxLayout *preTextLayout;
     QVBoxLayout *textLayout;
     QHBoxLayout *buttonsLayout;
     QHBoxLayout *mainLayout;
@@ -23,15 +25,20 @@ private:
     void initEditButton();
     void initInput();
     void initDeleteButton();
+    void initPreTextLayout();
     void initTextLayout();
     void initButtonsLayout();
     void initMainLayout();
 
 public:
-    TaskWidget(const QString &text, int index, QWidget *parent = nullptr);
+    int _index = 1;
+
+    TaskWidget(const QString& id, const QString &text, QWidget *parent = nullptr);
     void updateTextIndex(int newIndex);
 
     const QPushButton* getDeleteButton() const;
+    void setId(const QString& _id);
+    void setLabelColor(const QString& color);
 
 signals:
     void deleteClicked(TaskWidget* item);

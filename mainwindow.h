@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "libs.h"
 #include "taskwidget.h"
 
 class MainWindow : public QWidget
@@ -11,6 +12,8 @@ private:
     QColor currentBackgroundColor = Qt::white;
     QLabel *label;
     QHBoxLayout *topLayout;
+    QHBoxLayout *btnsLayout;
+    QHBoxLayout *inputsLayout;
     QVBoxLayout *mainLayout;
     QPushButton *button;
     QPushButton *closeBtn;
@@ -28,9 +31,10 @@ private:
     QVBoxLayout* widgetLayout;
     QVector<TaskWidget*> widgets;
     QString stringIndex;
+    TaskWidget* taskWidget;
 
     int countOfTasks = 1;
-    int index;
+    // int index;
     bool dragging = false;  // Флаг для отслеживания, перетаскивается ли окно
 
     void changeBackgroundColor();
@@ -39,6 +43,17 @@ private:
     void onDeleteText(TaskWidget* item);
     void updatePostsLabel();
     void showButton(QLabel* label);
+
+    void initCloseWindowButton();
+    void initHideWindowButton();
+    void initChangeThemeButton();
+    void initAddTasks();
+    void initBtnsLayout();
+    void initTopLayout();
+    void initInputsLayout();
+    void initTasksLayout();
+    void initWidgetLayout();
+    void initMainLayout();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
