@@ -25,5 +25,6 @@
 #include <QFrame>
 #include <QFontMetrics>
 #include <QPalette>
+#include <QSpacerItem>
 
 #endif // LIBS_H

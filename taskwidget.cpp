@@ -36,11 +36,14 @@ void TaskWidget::initEditButton() {
 
 void TaskWidget::initInput() {
     this->input->setVisible(false);
+    this->input->setStyleSheet("font-size: 19px; font-weight: 600;");
 
     connect(this->input, &QLineEdit::returnPressed, [=]() {
         this->label->setText(input->text());
         this->label->setVisible(true);
         this->input->setVisible(false);
+        this->preTextLayout->addStretch();
+        this->initLine();
     });
 }
 
@@ -55,10 +58,17 @@ void TaskWidget::initDeleteButton() {
     connect(this->buttonDelete, &QPushButton::clicked, this, &TaskWidget::onDeleteClicked);
 }
 
+void TaskWidget::initSpacer() {
+    this->spacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Fixed);
+}
+
 void TaskWidget::initPreTextLayout() {
+    this->initSpacer();
     this->preTextLayout = new QHBoxLayout();
     this->preTextLayout->addWidget(this->id);
+    // this->preTextLayout->addItem(this->spacer);
     this->preTextLayout->addWidget(this->label);
+    this->preTextLayout->addWidget(this->input);
 }
 
 void TaskWidget::initTextLayout() {
@@ -113,7 +123,8 @@ void TaskWidget::setId(const QString& _id) {
 void TaskWidget::setLabelColor(const QString& color)
 {
     this->label->setStyleSheet("font-size: 19px; font-weight: 600;" + color);
-    this->line->setStyleSheet(color);
+    this->id->setStyleSheet("font-size: 19px; font-weight: 600;" + color);
+    this->input->setStyleSheet("font-size: 19px; font-weight: 600;" + color);
 }
 
 void TaskWidget::enterEvent(QEvent *event) {

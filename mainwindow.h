@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "libs.h"
 #include "taskwidget.h"
 
 class MainWindow : public QWidget

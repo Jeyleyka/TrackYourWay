@@ -60,6 +60,19 @@ void MainWindow::onEnterPressed() {
     widgetLayout->addWidget(taskWidget);
     // widgetLayout->addWidget(taskItemWidget);
 
+    if (currentBackgroundColor == Qt::white)
+    {
+        for (int i = 0; i < widgets.size(); ++i) {
+            this->widgets[i]->setLabelColor("color: #000");
+        }
+    }
+    else
+    {
+        for (int i = 0; i < widgets.size(); ++i) {
+            this->widgets[i]->setLabelColor("color: #fff");
+        }
+    }
+
     connect(taskWidget, &TaskWidget::deleteClicked, this, &MainWindow::onDeleteText);
 
     updatePostsLabel();

@@ -18,6 +18,7 @@ private:
     QVBoxLayout *textLayout;
     QHBoxLayout *buttonsLayout;
     QHBoxLayout *mainLayout;
+    QSpacerItem* spacer;
 
     void initFont();
     void initLabel();
@@ -25,6 +26,7 @@ private:
     void initEditButton();
     void initInput();
     void initDeleteButton();
+    void initSpacer();
     void initPreTextLayout();
     void initTextLayout();
     void initButtonsLayout();
