@@ -26,5 +26,10 @@
 #include <QFontMetrics>
 #include <QPalette>
 #include <QSpacerItem>
+#include <QMainWindow>
+#include <QPixmap>
+#include <QMessageBox>
+#include <QKeyEvent>
+#include <QShortcut>
 
 #endif // LIBS_H

@@ -6,7 +6,10 @@ void TaskWidget::initFont() {
 
 void TaskWidget::initLabel() {
     this->id->setStyleSheet("font-size: 19px; font-weight: 600;");
-    this->label->setStyleSheet("font-size: 19px; font-weight: 600;");
+    this->label->setStyleSheet("font-size: 19px; font-weight: 600;");  // Убираем отступы
+    this->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);  // Выравниваем по левому краю, без отступов
+    this->label->setWordWrap(true);  // Разрешаем перенос текста
+    this->label->setTextInteractionFlags(Qt::TextEditorInteraction);
 }
 
 void TaskWidget::initLine() {
@@ -15,18 +18,28 @@ void TaskWidget::initLine() {
 
     this->line->setFrameShape(QFrame::HLine);
     this->line->setFrameShadow(QFrame::Sunken);
+    // Устанавливаем фиксированную ширину для линии
     this->line->setFixedWidth(textWidth * 2);
+
+    // Ограничиваем ширину QLabel, чтобы текст не выходил за рамки
+    // this->label->setFixedWidth(300); // Установите нужную ширину
 }
 
 void TaskWidget::initEditButton() {
-    QIcon changeIco("G:/Work/untitled1/Images/pencil.png");
+    QIcon changeIco("icons/pencil.png");
     this->buttonEdit->setIcon(changeIco);
-    this->buttonEdit->setIconSize(QSize(52,25));
-    this->buttonEdit->setFixedSize(52,25);
+    this->buttonEdit->setIconSize(QSize(52, 25));
+    this->buttonEdit->setFixedSize(52, 25);
     this->buttonEdit->setStyleSheet("background-color: transparent;");
     this->buttonEdit->setVisible(false);
 
     connect(this->buttonEdit, &QPushButton::clicked, [=]() {
+        // Проверка на пустой текст
+        if (this->label->text().isEmpty()) {
+            // Если текст пустой, не показываем QLineEdit и не удаляем объект
+            return;
+        }
+
         this->label->setVisible(false);
         this->input->setVisible(true);
         this->input->setText(label->text());
@@ -39,7 +52,19 @@ void TaskWidget::initInput() {
     this->input->setStyleSheet("font-size: 19px; font-weight: 600;");
 
     connect(this->input, &QLineEdit::returnPressed, [=]() {
-        this->label->setText(input->text());
+        QString newText = input->text().trimmed(); // Убираем пробелы
+
+        if (newText.isEmpty()) {
+            // Если текст пустой, удаляем сам виджет
+            this->label->clear();  // Очищаем текст в лейбле
+            this->label->setVisible(false); // Скрываем лейбл
+            this->input->setVisible(false); // Скрываем поле ввода
+            this->onDeleteClicked(); // Вызываем удаление виджета
+            return; // Прерываем выполнение функции
+        }
+
+        // Обновляем метку с новым текстом
+        this->label->setText(newText);
         this->label->setVisible(true);
         this->input->setVisible(false);
         this->preTextLayout->addStretch();
@@ -48,7 +73,7 @@ void TaskWidget::initInput() {
 }
 
 void TaskWidget::initDeleteButton() {
-    QIcon deleteIco("G:/Work/untitled1/Images/close.png");
+    QIcon deleteIco("icons/close.png");
     this->buttonDelete->setIcon(deleteIco);
     this->buttonDelete->setIconSize(QSize(52,25));
     this->buttonDelete->setFixedSize(52,25);
@@ -76,6 +101,9 @@ void TaskWidget::initTextLayout() {
     this->textLayout = new QVBoxLayout();
     this->textLayout->addLayout(this->preTextLayout);
     this->textLayout->addWidget(this->line);
+
+    // Установим фиксированную ширину для текстового блока, чтобы окно не расширялось
+    this->label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
 
 void TaskWidget::initButtonsLayout() {
@@ -140,5 +168,10 @@ void TaskWidget::leaveEvent(QEvent *event) {
 }
 
 void TaskWidget::onDeleteClicked() {
+    this->label->clear();
+    this->input->clear();
+    this->label->setVisible(false);
+    this->input->setVisible(false);
+
     emit deleteClicked(this);  // Отправляем сигнал на удаление
 }

@@ -2,11 +2,10 @@
 #define MAINWINDOW_H
 
 #include "taskwidget.h"
+#include "greetings.h"
 
-class MainWindow : public QWidget
+class MainWindow : public QMainWindow
 {
-    Q_OBJECT
-
 private:
     QColor currentBackgroundColor = Qt::white;
     QLabel *label;
@@ -31,6 +30,9 @@ private:
     QVector<TaskWidget*> widgets;
     QString stringIndex;
     TaskWidget* taskWidget;
+    QVBoxLayout *testL;
+    QPushButton* openWnd;
+
 
     int countOfTasks = 1;
     // int index;
@@ -54,14 +56,27 @@ private:
     void initWidgetLayout();
     void initMainLayout();
 
+private slots:
+    void openSecondWindow() {
+        this->close();
+        Greetings *greetings = new Greetings(this);  // Создаем второе окно
+        greetings->show();           // Открываем его как модальное окно
+    }
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void enterEvent(QEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void focusInEvent(QFocusEvent *event) override;
+    void focusOutEvent(QFocusEvent *event) override;
+    bool event(QEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
 public:
-    MainWindow();
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 };
+
 #endif // MAINWINDOW_H

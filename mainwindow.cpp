@@ -12,7 +12,7 @@ void MainWindow::changeBackgroundColor()
         this->tasks->setStyleSheet("color: #fff");
         this->inputField->setStyleSheet("color: #fff");
         this->savedTextLabel->setStyleSheet("color: #fff");
-        QIcon icon("G:/Work/untitled1/Images/sun.png");
+        QIcon icon("icons/sun.png");
         button->setIcon(icon);
 
         for (int i = 0; i < widgets.size(); ++i) {
@@ -27,7 +27,7 @@ void MainWindow::changeBackgroundColor()
         this->tasks->setStyleSheet("color: #000");
         this->inputField->setStyleSheet("color: #000");
         this->savedTextLabel->setStyleSheet("color: #000");
-        QIcon icon("G:/Work/untitled1/Images/moon.png");
+        QIcon icon("icons/moon.png");
         button->setIcon(icon);
         for (int i = 0; i < widgets.size(); ++i) {
             this->widgets[i]->setLabelColor("color: #000");
@@ -51,49 +51,66 @@ void MainWindow::onCreateInputClicked()
 }
 
 void MainWindow::onEnterPressed() {
-    stringIndex = QString::number(this->countOfTasks);
-    QString enteredText = QString::fromStdString(".") + this->inputField->text();
-    // index = countOfTasks;
-    QLabel *text = new QLabel(enteredText, this);
-    this->taskWidget = new TaskWidget(QString::number(countOfTasks), text->text(), this);
-    this->widgets.append(taskWidget);
-    widgetLayout->addWidget(taskWidget);
-    // widgetLayout->addWidget(taskItemWidget);
+    QString enteredText = this->inputField->text().trimmed();  // Удаляем пробелы с начала и конца
 
-    if (currentBackgroundColor == Qt::white)
-    {
-        for (int i = 0; i < widgets.size(); ++i) {
-            this->widgets[i]->setLabelColor("color: #000");
+    // Проверяем, что строка не пустая после удаления пробелов
+    if (!enteredText.isEmpty()) {
+        QString stringIndex = QString::number(this->countOfTasks);
+
+        // Добавляем точку между индексом и текстом
+        QString fullText = "." + enteredText;
+
+        // Теперь передаем только fullText без индекса в TaskWidget
+        this->taskWidget = new TaskWidget(QString::number(countOfTasks), fullText.trimmed(), this);
+        this->widgets.append(taskWidget);
+        widgetLayout->addWidget(taskWidget);
+
+        // Изменение цвета текста в зависимости от фона
+        if (currentBackgroundColor == Qt::white) {
+            for (int i = 0; i < widgets.size(); ++i) {
+                this->widgets[i]->setLabelColor("color: #000");
+            }
+        } else {
+            for (int i = 0; i < widgets.size(); ++i) {
+                this->widgets[i]->setLabelColor("color: #fff");
+            }
         }
+
+        connect(taskWidget, &TaskWidget::deleteClicked, this, &MainWindow::onDeleteText);
+
+        updatePostsLabel();
+
+        // Очищаем поле ввода
+        this->inputField->clear();
+        this->inputField->setVisible(false);
+
+        this->countOfTasks++;
+    } else {
+        // Если введенный текст пуст или состоит только из пробелов
+        QMessageBox::warning(this, "Ошибка", "Текст не может быть пустым!");
+        this->inputField->clear();
+        this->inputField->setVisible(false);
     }
-    else
-    {
-        for (int i = 0; i < widgets.size(); ++i) {
-            this->widgets[i]->setLabelColor("color: #fff");
-        }
-    }
-
-    connect(taskWidget, &TaskWidget::deleteClicked, this, &MainWindow::onDeleteText);
-
-    updatePostsLabel();
-
-    this->inputField->clear();
-    this->inputField->setVisible(false);
-
-    this->countOfTasks++;
 }
 
 void MainWindow::onDeleteText(TaskWidget* item) {
-    this->widgets.removeAll(item);
-    delete item;
-    this->countOfTasks--;
+    widgetLayout->removeWidget(item);
 
-    for (int i = 0; i < this->widgets.size(); ++i) {
-        this->widgets[i]->setId(QString::number(i + 1));
+    // Удаляем сам виджет
+    item->deleteLater();
+
+    // Пересчитываем индексы для всех оставшихся виджетов
+    for (int i = 1; i < widgets.size(); ++i) {
+        // Переназначаем индексы для оставшихся задач
+        QString newId = QString::number(i);
+        widgets[i]->setId(newId);  // Обновляем id
     }
 
-    // updateTextIndexes();
-    qDebug() << this->widgets.size();
+    // Обновляем количество задач
+    this->countOfTasks = widgets.size();
+
+    // Также обновляем отображение индекса в других местах
+    updatePostsLabel();
 }
 
 void MainWindow::paintEvent(QPaintEvent *event) {
@@ -165,8 +182,58 @@ void MainWindow::enterEvent(QEvent *event) {
     this->button->setVisible(true);
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Space) {
+        // Останавливаем стандартное поведение для Space
+        event->ignore();
+
+        // Явно предотвратить сворачивание окна
+        this->setWindowState(Qt::WindowActive);
+
+        return;  // Останавливаем дальнейшую обработку события
+    }
+
+    QMainWindow::keyPressEvent(event);
+}
+
+void MainWindow::focusInEvent(QFocusEvent *event) {
+    // Убедитесь, что фокус внутри главного окна
+    QWidget::focusInEvent(event);
+}
+
+void MainWindow::focusOutEvent(QFocusEvent *event) {
+    // Обрабатываем потерю фокуса, если нужно
+    QWidget::focusOutEvent(event);
+}
+
+bool MainWindow::event(QEvent *event) {
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        // Если нажата клавиша Space, блокируем её
+        if (keyEvent->key() == Qt::Key_Space) {
+            event->ignore();  // Игнорируем событие
+            return true;  // Не пропускаем событие дальше
+        }
+    }
+    return QMainWindow::event(event);  // Для остальных событий передаем дальше
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
+    // Проверяем нажатие клавиши Space
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        if (keyEvent->key() == Qt::Key_Space) {
+            // Игнорируем событие (не даем сворачивать окно)
+            event->ignore();
+            return true;  // Событие обработано, не передаем дальше
+        }
+    }
+    // Для всех остальных событий передаем дальше
+    return QMainWindow::eventFilter(obj, event);
+}
+
 void MainWindow::initCloseWindowButton() {
-    QIcon redIcon("G:/Work/untitled1/Images/red_circle.png");
+    QIcon redIcon("icons/red_circle.png");
     this->closeBtn = new QPushButton(this);
     this->closeBtn->setIcon(redIcon);
     this->closeBtn->setIconSize(QSize(32,32));
@@ -179,7 +246,7 @@ void MainWindow::initCloseWindowButton() {
 }
 
 void MainWindow::initHideWindowButton() {
-    QIcon greenIcon("G:/Work/untitled1/Images/green_circle.png");
+    QIcon greenIcon("icons/green_circle.png");
     this->hideBtn = new QPushButton(this);
     this->hideBtn->setIcon(greenIcon);
     this->hideBtn->setIconSize(QSize(32,32));
@@ -194,13 +261,13 @@ void MainWindow::initHideWindowButton() {
 void MainWindow::initChangeThemeButton() {
     this->button = new QPushButton(this);
 
-    QIcon icon("G:/Work/untitled1/Images/moon.png");
+    QIcon icon("icons/moon.png");
     this->button->setIcon(icon);
     this->button->setIconSize(QSize(52,52));
     this->button->setStyleSheet(QString("QPushButton {"
-                                                   "border-radius: %1px;"
-                                                   "border: none;"
-                                                   "}").arg(52 / 2));
+                                        "border-radius: %1px;"
+                                        "border: none;"
+                                        "}").arg(52 / 2));
 
     // Обработчик для кнопки
     connect(this->button, &QPushButton::clicked, this, &MainWindow::changeBackgroundColor);
@@ -211,7 +278,7 @@ void MainWindow::initAddTasks() {
     this->tasks->setFont(this->basicFont);
 
     this->addTasks = new QPushButton(this);
-    QIcon plusIcon("G:/Work/untitled1/Images/plus.png");
+    QIcon plusIcon("icons/plus.png");
     this->addTasks->setIcon(plusIcon);
     this->addTasks->setIconSize(QSize(32,32));
     this->addTasks->setStyleSheet(QString("QPushButton {"
@@ -257,6 +324,7 @@ void MainWindow::initInputsLayout() {
     this->inputsLayout->addWidget(this->inputField);
     this->inputsLayout->addWidget(this->savedTextLabel);
     this->inputsLayout->setContentsMargins(15,0,0,0);
+    // this->inputsLayout->addWidget(this->openWnd);
 }
 
 void MainWindow::initTasksLayout() {
@@ -282,11 +350,20 @@ void MainWindow::initMainLayout() {
     this->mainLayout->addLayout(this->widgetLayout);
 }
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
     setWindowTitle("Track Your Day");
     setWindowFlags(Qt::FramelessWindowHint);
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowMinimizeButtonHint);
+    this->installEventFilter(this);
     setMouseTracking(true);
+
+    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Space), this);
+    connect(shortcut, &QShortcut::activated, this, []() {
+        // Обрабатываем нажатие клавиши Space, но не сворачиваем окно
+    });
+
+    QWidget* centralWidget = new QWidget;
 
     this->initCloseWindowButton();
     this->initHideWindowButton();
@@ -299,6 +376,10 @@ MainWindow::MainWindow()
     this->basicFont.setPointSize(17);    // Устанавливаем размер шрифта
     this->label->setFont(this->basicFont);   // Применяем шрифт к метке
 
+    // this->openWnd = new QPushButton;
+
+    // connect(this->openWnd, &QPushButton::clicked, this, &MainWindow::openSecondWindow);
+
     this->initChangeThemeButton();
     this->initAddTasks();
     this->initBtnsLayout();
@@ -309,8 +390,12 @@ MainWindow::MainWindow()
     this->initMainLayout();
 
     // Устанавливаем макет для окна
-    setLayout(this->mainLayout);
+    centralWidget->setLayout(this->mainLayout);
+    setCentralWidget(centralWidget);
+    // setLayout(this->mainLayout);
+
     resize(750, 800); // Устанавливаем фиксированный размер окна (опционально)
 }
 
 MainWindow::~MainWindow() {}
+
