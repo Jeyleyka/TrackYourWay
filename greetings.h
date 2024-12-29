@@ -10,8 +10,20 @@ class Greetings : public QMainWindow
 private:
     QColor currentBackgroundColor = Qt::white;
     QVBoxLayout* mainLayout;
-    QLabel* label;
+    QHBoxLayout* logoLayout;
+    QHBoxLayout *btnsLayout;
+    QPushButton *closeBtn;
+    QPushButton *hideBtn;
     QPushButton* btn;
+    QLabel* logoLabel;
+    QLabel* label;
+    QPoint offset;
+
+    bool dragging = false;
+
+    void initCloseWindowButton();
+    void initHideWindowButton();
+    void initBtnsLayout();
 
 private slots:
     void openSecondWindow() {
@@ -22,6 +34,9 @@ private slots:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 public:
     Greetings(QWidget *parent = nullptr);

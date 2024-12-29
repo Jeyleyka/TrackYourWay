@@ -354,6 +354,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
     setWindowTitle("Track Your Day");
     setWindowFlags(Qt::FramelessWindowHint);
+    setWindowIcon(QIcon("icons/logo.png"));
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowMinimizeButtonHint);
     this->installEventFilter(this);
     setMouseTracking(true);

@@ -31,5 +31,7 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 #include <QShortcut>
+#include <QFile>
+#include <QTextStream>
 
 #endif // LIBS_H
