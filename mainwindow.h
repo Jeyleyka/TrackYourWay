@@ -2,10 +2,12 @@
 #define MAINWINDOW_H
 
 #include "taskwidget.h"
-#include "greetings.h"
+// #include "greetings.h"
 
 class MainWindow : public QMainWindow
 {
+    Q_OBJECT
+
 private:
     QColor currentBackgroundColor = Qt::white;
     QLabel *label;
@@ -56,12 +58,12 @@ private:
     void initWidgetLayout();
     void initMainLayout();
 
-private slots:
-    void openSecondWindow() {
-        this->close();
-        Greetings *greetings = new Greetings(this);  // Создаем второе окно
-        greetings->show();           // Открываем его как модальное окно
-    }
+// private slots:
+//     void openSecondWindow() {
+//         this->close();
+//         Greetings *greetings = new Greetings(this);  // Создаем второе окно
+//         greetings->show();           // Открываем его как модальное окно
+//     }
 
 protected:
     void paintEvent(QPaintEvent *event) override;

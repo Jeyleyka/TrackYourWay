@@ -27,8 +27,13 @@ Greetings::Greetings(QWidget *parent) : QMainWindow(parent) {
         QWidget *centralWidget = new QWidget(this);
         QVBoxLayout *layout = new QVBoxLayout(centralWidget);
 
-        QLabel *label = new QLabel("Это второе окно", this);
-        layout->addWidget(label);
+        this->label = new QLabel("Это второе окно", this);
+        this->btn = new QPushButton("открыть главное окно", this);
+
+        connect(this->btn, &QPushButton::clicked, this, &Greetings::openSecondWindow);
+
+        layout->addWidget(this->label);
+        layout->addWidget(this->btn);
 
         centralWidget->setLayout(layout);
         setCentralWidget(centralWidget);
