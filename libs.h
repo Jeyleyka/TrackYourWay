@@ -33,5 +33,6 @@
 #include <QShortcut>
 #include <QFile>
 #include <QTextStream>
+#include <QCheckBox>
 
 #endif // LIBS_H

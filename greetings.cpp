@@ -49,6 +49,10 @@ void Greetings::mouseReleaseEvent(QMouseEvent *event) {
     QWidget::mouseMoveEvent(event);
 }
 
+void Greetings::initCentralWidget() {
+   this->centralWidget = new QWidget(this);
+}
+
 void Greetings::initCloseWindowButton() {
     QIcon redIcon("icons/red_circle.png");
     this->closeBtn = new QPushButton(this);
@@ -75,6 +79,22 @@ void Greetings::initHideWindowButton() {
     connect(this->hideBtn,&QPushButton::clicked, this, &MainWindow::showMinimized);
 }
 
+void Greetings::initLogo() {
+    this->logoLabel = new QLabel(this);
+
+    QPixmap logo("icons/logo.png");
+    this->scaledLogo = logo.scaled(100, 100, Qt::KeepAspectRatio);
+    this->logoLabel->setPixmap(this->scaledLogo);  // Устанавливаем изображение в QLabel
+    this->logoLabel->setFixedSize(100, 100);
+    this->logoLabel->setAlignment(Qt::AlignCenter);
+}
+
+void Greetings::initCheckBox() {
+    this->rememberUser = new QCheckBox("Remember me", this);
+    this->rememberUser->setStyleSheet("margin-left: 40px; margin-top: 10px; font-weight: 600");
+    this->rememberUser->setChecked(false);  // По умолчанию не выбран
+}
+
 void Greetings::initBtnsLayout() {
     // Создаем горизонтальный макет для кнопки, чтобы она была в правом верхнем углу
     this->btnsLayout = new QHBoxLayout;
@@ -83,44 +103,137 @@ void Greetings::initBtnsLayout() {
     this->btnsLayout->addWidget(this->closeBtn);
 }
 
-Greetings::Greetings(QWidget *parent) : QMainWindow(parent) {
+void Greetings::initLogoLayout() {
+    this->logoLayout = new QHBoxLayout;
+    this->logoLayout->setContentsMargins(0,100,0,50);
+    this->logoLayout->addWidget(this->logoLabel);
+}
+
+void Greetings::initPasswordLayout() {
+    this->passwordLayout = new QHBoxLayout();
+    this->passwordLayout->addWidget(this->password);
+}
+
+void Greetings::initMainLayout() {
+    this->mainLayout = new QVBoxLayout(this->centralWidget);
+    this->mainLayout->setContentsMargins(0, 0, 0, 30); // Убираем все отступы
+    this->mainLayout->setSpacing(0);
+    this->mainLayout->addLayout(this->btnsLayout);
+    this->mainLayout->addLayout(this->logoLayout);
+    this->mainLayout->addWidget(this->username);
+    // this->mainLayout->addWidget(this->password);
+    this->mainLayout->addLayout(this->passwordLayout);
+    this->mainLayout->addWidget(this->rememberUser);
+    this->mainLayout->addWidget(this->btn);
+}
+
+void Greetings::openSecondWindow() {
+    this->close();
+    MainWindow *main = new MainWindow();  // Создаем второе окно
+    main->show();           // Открываем его как модальное окно
+}
+
+void Greetings::handleLogin() {
+    QString usernameText = this->username->text();
+    QString passwordText = this->password->text();
+    int remUs = this->rememberUser->checkState();
+
+    if (usernameText.isEmpty() || passwordText.isEmpty()) {
+        QMessageBox::warning(this, "Input Error", "Please enter both username and password.");
+        return;
+    }
+
+    QFile file("login_data.txt");
+
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+        QTextStream out(&file);
+        out << "Username: " << usernameText << "\n";
+        out << "Password: " << passwordText << "\n";
+        out << "Remember: " << QString::number(remUs) << "\n\n";
+        file.close();
+
+        QMessageBox::warning(this, "Input Error", "Data saved successfully!");
+
+        this->username->clear();
+        this->password->clear();
+        this->rememberUser->setChecked(false);
+    } else
+    {
+        QMessageBox::critical(this, "File Error", "Failed to open file for writing.");
+    }
+}
+
+Greetings::Greetings(QWidget *parent) : QMainWindow(parent), passwordVisible(false) {
         setWindowTitle("Второе окно");
         setWindowIcon(QIcon("icons/logo.png"));
         // Создаем простой виджет в центре окна
-        QWidget *centralWidget = new QWidget(this);
 
+        this->initCentralWidget();
         this->initCloseWindowButton();
         this->initHideWindowButton();
+        this->initLogo();
 
-        QLabel* logoLabel = new QLabel(this);
-
-        QPixmap logo("icons/logo.png");
-        QPixmap scaledLogo = logo.scaled(100, 100, Qt::KeepAspectRatio);
-        // logo.scaled(52,52,Qt::KeepAspectRatio);
-        logoLabel->setPixmap(scaledLogo);  // Устанавливаем изображение в QLabel
-        logoLabel->setFixedSize(100, 100);
-        logoLabel->setAlignment(Qt::AlignCenter);
-
-
-        this->mainLayout = new QVBoxLayout(centralWidget);
-        this->logoLayout = new QHBoxLayout;
-        this->logoLayout->setContentsMargins(0,50,0,0);
-        this->logoLayout->addWidget(logoLabel);
-
-        this->label = new QLabel("Это второе окно", this);
-        this->btn = new QPushButton("открыть главное окно", this);
-
-        connect(this->btn, &QPushButton::clicked, this, &Greetings::openSecondWindow);
-
+        this->initLogoLayout();
         this->initBtnsLayout();
 
-        // this->mainLayout->addWidget(logoLabel);
-        this->mainLayout->addLayout(this->btnsLayout);
-        this->mainLayout->addLayout(this->logoLayout);
-        this->mainLayout->addWidget(this->label);
-        this->mainLayout->addWidget(this->btn);
+        this->username = new QLineEdit(this);
+        this->username->setPlaceholderText("Username");
+        this->username->setStyleSheet(R"(
+            QLineEdit {
+                border: none;
+                border-radius: 15px;
+                padding: 10px;
+                font-size: 16px;
+                max-width: 420px;
+                margin-left: auto;
+                margin-right: auto;
+                height: 40px;
+            }
+        )");
+        this->password = new QLineEdit(this);
+        this->password->setPlaceholderText("password");
+        this->password->setEchoMode(QLineEdit::Password);
+        this->password->setStyleSheet(R"(
+            QLineEdit {
+                border-radius: 15px;
+                padding: 10px;
+                font-size: 16px;
+                margin-top: 20px;
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 420px;
+                height: 40px;
+            }
+        )");
 
-        centralWidget->setLayout(this->mainLayout);
-        setCentralWidget(centralWidget);
-        resize(450, 700);
+        this->btn = new QPushButton("Login", this);
+        this->btn->setStyleSheet(R"(
+            QPushButton {
+                background-color: #6e61e0;
+                border: none;
+                border-radius: 30px;
+                padding: 10px;
+                color: white;
+                font-size: 16px;
+                font-weight: 600;
+                margin-top: 40px;
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 420px;
+                height: 40px;
+            }
+            QPushButton:hover {
+                background-color: #45a049;
+            }
+        )");
+
+        connect(this->btn, &QPushButton::clicked, this, &Greetings::handleLogin);
+        connect(this->btn, &QPushButton::clicked, this, &Greetings::openSecondWindow);
+
+        this->initCheckBox();
+        this->initPasswordLayout();
+        this->initMainLayout();
+        this->centralWidget->setLayout(this->mainLayout);
+        setCentralWidget(this->centralWidget);
+        resize(450, 650);
 }

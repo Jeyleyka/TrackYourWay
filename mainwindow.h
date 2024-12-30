@@ -9,7 +9,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    QColor currentBackgroundColor = Qt::white;
+    QColor currentBackgroundColor = QColor(234,226,249);
     QLabel *label;
     QHBoxLayout *topLayout;
     QHBoxLayout *btnsLayout;
