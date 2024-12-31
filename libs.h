@@ -34,5 +34,8 @@
 #include <QFile>
 #include <QTextStream>
 #include <QCheckBox>
+#include <QPropertyAnimation>
+#include <QStackedWidget>
+#include <QSignalMapper>
 
 #endif // LIBS_H

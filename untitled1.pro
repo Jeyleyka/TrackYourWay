@@ -14,6 +14,7 @@ SOURCES += \
     login.cpp \
     main.cpp \
     mainwindow.cpp \
+    modalwindow.cpp \
     taskwidget.cpp \
     welcomewnd.cpp
 
@@ -21,6 +22,7 @@ HEADERS += \
     libs.h \
     login.h \
     mainwindow.h \
+    modalwindow.h \
     taskwidget.h \
     welcomewnd.h
 

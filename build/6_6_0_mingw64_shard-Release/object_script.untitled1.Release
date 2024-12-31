@@ -1,10 +1,12 @@
 release/login.o
 release/main.o
 release/mainwindow.o
+release/modalwindow.o
 release/taskwidget.o
 release/welcomewnd.o
 release/untitled1_plugin_import.o
 release/moc_login.o
 release/moc_mainwindow.o
+release/moc_modalwindow.o
 release/moc_taskwidget.o
 release/moc_welcomewnd.o

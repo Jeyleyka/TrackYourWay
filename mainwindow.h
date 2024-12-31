@@ -2,13 +2,17 @@
 #define MAINWINDOW_H
 
 #include "taskwidget.h"
-// #include "greetings.h"
+#include "modalwindow.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 private:
+    ModalWindow* modal;
+
+    QWidget *modalWidget;
+    QPropertyAnimation *animation;
     QColor currentBackgroundColor = QColor(234,226,249);
     QLabel *label;
     QHBoxLayout *topLayout;
@@ -18,6 +22,7 @@ private:
     QPushButton *button;
     QPushButton *closeBtn;
     QPushButton *hideBtn;
+    QPushButton *modalUser;
     QFont basicFont;
     QFont inputFont;
     QPoint offset;  // Смещение при перетаскивании
@@ -39,6 +44,7 @@ private:
     int countOfTasks = 1;
     // int index;
     bool dragging = false;  // Флаг для отслеживания, перетаскивается ли окно
+    bool openModal = false;
 
     void changeBackgroundColor();
     void onCreateInputClicked();
@@ -49,6 +55,7 @@ private:
 
     void initCloseWindowButton();
     void initHideWindowButton();
+    void initModalUserMenuBtn();
     void initChangeThemeButton();
     void initAddTasks();
     void initBtnsLayout();
@@ -58,12 +65,8 @@ private:
     void initWidgetLayout();
     void initMainLayout();
 
-// private slots:
-//     void openSecondWindow() {
-//         this->close();
-//         Greetings *greetings = new Greetings(this);  // Создаем второе окно
-//         greetings->show();           // Открываем его как модальное окно
-//     }
+private slots:
+    void showModalWindow();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

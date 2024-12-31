@@ -7,7 +7,7 @@ void MainWindow::changeBackgroundColor()
 
     if (toggle)
     {
-        setStyleSheet("background-color: #000;");
+        setStyleSheet("background-color: #1e1e20;");
         this->label->setStyleSheet("color: #fff");
         this->tasks->setStyleSheet("color: #fff");
         this->inputField->setStyleSheet("color: #fff");
@@ -22,7 +22,7 @@ void MainWindow::changeBackgroundColor()
     }
     else
     {
-        setStyleSheet("background-color: #fff");
+        setStyleSheet("background-color: #EAE2F9");
         this->label->setStyleSheet("color: #000");
         this->tasks->setStyleSheet("color: #000");
         this->inputField->setStyleSheet("color: #000");
@@ -273,6 +273,21 @@ void MainWindow::initChangeThemeButton() {
     connect(this->button, &QPushButton::clicked, this, &MainWindow::changeBackgroundColor);
 }
 
+void MainWindow::initModalUserMenuBtn() {
+    this->modal = new ModalWindow(this);
+
+    this->modalUser = new QPushButton(this);
+    this->modalUser->setIcon(QIcon("icons/user.png"));
+    this->modalUser->setIconSize(QSize(52,52));
+    this->modalUser->setStyleSheet(QString("QPushButton {"
+                                        "border-radius: %1px;"
+                                        "border: none;"
+                                        "}").arg(52 / 2));
+
+    connect(this->modalUser, &QPushButton::clicked, this, &MainWindow::showModalWindow);
+
+}
+
 void MainWindow::initAddTasks() {
     this->tasks = new QLabel("Add tasks", this);
     this->tasks->setFont(this->basicFont);
@@ -305,6 +320,7 @@ void MainWindow::initAddTasks() {
 void MainWindow::initBtnsLayout() {
     // Создаем горизонтальный макет для кнопки, чтобы она была в правом верхнем углу
     this->btnsLayout = new QHBoxLayout;
+    this->btnsLayout->addWidget(this->modalUser);
     this->btnsLayout->addStretch();
     this->btnsLayout->addWidget(this->hideBtn);
     this->btnsLayout->addWidget(this->closeBtn);
@@ -350,6 +366,14 @@ void MainWindow::initMainLayout() {
     this->mainLayout->addLayout(this->widgetLayout);
 }
 
+void MainWindow::showModalWindow() {
+    QPoint startPosition = this->pos() + QPoint(0, 0); // Слева от главного окна
+
+    // Вызываем анимацию выезда на всю ширину окна
+    this->modal->show(); // Показываем модальное окно
+    this->modal->slideIn(startPosition, 300);
+}
+
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
     setWindowTitle("Track Your Day");
@@ -368,6 +392,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
     this->initCloseWindowButton();
     this->initHideWindowButton();
+    this->initModalUserMenuBtn();
 
     this->label = new QLabel("Let's start the day by making a plan for today", this);
     this->label->setAlignment(Qt::AlignCenter); // Центрируем текст
