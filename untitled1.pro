@@ -11,16 +11,18 @@ TEMPLATE = app
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    greetings.cpp \
+    login.cpp \
     main.cpp \
     mainwindow.cpp \
-    taskwidget.cpp
+    taskwidget.cpp \
+    welcomewnd.cpp
 
 HEADERS += \
-    greetings.h \
     libs.h \
+    login.h \
     mainwindow.h \
-    taskwidget.h
+    taskwidget.h \
+    welcomewnd.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
