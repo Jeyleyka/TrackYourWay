@@ -50,33 +50,33 @@ void Login::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void Login::initCentralWidget() {
-   this->centralWidget = new QWidget(this);
+    this->centralWidget = new QWidget(this);
 }
 
 void Login::initCloseWindowButton() {
     QIcon redIcon("icons/red_circle.png");
     this->closeBtn = new QPushButton(this);
     this->closeBtn->setIcon(redIcon);
-    this->closeBtn->setIconSize(QSize(32,32));
+    this->closeBtn->setIconSize(QSize(32, 32));
     this->closeBtn->setStyleSheet(QString("QPushButton {"
                                           "border-radius: %1px;"
                                           "border: none;"
                                           "}").arg(32 / 2));
 
-    connect(this->closeBtn,&QPushButton::clicked, this, &MainWindow::close);
+    connect(this->closeBtn, &QPushButton::clicked, this, &QWidget::close);
 }
 
 void Login::initHideWindowButton() {
     QIcon greenIcon("icons/green_circle.png");
     this->hideBtn = new QPushButton(this);
     this->hideBtn->setIcon(greenIcon);
-    this->hideBtn->setIconSize(QSize(32,32));
+    this->hideBtn->setIconSize(QSize(32, 32));
     this->hideBtn->setStyleSheet(QString("QPushButton {"
                                          "border-radius: %1px;"
                                          "border: none;"
                                          "}").arg(32 / 2));
 
-    connect(this->hideBtn,&QPushButton::clicked, this, &MainWindow::showMinimized);
+    connect(this->hideBtn, &QPushButton::clicked, this, &QWidget::showMinimized);
 }
 
 void Login::initLogo() {
@@ -105,7 +105,7 @@ void Login::initBtnsLayout() {
 
 void Login::initLogoLayout() {
     this->logoLayout = new QHBoxLayout;
-    this->logoLayout->setContentsMargins(0,100,0,50);
+    this->logoLayout->setContentsMargins(0, 100, 0, 50);
     this->logoLayout->addWidget(this->logoLabel);
 }
 
@@ -121,10 +121,13 @@ void Login::initMainLayout() {
     this->mainLayout->addLayout(this->btnsLayout);
     this->mainLayout->addLayout(this->logoLayout);
     this->mainLayout->addWidget(this->username);
-    // this->mainLayout->addWidget(this->password);
     this->mainLayout->addLayout(this->passwordLayout);
     this->mainLayout->addWidget(this->rememberUser);
     this->mainLayout->addWidget(this->btn);
+}
+
+void Login::logout() {
+    this->rememberUser = 0;
 }
 
 bool Login::checkCorrectlyData() {
@@ -157,12 +160,12 @@ bool Login::checkCorrectlyData() {
             }
         }
 
-
         if (this->username->text() == this->usernameData && this->password->text() == this->passwordData)
         {
             this->close();
-            MainWindow *main = new MainWindow();  // Создаем второе окно
+            MainWindow* main = new MainWindow();  // Создаем второе окно
             main->show();
+            this->openWnd = true;
             return true;
         } else {
             QMessageBox::warning(this, "Input error", "Incorrect password or username");
@@ -170,7 +173,6 @@ bool Login::checkCorrectlyData() {
     }
 
     return false;
-
 }
 
 int Login::haveAccountAndShowLogin() {
@@ -194,9 +196,6 @@ int Login::haveAccountAndShowLogin() {
     while (!in.atEnd()) {
         QString line = in.readLine();
 
-        // if ((line.startsWith("Username: ") && !line.mid(10).isEmpty()) || (line.startsWith("Remember: ") && line.mid(10) == 0))
-        //     return true;
-
         if (line.startsWith("Username: "))
         {
             if (!line.mid(10).isEmpty())
@@ -211,7 +210,6 @@ int Login::haveAccountAndShowLogin() {
             {
                 qDebug() << "remember: " << line.mid(10).toInt();
                 return 2;
-                qDebug() << "have account";
             }
         }
         else
@@ -223,26 +221,6 @@ int Login::haveAccountAndShowLogin() {
 
     return showLogin;
 }
-
-// void Login::openSecondWindow() {
-//     if (haveAccountAndShowLogin() == 0)
-//     {
-//         this->close();
-//         MainWindow *main = new MainWindow();  // Создаем второе окно
-//         main->show();
-//     }
-//     else if (haveAccountAndShowLogin() == 1)
-//     {
-//         if (checkCorrectlyData() == true)
-//         {
-//             this->close();
-//             MainWindow *main = new MainWindow();  // Создаем второе окно
-//             main->show(); // Открываем его как модальное окно
-//         } else {
-//             QMessageBox::warning(this, "Input error", "Incorrect password or username");
-//         }
-//     }
-// }
 
 void Login::handleLogin() {
     int state = this->haveAccountAndShowLogin();
@@ -268,97 +246,56 @@ void Login::handleLogin() {
             out << "Remember: " << QString::number(remUs) << "\n\n";
             file.close();
 
-            QMessageBox::warning(this, "Input Error", "Data saved successfully!");
-
-            this->username->clear();
-            this->password->clear();
-            this->rememberUser->setChecked(false);
-        } else
-        {
-            QMessageBox::critical(this, "File Error", "Failed to open file for writing.");
+            QMessageBox::warning(this, "Input Error", "Data saved successfully.");
+            return;
+        } else {
+            QMessageBox::warning(this, "File Error", "Failed to write to the file.");
         }
-
-        this->close();
-        MainWindow *main = new MainWindow();  // Создаем второе окно
-        main->show();
     }
 }
 
-Login::Login(QWidget *parent) : QMainWindow(parent), passwordVisible(false) {
-        setWindowTitle("Второе окно");
-        setWindowIcon(QIcon("icons/logo.png"));
-        // Создаем простой виджет в центре окна
-        this->haveAccountAndShowLogin();
-        this->initCentralWidget();
-        this->initCloseWindowButton();
-        this->initHideWindowButton();
-        this->initLogo();
+Login::Login(QWidget *parent) : QMainWindow(parent),
+    passwordVisible(false),
+    openWnd(false)
+{
+    // Инициализация центрального виджета и остальных элементов интерфейса
+    initCentralWidget();
+    initCloseWindowButton();
+    initHideWindowButton();
+    initLogo();
+    initCheckBox();
+    initBtnsLayout();
+    initLogoLayout();
+    initPasswordLayout();
+    initMainLayout();
 
-        this->initLogoLayout();
-        this->initBtnsLayout();
+    // Установка центрального виджета
+    setCentralWidget(centralWidget);
 
-        this->username = new QLineEdit(this);
-        this->username->setPlaceholderText("Username");
-        this->username->setStyleSheet(R"(
-            QLineEdit {
-                border: none;
-                border-radius: 15px;
-                padding: 10px;
-                font-size: 16px;
-                max-width: 420px;
-                margin-left: auto;
-                margin-right: auto;
-                height: 40px;
-            }
-        )");
-        this->password = new QLineEdit(this);
-        this->password->setPlaceholderText("password");
-        this->password->setEchoMode(QLineEdit::Password);
-        this->password->setStyleSheet(R"(
-            QLineEdit {
-                border-radius: 15px;
-                padding: 10px;
-                font-size: 16px;
-                margin-top: 20px;
-                margin-left: auto;
-                margin-right: auto;
-                max-width: 420px;
-                height: 40px;
-            }
-        )");
+    // Настройка окна
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
+    setAttribute(Qt::WA_TranslucentBackground);  // Окно без фона
+    setFixedSize(400, 300); // Размер окна
+    setWindowIcon(QIcon("icons/logo.png"));  // Установка иконки окна
 
-        this->btn = new QPushButton("Login", this);
-        this->btn->setStyleSheet(R"(
-            QPushButton {
-                background-color: #6e61e0;
-                border: none;
-                border-radius: 30px;
-                padding: 10px;
-                color: white;
-                font-size: 16px;
-                font-weight: 600;
-                margin-top: 40px;
-                margin-left: auto;
-                margin-right: auto;
-                max-width: 420px;
-                height: 40px;
-            }
-            QPushButton:hover {
-                background-color: #45a049;
-            }
-        )");
+    // Подключение сигнала успешного входа
+    connect(this->btn, &QPushButton::clicked, this, &Login::handleLogin);
 
-        if (haveAccountAndShowLogin() == 0)
-            connect(this->btn, &QPushButton::clicked, this, &Login::handleLogin);
-        else if (haveAccountAndShowLogin() == 1)
-            connect(this->btn, &QPushButton::clicked, this, &Login::checkCorrectlyData);
-
-        // connect(this->btn, &QPushButton::clicked, this, &Login::openSecondWindow);
-
-        this->initCheckBox();
-        this->initPasswordLayout();
-        this->initMainLayout();
-        this->centralWidget->setLayout(this->mainLayout);
-        setCentralWidget(this->centralWidget);
-        resize(450, 650);
+    // Стиль для текста кнопок и других элементов
+    this->setStyleSheet("QLineEdit {"
+                        "background-color: #ffffff;"
+                        "border: 1px solid #dcdcdc;"
+                        "border-radius: 5px;"
+                        "padding: 5px;"
+                        "}"
+                        "QPushButton {"
+                        "background-color: #3498db;"
+                        "color: white;"
+                        "border: none;"
+                        "border-radius: 5px;"
+                        "padding: 10px;"
+                        "}"
+                        "QCheckBox {"
+                        "font-size: 14px;"
+                        "}");
 }

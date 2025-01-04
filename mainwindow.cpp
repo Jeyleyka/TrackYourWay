@@ -12,6 +12,7 @@ void MainWindow::changeBackgroundColor()
         this->tasks->setStyleSheet("color: #fff");
         this->inputField->setStyleSheet("color: #fff");
         this->savedTextLabel->setStyleSheet("color: #fff");
+        this->modal->setBackgroundColor(QColor(51,51,56));
         QIcon icon("icons/sun.png");
         button->setIcon(icon);
 
@@ -27,6 +28,7 @@ void MainWindow::changeBackgroundColor()
         this->tasks->setStyleSheet("color: #000");
         this->inputField->setStyleSheet("color: #000");
         this->savedTextLabel->setStyleSheet("color: #000");
+        this->modal->setBackgroundColor(QColor(219,211,233));
         QIcon icon("icons/moon.png");
         button->setIcon(icon);
         for (int i = 0; i < widgets.size(); ++i) {
@@ -274,15 +276,13 @@ void MainWindow::initChangeThemeButton() {
 }
 
 void MainWindow::initModalUserMenuBtn() {
-    this->modal = new ModalWindow(this);
-
     this->modalUser = new QPushButton(this);
     this->modalUser->setIcon(QIcon("icons/user.png"));
     this->modalUser->setIconSize(QSize(52,52));
     this->modalUser->setStyleSheet(QString("QPushButton {"
-                                        "border-radius: %1px;"
-                                        "border: none;"
-                                        "}").arg(52 / 2));
+                                           "border-radius: %1px;"
+                                           "border: none;"
+                                           "}").arg(52 / 2));
 
     connect(this->modalUser, &QPushButton::clicked, this, &MainWindow::showModalWindow);
 
@@ -367,11 +367,9 @@ void MainWindow::initMainLayout() {
 }
 
 void MainWindow::showModalWindow() {
-    QPoint startPosition = this->pos() + QPoint(0, 0); // Слева от главного окна
-
-    // Вызываем анимацию выезда на всю ширину окна
-    this->modal->show(); // Показываем модальное окно
-    this->modal->slideIn(startPosition, 300);
+    ModalWindow *modalWindow = new ModalWindow(this);
+    modalWindow->show();
+    modalWindow->slideIn();  // Запуск анимации выдвижения
 }
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
@@ -424,4 +422,3 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 }
 
 MainWindow::~MainWindow() {}
-

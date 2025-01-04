@@ -1,5 +1,16 @@
 #include "modalwindow.h"
 
+void ModalWindow::initCloseBtn() {
+    this->label = new QLabel("lfhsd", this);
+    this->closeBtn = new QPushButton(this);
+    this->closeBtn->setIcon(QIcon("icons/modal_close.png"));
+    this->closeBtn->setIconSize(QSize(30,30));
+    this->closeBtn->setStyleSheet(QString("QPushButton {"
+                                         "border-radius: %1px;"
+                                         "border: none;"
+                                         "}").arg(30 / 2));
+}
+
 void ModalWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing); // Включаем сглаживание для плавных линий
@@ -22,34 +33,46 @@ void ModalWindow::paintEvent(QPaintEvent *event) {
 
 ModalWindow::ModalWindow(QWidget* parent) : QDialog(parent) {
     setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint); // Окно без рамки
-    setModal(true); // Модальное окно
+    // setModal(true); // Модальное окно
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    QPushButton* btn = new QPushButton("Закрыть", this);
-    layout->addWidget(btn);
+    QHBoxLayout *layout = new QHBoxLayout(this);
+    this->initCloseBtn();
+    layout->setContentsMargins(0,10,200,0);
+    layout->addWidget(this->closeBtn, 0, Qt::AlignTop);
     setLayout(layout);
-    resize(300, 800);
+    setFixedHeight(800);  // Изначально окно имеет ширину 0
+    setMinimumWidth(10);
 
     // По нажатию на кнопку, закрывать окно
-    connect(btn, &QPushButton::clicked, this, &ModalWindow::slideOut);
+    connect(this->closeBtn, &QPushButton::clicked, this, &ModalWindow::slideOut);
+    // connect(this->closeBtn, &QPushButton::clicked, this, &ModalWindow::close);
+
+    QPoint mainWindowPos = parentWidget()->pos();
+    move(mainWindowPos);  // Устанавливаем начальную позицию окна
+
+    // Настроим анимацию для расширения окна
+    this->openAnimation = new QPropertyAnimation(this, "size");
+    this->openAnimation->setDuration(500); // Длительность анимации
+    this->openAnimation->setStartValue(QSize(0, height())); // Начальная ширина равна 0
+    this->openAnimation->setEndValue(QSize(300, height())); // Конечная ширина — желаемая (300 пикселей)
 }
 
-void ModalWindow::slideIn(const QPoint &startPosition, int finalWidth) {
-    move(startPosition);  // Позиционируем окно у левого края основного окна
-
-    // Анимация ширины
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "size");
-    animation->setDuration(500); // Длительность анимации
-    animation->setStartValue(QSize(0, height())); // Начальная ширина = 0
-    animation->setEndValue(QSize(finalWidth, height())); // Конечная ширина = ширина основного окна
-    animation->start();
+void ModalWindow::slideIn() {
+    this->openAnimation->start();
 }
 
 void ModalWindow::slideOut() {
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "size");
-    animation->setDuration(500); // Длительность анимации
-    animation->setStartValue(size()); // Начальная ширина (текущая ширина)
-    animation->setEndValue(QSize(0, height())); // Конечная ширина = 0
-    connect(animation, &QPropertyAnimation::finished, this, &ModalWindow::close); // Закрытие окна после завершения анимации
-    animation->start();
+    QPropertyAnimation *closeAnimation = new QPropertyAnimation(this, "size");
+    closeAnimation->setDuration(500); // Длительность анимации
+    closeAnimation->setStartValue(size()); // Начальная ширина и высота (текущий размер)
+    closeAnimation->setEndValue(QSize(0, height())); // Конечная ширина — 0
+
+    // После завершения анимации закрываем окно
+    connect(closeAnimation, &QPropertyAnimation::finished, this, &ModalWindow::close);
+
+    closeAnimation->start(); // Запускаем анимацию сужения
+}
+
+void ModalWindow::setBackgroundColor(const QColor& color) {
+    this->currentBackgroundColor = color;
 }

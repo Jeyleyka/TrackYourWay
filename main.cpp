@@ -96,6 +96,7 @@ int main(int argc, char *argv[]) {
     if (handleReadPassword() == 0 || haveAccountAndShowLogin() == 1) {
         Login *window = new Login();
         window->show();
+
     } else if (handleReadPassword() == 2 || haveAccountAndShowLogin() == 2) {
         WelcomeWnd *window = new WelcomeWnd();
         window->show();

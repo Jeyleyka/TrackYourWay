@@ -330,6 +330,7 @@ release/moc_login.cpp: ../../login.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QSignalMapper \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/qsignalmapper.h \
 		../../modalwindow.h \
+		../../login.h \
 		release/moc_predefs.h \
 		../../../../msys64/mingw64/qt5-static/bin/moc.exe
 	G:\msys64\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/release/moc_predefs.h -IG:/msys64/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/msys64/mingw64/qt5-static/include -IG:/msys64/mingw64/qt5-static/include/QtWidgets -IG:/msys64/mingw64/qt5-static/include/QtGui -IG:/msys64/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\login.h -o release\moc_login.cpp
@@ -528,6 +529,8 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QSignalMapper \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/qsignalmapper.h \
 		../../modalwindow.h \
+		../../login.h \
+		../../mainwindow.h \
 		release/moc_predefs.h \
 		../../../../msys64/mingw64/qt5-static/bin/moc.exe
 	G:\msys64\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/release/moc_predefs.h -IG:/msys64/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/msys64/mingw64/qt5-static/include -IG:/msys64/mingw64/qt5-static/include/QtWidgets -IG:/msys64/mingw64/qt5-static/include/QtGui -IG:/msys64/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\mainwindow.h -o release\moc_mainwindow.cpp
@@ -1119,6 +1122,7 @@ release/moc_welcomewnd.cpp: ../../welcomewnd.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QSignalMapper \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/qsignalmapper.h \
 		../../modalwindow.h \
+		../../login.h \
 		release/moc_predefs.h \
 		../../../../msys64/mingw64/qt5-static/bin/moc.exe
 	G:\msys64\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/release/moc_predefs.h -IG:/msys64/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/msys64/mingw64/qt5-static/include -IG:/msys64/mingw64/qt5-static/include/QtWidgets -IG:/msys64/mingw64/qt5-static/include/QtGui -IG:/msys64/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\welcomewnd.h -o release\moc_welcomewnd.cpp
@@ -1338,7 +1342,10 @@ release/login.o: ../../login.cpp ../../login.h \
 		../../modalwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\login.o ..\..\login.cpp
 
-release/main.o: ../../main.cpp ../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QApplication \
+release/main.o: ../../main.cpp ../../mainwindow.h \
+		../../taskwidget.h \
+		../../libs.h \
+		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QApplication \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qapplication.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qtwidgetsglobal.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtGui/qtguiglobal.h \
@@ -1447,16 +1454,6 @@ release/main.o: ../../main.cpp ../../../../../../msys64/mingw64/qt5-static/inclu
 		../../../../../../msys64/mingw64/qt5-static/include/QtGui/qtouchdevice.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtGui/qguiapplication.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtGui/qinputmethod.h \
-		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QFile \
-		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QTextStream \
-		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QMessageBox \
-		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qmessagebox.h \
-		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qdialog.h \
-		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QDebug \
-		../../login.h \
-		../../mainwindow.h \
-		../../taskwidget.h \
-		../../libs.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QWidget \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QLabel \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qlabel.h \
@@ -1472,6 +1469,7 @@ release/main.o: ../../main.cpp ../../../../../../msys64/mingw64/qt5-static/inclu
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qgridlayout.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QHBoxLayout \
 		../../../../../../msys64/mingw64/qt5-static/include/QtGui/QFont \
+		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QDebug \
 		../../../../../../msys64/mingw64/qt5-static/include/QtGui/QIcon \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QString \
 		../../../../../../msys64/mingw64/qt5-static/include/QtGui/Qpainter \
@@ -1491,6 +1489,7 @@ release/main.o: ../../main.cpp ../../../../../../msys64/mingw64/qt5-static/inclu
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qgroupbox.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QInputDialog \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qinputdialog.h \
+		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qdialog.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QPoint \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QListWidget \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qlistwidget.h \
@@ -1518,9 +1517,13 @@ release/main.o: ../../main.cpp ../../../../../../msys64/mingw64/qt5-static/inclu
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QMainWindow \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qmainwindow.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtGui/QPixmap \
+		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QMessageBox \
+		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qmessagebox.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtGui/QKeyEvent \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QShortcut \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qshortcut.h \
+		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QFile \
+		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QTextStream \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/QCheckBox \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qcheckbox.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QPropertyAnimation \
@@ -1533,6 +1536,7 @@ release/main.o: ../../main.cpp ../../../../../../msys64/mingw64/qt5-static/inclu
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QSignalMapper \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/qsignalmapper.h \
 		../../modalwindow.h \
+		../../login.h \
 		../../welcomewnd.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\..\main.cpp
 
@@ -1729,7 +1733,8 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qstackedwidget.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QSignalMapper \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/qsignalmapper.h \
-		../../modalwindow.h
+		../../modalwindow.h \
+		../../login.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\..\mainwindow.cpp
 
 release/modalwindow.o: ../../modalwindow.cpp ../../modalwindow.h \
@@ -2314,7 +2319,8 @@ release/welcomewnd.o: ../../welcomewnd.cpp ../../welcomewnd.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtWidgets/qstackedwidget.h \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/QSignalMapper \
 		../../../../../../msys64/mingw64/qt5-static/include/QtCore/qsignalmapper.h \
-		../../modalwindow.h
+		../../modalwindow.h \
+		../../login.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\welcomewnd.o ..\..\welcomewnd.cpp
 
 release/untitled1_plugin_import.o: G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/untitled1_plugin_import.cpp 
