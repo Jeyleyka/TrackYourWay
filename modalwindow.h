@@ -10,9 +10,12 @@ class ModalWindow : public QDialog
 private:
     QPropertyAnimation *openAnimation;
     QPropertyAnimation *closeAnimation;
-    QColor currentBackgroundColor = QColor(219,211,233);
     QPushButton* closeBtn;
-    QLabel* label;
+    QPushButton* weekTasks;
+    QFrame *line;
+    QHBoxLayout *btnLayout;
+    QVBoxLayout *menuLayout;
+    QVBoxLayout* mainLayout;
 
     void initCloseBtn();
 
@@ -20,11 +23,13 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 public:
-    explicit ModalWindow(QWidget* parent = nullptr);
+    QColor currentBackgroundColor = QColor(219,211,233);
+    explicit ModalWindow(QColor color, QWidget* parent = nullptr);
 
     void slideIn();
     void slideOut();
-    void setBackgroundColor(const QColor& color);
+    void setBackgroundColor(const bool& toggle, const QString& color);
+
 };
 
 #endif // MODALWINDOW_H

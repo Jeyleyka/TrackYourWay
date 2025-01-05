@@ -45,6 +45,7 @@ private:
     // int index;
     bool dragging = false;  // Флаг для отслеживания, перетаскивается ли окно
     bool openModal = false;
+    bool toggle = true;
 
     void changeBackgroundColor();
     void onCreateInputClicked();

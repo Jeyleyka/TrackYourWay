@@ -2,17 +2,16 @@
 
 void MainWindow::changeBackgroundColor()
 {
-    static bool toggle = true;
     QPushButton *button = qobject_cast<QPushButton *>(sender());
 
-    if (toggle)
+    if (this->toggle)
     {
         setStyleSheet("background-color: #1e1e20;");
         this->label->setStyleSheet("color: #fff");
         this->tasks->setStyleSheet("color: #fff");
         this->inputField->setStyleSheet("color: #fff");
         this->savedTextLabel->setStyleSheet("color: #fff");
-        this->modal->setBackgroundColor(QColor(51,51,56));
+        // this->modal->setBackgroundColor(QColor(51,51,56));
         QIcon icon("icons/sun.png");
         button->setIcon(icon);
 
@@ -28,7 +27,7 @@ void MainWindow::changeBackgroundColor()
         this->tasks->setStyleSheet("color: #000");
         this->inputField->setStyleSheet("color: #000");
         this->savedTextLabel->setStyleSheet("color: #000");
-        this->modal->setBackgroundColor(QColor(219,211,233));
+        // this->modal->setBackgroundColor(QColor(219,211,233));
         QIcon icon("icons/moon.png");
         button->setIcon(icon);
         for (int i = 0; i < widgets.size(); ++i) {
@@ -276,6 +275,8 @@ void MainWindow::initChangeThemeButton() {
 }
 
 void MainWindow::initModalUserMenuBtn() {
+    // this->modal = new ModalWindow(QColor(219,211,233), this);
+
     this->modalUser = new QPushButton(this);
     this->modalUser->setIcon(QIcon("icons/user.png"));
     this->modalUser->setIconSize(QSize(52,52));
@@ -367,9 +368,20 @@ void MainWindow::initMainLayout() {
 }
 
 void MainWindow::showModalWindow() {
-    ModalWindow *modalWindow = new ModalWindow(this);
-    modalWindow->show();
-    modalWindow->slideIn();  // Запуск анимации выдвижения
+    if (this->toggle)
+    {
+        this->modal = new ModalWindow(QColor(219,211,233), this);
+        this->modal->setBackgroundColor(false, "background-color: #DBD3E9");
+
+    }
+    else
+    {
+        this->modal = new ModalWindow(QColor(51,51,56), this);
+        this->modal->setBackgroundColor(true, "background-color: #333338");
+    }
+
+    this->modal->show();
+    this->modal->slideIn();  // Запуск анимации выдвижения
 }
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)

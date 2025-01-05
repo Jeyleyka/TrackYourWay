@@ -38,4 +38,6 @@
 #include <QStackedWidget>
 #include <QSignalMapper>
 
+#include <map>
+
 #endif // LIBS_H
