@@ -351,6 +351,7 @@ void MainWindow::initTasksLayout() {
     this->tasksLayout->addWidget(this->addTasks);
     this->tasksLayout->addStretch(2);
     this->tasksLayout->setContentsMargins(15,30,0,0);
+    // this->tasksLayout->setSpacing(0);
 }
 
 void MainWindow::initWidgetLayout() {
@@ -388,6 +389,9 @@ void MainWindow::initMainLayout() {
     this->tasksSlideLayout->addLayout(this->tasksLayout);
     this->tasksSlideLayout->addLayout(this->inputsLayout);
     this->tasksSlideLayout->addLayout(this->widgetLayout);
+    this->tasksSlideLayout->addSpacing(0);
+    this->tasksSlideLayout->setContentsMargins(0,0,0,0);
+    this->tasksSlideLayout->addStretch(0);
 
     this->calendarSlide = new QWidget(this);
     this->calendarLayout = new QVBoxLayout(this->calendarSlide);
@@ -400,12 +404,8 @@ void MainWindow::initMainLayout() {
     this->mainLayout->setAlignment(Qt::AlignTop);
     this->mainLayout->addLayout(this->btnsLayout);
     this->mainLayout->addLayout(this->topLayout);
-    // this->mainLayout->addLayout(this->tasksLayout);
-    // this->mainLayout->addLayout(this->inputsLayout);
     this->mainLayout->addWidget(this->stackedWidget);
     this->mainLayout->addLayout(carouselLayout);
-    // this->mainLayout->addLayout(this->widgetLayout);
-    // this->mainLayout->addLayout(this->tasksSlideLayout);
 
     connect(tasksButton, &QPushButton::clicked, this, [=]() {
         stackedWidget->setCurrentIndex(0);
