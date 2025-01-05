@@ -6,6 +6,7 @@
 #include "login.h"  // Подключаем заголовочный файл для Greetings
 #include "welcomewnd.h"  // Подключаем заголовочный файл для MainWindow
 
+
 int haveAccountAndShowLogin() {
     QFile file("login_data.txt");
 

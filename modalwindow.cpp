@@ -12,9 +12,8 @@ ModalWindow::ModalWindow(QColor color, QWidget* parent) : QDialog(parent) {
     this->btnLayout->addWidget(this->closeBtn);
 
     this->menuLayout = new QVBoxLayout;
-    this->menuLayout->addWidget(this->weekTasks);
-
-    this->menuLayout->addWidget(this->line);
+    this->menuLayout->addWidget(this->visitingCalendarBtn);
+    this->menuLayout->addWidget(this->showTasksOfPastDaysBtn);
     this->menuLayout->setContentsMargins(0,0,0,670);
     this->menuLayout->setSpacing(0);
     this->currentBackgroundColor = color;
@@ -29,7 +28,9 @@ ModalWindow::ModalWindow(QColor color, QWidget* parent) : QDialog(parent) {
     setMinimumWidth(10);  // Минимальная ширина
 
     // Подключаем сигнал закрытия окна
+
     connect(this->closeBtn, &QPushButton::clicked, this, &ModalWindow::slideOut);
+
 }
 
 void ModalWindow::initCloseBtn() {
@@ -41,13 +42,27 @@ void ModalWindow::initCloseBtn() {
                                           "border: none;"
                                           "}").arg(30 / 2));
 
-    this->weekTasks = new QPushButton("Таски за прошлые дни", this);
-    this->weekTasks->setStyleSheet("border: none;");
-    this->line = new QFrame;
-    this->line->setFrameShape(QFrame::HLine);
-    this->line->setFrameShadow(QFrame::Sunken);
-    this->line->setFixedWidth(170);
-    this->line->setStyleSheet("background-color: red");
+    this->visitingCalendarBtn = new QPushButton("Visiting calendar", this);
+    this->visitingCalendarBtn->setStyleSheet("QPushButton {"
+                                 "background: transparent;"
+                                 "border: none;"
+                                 "color: black;"
+                                 "font-size: 16px;"
+                                 "}"
+                                 "QPushButton:hover {"
+                                 "color: #EAE2F9;"  // Меняем цвет текста на серый при наведении
+                                 "}");
+
+    this->showTasksOfPastDaysBtn = new QPushButton("Show tasks of the past days", this);
+    this->showTasksOfPastDaysBtn->setStyleSheet("QPushButton {"
+                                             "background: transparent;"
+                                             "border: none;"
+                                             "color: black;"
+                                             "font-size: 16px;"
+                                             "}"
+                                             "QPushButton:hover {"
+                                             "color: #EAE2F9;"  // Меняем цвет текста на серый при наведении
+                                             "}");
 }
 
 void ModalWindow::paintEvent(QPaintEvent *event) {
@@ -93,12 +108,14 @@ void ModalWindow::setBackgroundColor(const bool& toggle, const QString &color) {
     if (toggle)
     {
         this->closeBtn->setIcon(QIcon("icons/cancel_bl.png"));
-        this->weekTasks->setStyleSheet("background-color: transparent; color: #fff;" + color);
+        this->visitingCalendarBtn->setStyleSheet("background-color: transparent; border: none; font-size: 16px; color: #fff;" + color);
+        this->showTasksOfPastDaysBtn->setStyleSheet("background-color: transparent; border: none; font-size: 16px; color: #fff; margin-top: 30px;" + color);
     }
     else
     {
         this->closeBtn->setIcon(QIcon("icons/cancel_wh.png"));
-        this->weekTasks->setStyleSheet("background-color: transparent; color: #000;" + color);
+        this->visitingCalendarBtn->setStyleSheet("background-color: transparent; border: none; font-size: 16px; color: #000;" + color);
+        this->showTasksOfPastDaysBtn->setStyleSheet("background-color: transparent; border: none; font-size: 16px; color: #000; margin-top: 30px;" + color);
     }
 
     this->closeBtn->setStyleSheet(QString("border-radius: %1px; border: none;").arg(30 / 2) + color);

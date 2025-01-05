@@ -5,8 +5,8 @@ void TaskWidget::initFont() {
 }
 
 void TaskWidget::initLabel() {
-    this->id->setStyleSheet("font-size: 19px; font-weight: 600;");
-    this->label->setStyleSheet("font-size: 19px; font-weight: 600;");  // Убираем отступы
+    this->id->setStyleSheet("color: #000; font-size: 19px; font-weight: 600;");
+    this->label->setStyleSheet("color: #000; font-size: 19px; font-weight: 600;");  // Убираем отступы
     this->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);  // Выравниваем по левому краю, без отступов
     this->label->setWordWrap(true);  // Разрешаем перенос текста
     this->label->setTextInteractionFlags(Qt::TextEditorInteraction);

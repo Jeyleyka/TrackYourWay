@@ -67,7 +67,7 @@ void MainWindow::onEnterPressed() {
         widgetLayout->addWidget(taskWidget);
 
         // Изменение цвета текста в зависимости от фона
-        if (currentBackgroundColor == Qt::white) {
+        if (currentBackgroundColor == QColor(234,226,249)) {
             for (int i = 0; i < widgets.size(); ++i) {
                 this->widgets[i]->setLabelColor("color: #000");
             }
@@ -359,12 +359,65 @@ void MainWindow::initWidgetLayout() {
 
 void MainWindow::initMainLayout() {
     this->mainLayout = new QVBoxLayout;
+    QHBoxLayout* carouselLayout = new QHBoxLayout;
+
+    QPushButton *tasksButton = new QPushButton(this);
+    tasksButton->setFixedSize(20,20);
+    tasksButton->setStyleSheet(QString("QPushButton {"
+                                       "border-radius: %1px;"
+                                       "border: none;"
+                                       "}").arg(20 / 2));
+    QPushButton *calendarButton = new QPushButton(this);
+    calendarButton->setFixedSize(20,20);
+    calendarButton->setStyleSheet(QString("QPushButton {"
+                                       "border-radius: %1px;"
+                                       "border: none;"
+                                       "}").arg(20 / 2));
+
+    tasksButton->setIcon(QIcon("icons/full_circle.png"));
+    calendarButton->setIcon(QIcon("icons/empty_circle.png"));
+
+    carouselLayout->addStretch(1);
+    carouselLayout->addWidget(tasksButton);
+    carouselLayout->addWidget(calendarButton);
+    carouselLayout->addStretch(1);
+
+    this->stackedWidget = new QStackedWidget(this);
+    this->tasksSlide = new QWidget(this);
+    this->tasksSlideLayout = new QVBoxLayout(tasksSlide);
+    this->tasksSlideLayout->addLayout(this->tasksLayout);
+    this->tasksSlideLayout->addLayout(this->inputsLayout);
+    this->tasksSlideLayout->addLayout(this->widgetLayout);
+
+    this->calendarSlide = new QWidget(this);
+    this->calendarLayout = new QVBoxLayout(this->calendarSlide);
+    QCalendarWidget *calendar = new QCalendarWidget(calendarSlide);
+    this->calendarLayout->addWidget(calendar);
+
+    this->stackedWidget->addWidget(this->tasksSlide);
+    this->stackedWidget->addWidget(this->calendarSlide);
+
     this->mainLayout->setAlignment(Qt::AlignTop);
     this->mainLayout->addLayout(this->btnsLayout);
     this->mainLayout->addLayout(this->topLayout);
-    this->mainLayout->addLayout(this->tasksLayout);
-    this->mainLayout->addLayout(this->inputsLayout);
-    this->mainLayout->addLayout(this->widgetLayout);
+    // this->mainLayout->addLayout(this->tasksLayout);
+    // this->mainLayout->addLayout(this->inputsLayout);
+    this->mainLayout->addWidget(this->stackedWidget);
+    this->mainLayout->addLayout(carouselLayout);
+    // this->mainLayout->addLayout(this->widgetLayout);
+    // this->mainLayout->addLayout(this->tasksSlideLayout);
+
+    connect(tasksButton, &QPushButton::clicked, this, [=]() {
+        stackedWidget->setCurrentIndex(0);
+        tasksButton->setIcon(QIcon("icons/full_circle.png"));
+        calendarButton->setIcon(QIcon("icons/empty_circle.png"));
+    });
+
+    connect(calendarButton, &QPushButton::clicked, this, [=]() {
+        stackedWidget->setCurrentIndex(1);
+        tasksButton->setIcon(QIcon("icons/empty_circle.png"));
+        calendarButton->setIcon(QIcon("icons/full_circle.png"));
+    });
 }
 
 void MainWindow::showModalWindow() {
@@ -424,6 +477,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->initTasksLayout();
     this->initWidgetLayout();
     this->initMainLayout();
+
+
+    // this->carouselWidget = new CarouselWidget(this);
 
     // Устанавливаем макет для окна
     centralWidget->setLayout(this->mainLayout);

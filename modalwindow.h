@@ -11,8 +11,8 @@ private:
     QPropertyAnimation *openAnimation;
     QPropertyAnimation *closeAnimation;
     QPushButton* closeBtn;
-    QPushButton* weekTasks;
-    QFrame *line;
+    QPushButton* visitingCalendarBtn;
+    QPushButton* showTasksOfPastDaysBtn;
     QHBoxLayout *btnLayout;
     QVBoxLayout *menuLayout;
     QVBoxLayout* mainLayout;

@@ -37,6 +37,7 @@
 #include <QPropertyAnimation>
 #include <QStackedWidget>
 #include <QSignalMapper>
+#include <QCalendarWidget>
 
 #include <map>
 
