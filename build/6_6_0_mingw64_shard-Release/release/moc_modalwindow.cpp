@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ModalWindow_t {
-    QByteArrayData data[1];
-    char stringdata0[12];
+    QByteArrayData data[4];
+    char stringdata0[51];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,10 +32,14 @@ struct qt_meta_stringdata_ModalWindow_t {
     )
 static const qt_meta_stringdata_ModalWindow_t qt_meta_stringdata_ModalWindow = {
     {
-QT_MOC_LITERAL(0, 0, 11) // "ModalWindow"
+QT_MOC_LITERAL(0, 0, 11), // "ModalWindow"
+QT_MOC_LITERAL(1, 12, 15), // "actionPerformed"
+QT_MOC_LITERAL(2, 28, 0), // ""
+QT_MOC_LITERAL(3, 29, 21) // "onActionButtonClicked"
 
     },
-    "ModalWindow"
+    "ModalWindow\0actionPerformed\0\0"
+    "onActionButtonClicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -45,21 +49,48 @@ static const uint qt_meta_data_ModalWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags
+       1,    0,   24,    2, 0x06 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags
+       3,    0,   25,    2, 0x08 /* Private */,
+
+ // signals: parameters
+    QMetaType::Void,
+
+ // slots: parameters
+    QMetaType::Void,
 
        0        // eod
 };
 
 void ModalWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    (void)_o;
-    (void)_id;
-    (void)_c;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        auto *_t = static_cast<ModalWindow *>(_o);
+        (void)_t;
+        switch (_id) {
+        case 0: _t->actionPerformed(); break;
+        case 1: _t->onActionButtonClicked(); break;
+        default: ;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (ModalWindow::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&ModalWindow::actionPerformed)) {
+                *result = 0;
+                return;
+            }
+        }
+    }
     (void)_a;
 }
 
@@ -89,7 +120,24 @@ void *ModalWindow::qt_metacast(const char *_clname)
 int ModalWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QDialog::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 2)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 2;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 2)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 2;
+    }
     return _id;
+}
+
+// SIGNAL 0
+void ModalWindow::actionPerformed()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

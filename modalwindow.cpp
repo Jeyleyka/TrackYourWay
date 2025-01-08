@@ -53,6 +53,8 @@ void ModalWindow::initCloseBtn() {
                                  "color: #EAE2F9;"  // Меняем цвет текста на серый при наведении
                                  "}");
 
+    connect(this->visitingCalendarBtn, &QPushButton::clicked, this, &ModalWindow::onActionButtonClicked);
+
     this->showTasksOfPastDaysBtn = new QPushButton("Show tasks of the past days", this);
     this->showTasksOfPastDaysBtn->setStyleSheet("QPushButton {"
                                              "background: transparent;"
@@ -63,6 +65,10 @@ void ModalWindow::initCloseBtn() {
                                              "QPushButton:hover {"
                                              "color: #EAE2F9;"  // Меняем цвет текста на серый при наведении
                                              "}");
+}
+
+void ModalWindow::onActionButtonClicked() {
+    emit actionPerformed();
 }
 
 void ModalWindow::paintEvent(QPaintEvent *event) {

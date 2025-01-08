@@ -19,6 +19,13 @@ private:
 
     void initCloseBtn();
 
+signals:
+    void actionPerformed();
+
+private slots:
+    void onActionButtonClicked();
+
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 
