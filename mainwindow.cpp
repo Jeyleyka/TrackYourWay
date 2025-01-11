@@ -285,7 +285,28 @@ void MainWindow::initCloseWindowButton() {
                                           "border: none;"
                                           "}").arg(32 / 2));
 
-    connect(this->closeBtn,&QPushButton::clicked, this, &MainWindow::close);
+    connect(this->closeBtn,&QPushButton::clicked, this, [=] () {
+        QFile file("other_data.txt");
+        QString day = this->API->getCurrentDayOfWeek();
+
+        if (file.open(QIODevice::Append | QIODevice::Text)) {
+            QTextStream out(&file);
+
+            out << "Day: " << day <<"\n";
+
+            for (int i = 0; i < this->widgets.size(); ++i) {
+                out << this->widgets[i]->getFullText()<<"\n";
+            }
+
+            out << "--------------------------\n";
+
+            file.close();
+        } else {
+            QMessageBox::warning(this, "File Error", "Failed to write to the file.");
+        }
+
+        this->close();
+    });
 }
 
 void MainWindow::initHideWindowButton() {
@@ -505,7 +526,7 @@ void MainWindow::performAction() {
     qDebug() << "action complete!";
 }
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(new QNetworkAccessManager(this))
 {
     setWindowTitle("Track Your Day");
     setWindowFlags(Qt::FramelessWindowHint);
@@ -514,10 +535,81 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->installEventFilter(this);
     setMouseTracking(true);
 
+    //////////////////////////////////// FIX ZONE ////////////////////////////////////
+
+    // Подключаемся к слоту, который будет вызван при получении ответа
+    // connect(networkManager, &QNetworkAccessManager::finished, this, &MainWindow::onNetworkReply);
+
+    // // Выполняем запрос к API для получения дня недели
+    // QUrl apiUrl("https://www.timeapi.io/api/conversion/dayoftheweek/2025-01-11"); // Замените на свой URL
+    // QNetworkRequest request(apiUrl);
+    // networkManager->get(request);
+    // qDebug() << request.url();
+
+
+    QFile file("other_data.txt");  // Путь к файлу. Убедитесь, что файл существует.
+
+    if (!file.exists()) {
+        qDebug() << "File does not exist.";
+        QMessageBox::critical(nullptr, "File Error", "File not found.");
+    }
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+
+        QStringList tasks;  // Список задач
+        QString currentLine;
+        QStringList currentTasks;
+
+        in.readLine();
+
+        // Определяем список дней недели
+        QStringList daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+
+        while (!in.atEnd()) {
+            currentLine = in.readLine().trimmed();  // Читаем строку и убираем лишние пробелы
+
+            if (currentLine.startsWith("---"))
+                break;
+
+            // Если строка соответствует дню недели, пропускаем её
+            if (daysOfWeek.contains(currentLine)) {
+                continue;  // Пропускаем строки с днями недели
+            }
+
+            // Если это строка с задачей (не пустая), добавляем её в список задач
+            if (!currentLine.isEmpty()) {
+                tasks.append(currentLine);
+            }
+        }
+
+        file.close();
+
+        // Выводим все задачи
+        qDebug() << "Все задачи:";
+        for (const QString &task : tasks) {
+            qDebug() << task;
+        }
+
+        QString currentDay = this->API->getCurrentDayOfWeek();
+
+        this->infoBlock = new InfoBlock(currentDay, tasks, this);
+
+    } else {
+        qDebug() << "Не удалось открыть файл для чтения!";
+    }
+
+    // QStringList subItems = {"fwsdfs", "fsdfsadf"};
+
+
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Space), this);
     connect(shortcut, &QShortcut::activated, this, []() {
         // Обрабатываем нажатие клавиши Space, но не сворачиваем окно
     });
+
+    //////////////////////////////////// FIX ZONE ////////////////////////////////////
+
+    // this->getDayOfWeek();
 
     QWidget* centralWidget = new QWidget;
 
@@ -533,10 +625,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->basicFont.setPointSize(17);    // Устанавливаем размер шрифта
     this->label->setFont(this->basicFont);   // Применяем шрифт к метке
 
-    // this->openWnd = new QPushButton;
-
-    // connect(this->openWnd, &QPushButton::clicked, this, &MainWindow::openSecondWindow);
-
     this->initChangeThemeButton();
     this->initAddTasks();
     this->initBtnsLayout();
@@ -548,10 +636,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->initTasksSlideLayout();
     this->initCalendarLayout();
     this->initCarousel();
+
+
+
+    // NetworkManager* manager = new NetworkManager(this);
+
+
     this->initMainLayout();
-
-
-    // this->carouselWidget = new CarouselWidget(this);
+    this->mainLayout->addWidget(infoBlock);
 
     // Устанавливаем макет для окна
     centralWidget->setLayout(this->mainLayout);
@@ -562,3 +654,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 }
 
 MainWindow::~MainWindow() {}
+
+void MainWindow::getDayOfWeek() {
+    QUrl url("https://www.timeapi.io/api/conversion/dayoftheweek/2025-01-08");
+    QNetworkRequest request(url);
+
+    // Добавляем заголовки, если нужно (например, для принятия JSON)
+    request.setRawHeader("accept", "application/json");
+
+    // Отправляем GET запрос
+    networkManager->get(request);
+}

@@ -38,6 +38,12 @@
 #include <QStackedWidget>
 #include <QSignalMapper>
 #include <QCalendarWidget>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QDate>
 
 #include <map>
 

@@ -139,6 +139,12 @@ TaskWidget::TaskWidget(const QString& id, const QString &text, QWidget *parent)
     setMouseTracking(true); // Включаем отслеживание движения мыши
 }
 
+QString TaskWidget::getFullText() {
+    QString text = this->id->text() + this->label->text();
+    qDebug() << "text: " << text;
+    return text;
+}
+
 const QPushButton* TaskWidget::getDeleteButton() const
 {
     return this->buttonDelete;

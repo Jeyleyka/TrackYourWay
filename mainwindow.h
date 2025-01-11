@@ -3,6 +3,8 @@
 
 #include "taskwidget.h"
 #include "modalwindow.h"
+#include "infoblock.h"
+#include "dayofweekapi.h"
 
 class MainWindow : public QMainWindow
 {
@@ -11,6 +13,8 @@ class MainWindow : public QMainWindow
 private:
     ModalWindow* modal;
     TaskWidget* taskWidget;
+    InfoBlock* infoBlock;
+    DayOfWeekAPI* API;
 
     QWidget *modalWidget;
     QWidget *tasksSlide;
@@ -23,6 +27,7 @@ private:
     QLabel *label;
     QLabel *tasks;
     QLabel *savedTextLabel;
+    QLabel *dayOfTheWeek;
 
     QHBoxLayout *topLayout;
     QHBoxLayout *btnsLayout;
@@ -54,12 +59,18 @@ private:
     QVector<QLabel*> posts;
     QVector<QLabel *> taskLabels;
     QVector<TaskWidget*> widgets;
+    QVector<InfoBlock*> m_blocks;
 
     QString stringIndex;
+    QString stringOfWeek;
+    QString day;
+    QString m_filePath;
 
     QStackedWidget* carousel;
 
     QCalendarWidget *calendar;
+
+    QNetworkAccessManager *networkManager;
 
     int countOfTasks = 1;
     // int index;
@@ -109,6 +120,8 @@ protected:
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void getDayOfWeek();
 };
 
 #endif // MAINWINDOW_H

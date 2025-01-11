@@ -366,8 +366,10 @@ Makefile: ../../untitled1.pro ../../../../mingw64/qt5-static/share/qt5/mkspecs/w
 		../../../../mingw64/qt5-static/share/qt5/plugins/imageformats/qtiff.prl \
 		../../../../mingw64/qt5-static/share/qt5/plugins/imageformats/qwbmp.prl \
 		../../../../mingw64/qt5-static/share/qt5/plugins/imageformats/qwebp.prl \
+		../../../../mingw64/qt5-static/share/qt5/plugins/bearer/qgenericbearer.prl \
 		../../../../mingw64/qt5-static/lib/Qt5Widgets.prl \
 		../../../../mingw64/qt5-static/lib/Qt5Gui.prl \
+		../../../../mingw64/qt5-static/lib/Qt5Network.prl \
 		../../../../mingw64/qt5-static/lib/Qt5Core.prl \
 		../../../../mingw64/qt5-static/lib/qtmain.prl \
 		../../../../mingw64/qt5-static/share/qt5/mkspecs/features/build_pass.prf
@@ -668,8 +670,10 @@ Makefile: ../../untitled1.pro ../../../../mingw64/qt5-static/share/qt5/mkspecs/w
 ../../../../mingw64/qt5-static/share/qt5/plugins/imageformats/qtiff.prl:
 ../../../../mingw64/qt5-static/share/qt5/plugins/imageformats/qwbmp.prl:
 ../../../../mingw64/qt5-static/share/qt5/plugins/imageformats/qwebp.prl:
+../../../../mingw64/qt5-static/share/qt5/plugins/bearer/qgenericbearer.prl:
 ../../../../mingw64/qt5-static/lib/Qt5Widgets.prl:
 ../../../../mingw64/qt5-static/lib/Qt5Gui.prl:
+../../../../mingw64/qt5-static/lib/Qt5Network.prl:
 ../../../../mingw64/qt5-static/lib/Qt5Core.prl:
 ../../../../mingw64/qt5-static/lib/qtmain.prl:
 ../../../../mingw64/qt5-static/share/qt5/mkspecs/features/build_pass.prf:

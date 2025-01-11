@@ -1,3 +1,5 @@
+debug/dayofweekapi.o
+debug/infoblock.o
 debug/login.o
 debug/main.o
 debug/mainwindow.o
@@ -5,6 +7,7 @@ debug/modalwindow.o
 debug/taskwidget.o
 debug/welcomewnd.o
 debug/untitled1_plugin_import.o
+debug/moc_infoblock.o
 debug/moc_login.o
 debug/moc_mainwindow.o
 debug/moc_modalwindow.o
