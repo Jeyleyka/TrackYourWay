@@ -139,10 +139,45 @@ TaskWidget::TaskWidget(const QString& id, const QString &text, QWidget *parent)
     setMouseTracking(true); // Включаем отслеживание движения мыши
 }
 
-QString TaskWidget::getFullText() {
+TaskWidget::TaskWidget(QString text, QWidget *parent)
+    : QWidget(parent), label(new QLabel(text, this)), buttonEdit(new QPushButton(this)), buttonDelete(new QPushButton(this)), line(new QFrame(this)),
+    input(new QLineEdit(this))    {
+
+    this->initFont();
+    // this->id->setStyleSheet("color: #000; font-size: 19px; font-weight: 600;");
+    this->label->setStyleSheet("color: #000; font-size: 19px; font-weight: 600; max-width: 100px");  // Убираем отступы
+    this->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);  // Выравниваем по левому краю, без отступов
+    this->label->setWordWrap(true);  // Разрешаем перенос текста
+    this->label->setTextInteractionFlags(Qt::TextEditorInteraction);
+    this->initLine();
+    this->initEditButton();
+    this->initInput();
+    this->initDeleteButton();
+    this->initSpacer();
+    this->preTextLayout = new QHBoxLayout();
+    // this->preTextLayout->addWidget(this->id);
+    // this->preTextLayout->addItem(this->spacer);
+    this->preTextLayout->addWidget(this->label);
+    this->preTextLayout->addWidget(this->input);
+    this->textLayout = new QVBoxLayout();
+    this->textLayout->addLayout(this->preTextLayout);
+    this->textLayout->addWidget(this->line);
+    this->initButtonsLayout();
+    this->initMainLayout();
+
+    setLayout(this->mainLayout);
+    setMouseTracking(true); // Включаем отслеживание движения мыши
+}
+
+QString TaskWidget::getFullTextI() {
     QString text = this->id->text() + this->label->text();
-    qDebug() << "text: " << text;
+    qDebug() << "Returning full text: " << text;  // Для отладки
     return text;
+}
+
+QString TaskWidget::getFullText() {
+    qDebug() << "Returning full text: " << this->label->text();  // Для отладки
+    return this->label->text();
 }
 
 const QPushButton* TaskWidget::getDeleteButton() const

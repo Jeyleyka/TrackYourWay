@@ -105,6 +105,7 @@ private:
 private slots:
     void showModalWindow();
     void performAction();
+    void saveTasksToFile();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -120,8 +121,6 @@ protected:
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
-    void getDayOfWeek();
 };
 
 #endif // MAINWINDOW_H

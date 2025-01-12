@@ -36,7 +36,9 @@ public:
     int _index = 1;
 
     TaskWidget(const QString& id, const QString &text, QWidget *parent = nullptr);
+    TaskWidget(QString text, QWidget *parent = nullptr);
     void updateTextIndex(int newIndex);
+    QString getFullTextI();
     QString getFullText();
 
     const QPushButton* getDeleteButton() const;
