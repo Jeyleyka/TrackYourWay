@@ -7,7 +7,7 @@ class TaskWidget : public QWidget {
     Q_OBJECT
 
 private:
-    QLabel *id;
+    QString id;  // Уникальный идентификатор
     QLabel *label;
     QPushButton *buttonEdit;
     QPushButton *buttonDelete;
@@ -37,16 +37,18 @@ public:
 
     TaskWidget(const QString& id, const QString &text, QWidget *parent = nullptr);
     TaskWidget(QString text, QWidget *parent = nullptr);
+    TaskWidget(TaskWidget* other, QWidget *parent);
     void updateTextIndex(int newIndex);
-    QString getFullTextI();
+    void setText(const QString& text);
     QString getFullText();
+    QString getId() const; // Получаем идентификатор
 
     const QPushButton* getDeleteButton() const;
     void setId(const QString& _id);
     void setLabelColor(const QString& color);
 
 signals:
-    void deleteClicked(TaskWidget* item);
+    void deleteClicked(const QString& task);
 
 protected:
     void enterEvent(QEvent *event) override;

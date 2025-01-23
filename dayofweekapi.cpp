@@ -19,3 +19,7 @@ QString DayOfWeekAPI::getCurrentDayOfWeek() {
     default: return "ERROR"; // Это никогда не произойдет
     }
 }
+
+void DayOfWeekAPI::setCurrentDayOfWeek() {
+
+}

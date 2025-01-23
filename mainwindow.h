@@ -19,6 +19,7 @@ private:
     QWidget *modalWidget;
     QWidget *tasksSlide;
     QWidget *calendarSlide;
+    QWidget *historyTasksSlide;
 
     QPropertyAnimation *animation;
 
@@ -35,6 +36,7 @@ private:
     QHBoxLayout *tasksLayout;
     QVBoxLayout* tasksSlideLayout;
     QVBoxLayout *calendarLayout;
+    QVBoxLayout *historyTasksLayout;
     QVBoxLayout *mainLayout;
     QVBoxLayout* widgetLayout;
     QVBoxLayout *testL;
@@ -48,6 +50,7 @@ private:
     QPushButton* openWnd;
     QPushButton *tasksSlideButton;
     QPushButton *calendarSlideButton;
+    QPushButton *historyTasksSlideButton;
 
     QFont basicFont;
     QFont inputFont;
@@ -72,6 +75,8 @@ private:
 
     QNetworkAccessManager *networkManager;
 
+    QFile tasksFile;
+
     int countOfTasks = 1;
     // int index;
     bool dragging = false;  // Флаг для отслеживания, перетаскивается ли окно
@@ -81,7 +86,8 @@ private:
     void changeBackgroundColor();
     void onCreateInputClicked();
     void onEnterPressed();
-    void onDeleteText(TaskWidget* item);
+    void onDeleteText(const QString& taskId);
+    void updateFileAfterDeletion(const QString& taskId);
     void updatePostsLabel();
     void showButton(QLabel* label);
 
@@ -99,13 +105,18 @@ private:
     void initChangeSlideLayout();
     void initTasksSlideLayout();
     void initCalendarLayout();
+    void initHistoryTasksLayout();
     void initCarousel();
     void initMainLayout();
 
 private slots:
     void showModalWindow();
     void performAction();
-    void saveTasksToFile();
+    void loadTasksFromFile();
+    void saveTasksToFile(const QString& widgetText);
+    QPair<int, QStringList> countDaysAndListInFile(const QString &fileName);
+    QVector<InfoBlock*> createInfoBlocksFromFile(const QString &fileName, QWidget *parentWidget);
+    void displayInfoBlocks();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

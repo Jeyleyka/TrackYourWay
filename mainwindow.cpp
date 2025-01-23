@@ -40,6 +40,12 @@ void MainWindow::changeBackgroundColor()
             this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
             this->calendarSlideButton->setIcon(QIcon("icons/red_circle_2.png"));
         });
+
+        connect(this->historyTasksSlideButton, &QPushButton::clicked, this, [=]() {
+            this->carousel->setCurrentIndex(2);
+            this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->calendarSlideButton->setIcon(QIcon("icons/red_circle_2.png"));
+        });
     }
     else
     {
@@ -70,12 +76,21 @@ void MainWindow::changeBackgroundColor()
             this->carousel->setCurrentIndex(0);
             this->tasksSlideButton->setIcon(QIcon("icons/full_circle.png"));
             this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
         });
 
         connect(this->calendarSlideButton, &QPushButton::clicked, this, [=]() {
             this->carousel->setCurrentIndex(1);
             this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
             this->calendarSlideButton->setIcon(QIcon("icons/full_circle.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+        });
+
+        connect(this->historyTasksSlideButton, &QPushButton::clicked, this, [=]() {
+            this->carousel->setCurrentIndex(2);
+            this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/full_circle.png"));
         });
     }
 
@@ -102,6 +117,7 @@ void MainWindow::onEnterPressed() {
     if (!enteredText.isEmpty()) {
         // Добавляем точку между индексом и текстом
         QString fullText = enteredText;
+        qDebug() << "FULL TEXT: " << fullText;
 
 
         qDebug() << "создание нового виджета...";
@@ -119,8 +135,12 @@ void MainWindow::onEnterPressed() {
 
         qDebug() << "конект нового виджета...";
 
+
         connect(newWidget, &TaskWidget::deleteClicked, this, &MainWindow::onDeleteText);
-        this->saveTasksToFile();
+        this->saveTasksToFile(newWidget->getFullText());
+        qDebug() << "NEW WIDGET TEXT: " << newWidget->getFullText();
+
+        this->loadTasksFromFile();
 
         updatePostsLabel();
 
@@ -137,26 +157,147 @@ void MainWindow::onEnterPressed() {
     }
 }
 
-void MainWindow::onDeleteText(TaskWidget* item) {
-    widgetLayout->removeWidget(item);
+void MainWindow::onDeleteText(const QString& taskId) {
+    TaskWidget* itemToDelete = new TaskWidget(taskId, this);
 
-    // Удаляем сам виджет
-    item->deleteLater();
-    this->saveTasksToFile();
+    widgetLayout->removeWidget(itemToDelete);
 
-    // Пересчитываем индексы для всех оставшихся виджетов
-    // for (int i = 1; i < widgets.size(); ++i) {
-    //     // Переназначаем индексы для оставшихся задач
-    //     QString newId = QString::number(i);
-    //     widgets[i]->setId(newId);  // Обновляем id
+    // Удаляем виджет
+    itemToDelete->deleteLater();
+    this->updatePostsLabel();
+
+    QFile file("other_data.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Не удалось открыть файл для чтения.";
+        return;
+    }
+
+    // Читаем строки из файла
+    QTextStream in(&file);
+    QStringList lines;
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();  // Читаем строку и удаляем лишние пробелы
+        if (line != taskId) {  // Добавляем строку, если она не совпадает с удаляемой
+            lines.append(line);
+        }
+    }
+    file.close();
+
+    // Открываем файл для записи, чтобы перезаписать его
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+        qDebug() << "Не удалось открыть файл для записи.";
+        return;
+    }
+
+    // Записываем оставшиеся строки обратно в файл
+    QTextStream out(&file);
+    for (const QString &line : lines) {
+        out << line << "\n";  // Записываем строку в файл
+    }
+
+    file.close();
+
+    qDebug() << "Строка успешно удалена.";
+
+
+    // QString today = this->API->getCurrentDayOfWeek();
+    // QFile file("other_data.txt");
+
+    // if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    //     qWarning() << "Не удалось открыть файл для записи!";
+    //     return;
     // }
 
-    // // Обновляем количество задач
-    // this->countOfTasks = widgets.size();
+    // QTextStream in(&file);
+    // QStringList tasksForToday;
+    // QString fileContent;
+    // bool todayTasks = false;
 
-    // Также обновляем отображение индекса в других местах
+    // qDebug() << "TASK FOR DELETE: " << taskId;
 
-    updatePostsLabel();
+
+    // while (!in.atEnd()) {
+    //     fileContent = in.readLine();
+
+    //     // qDebug() << "CUR LINE: " << fileContent.mid(4);
+
+    //     if (fileContent.startsWith("day: ") && fileContent.mid(4).trimmed() == today)
+    //     {
+    //         qDebug() << "CUR LINE: " << fileContent.mid(4);
+    //         todayTasks=true;
+    //         continue;
+    //     }
+
+    //     if (todayTasks)
+    //     {
+    //         if (fileContent.trimmed() != taskId)
+    //             tasksForToday.append(fileContent);
+    //     }
+    // }
+
+    // qDebug() << tasksForToday;
+
+    // file.close();
+
+    // if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+    //     qDebug() << "Не удалось открыть файл для записи.";
+    //     return;
+    // }
+
+    // while (!in.atEnd()) {
+    //     fileContent = in.readLine();
+
+    //     if (fileContent.startsWith("day: ") && fileContent.mid(4).trimmed() == today)
+    //     {
+    //         for (const QString &line : tasksForToday) {
+    //             in << line << "\n";  // Записываем строку в файл
+    //         }
+    //     }
+    // }
+    // file.close();
+}
+
+void MainWindow::updateFileAfterDeletion(const QString& taskId) {
+    QString today = this->API->getCurrentDayOfWeek();  // Текущий день недели
+    QFile file("other_data.txt");
+
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        qWarning() << "Не удалось открыть файл для записи!";
+        return;
+    }
+
+    QTextStream in(&file);
+    QString fileContent = in.readAll();
+    QString dayMarker = "Day: " + today;
+
+    if (fileContent.contains(dayMarker)) {
+        int pos = fileContent.indexOf(dayMarker);
+        int endOfDay = fileContent.indexOf("\nDay:", pos + 1);
+        if (endOfDay == -1) {
+            endOfDay = fileContent.length();
+        }
+
+        QString tasksForToday = fileContent.mid(pos, endOfDay - pos);
+        QStringList lines = tasksForToday.split("\n", QString::SkipEmptyParts);
+        lines.removeFirst();  // Удаляем строку "Day: <текущий день>"
+
+        // Удаляем задачу из списка задач
+        lines.removeAll(taskId.trimmed()); // Удаляем все совпадения
+
+        // Воссоздаем обновленный блок для текущего дня
+        if (lines.isEmpty()) {
+            fileContent.remove(tasksForToday);  // Удаляем все задачи для текущего дня, если их не осталось
+        } else {
+            QString updatedDayContent = "Day: " + today + "\n" + lines.join("\n");
+            fileContent.replace(tasksForToday, updatedDayContent);
+        }
+    }
+
+    // Перезаписываем файл
+    file.resize(0);  // Очищаем файл перед записью
+    QTextStream out(&file);
+    out << fileContent;
+    file.close();
 }
 
 void MainWindow::paintEvent(QPaintEvent *event) {
@@ -380,19 +521,36 @@ void MainWindow::initCarouselBtns() {
                                                      "border: none;"
                                                      "}").arg(20 / 2));
 
+    this->historyTasksSlideButton = new QPushButton(this);
+    this->historyTasksSlideButton->setFixedSize(20,20);
+    this->historyTasksSlideButton->setStyleSheet(QString("QPushButton {"
+                                                     "border-radius: %1px;"
+                                                     "border: none;"
+                                                     "}").arg(20 / 2));
+
     this->tasksSlideButton->setIcon(QIcon("icons/full_circle.png"));
     this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+    this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
 
     connect(this->tasksSlideButton, &QPushButton::clicked, this, [=]() {
         this->carousel->setCurrentIndex(0);
         this->tasksSlideButton->setIcon(QIcon("icons/full_circle.png"));
         this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+        this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
     });
 
     connect(this->calendarSlideButton, &QPushButton::clicked, this, [=]() {
         this->carousel->setCurrentIndex(1);
         this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
         this->calendarSlideButton->setIcon(QIcon("icons/full_circle.png"));
+        this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+    });
+
+    connect(this->historyTasksSlideButton, &QPushButton::clicked, this, [=]() {
+        this->carousel->setCurrentIndex(2);
+        this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+        this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+        this->historyTasksSlideButton->setIcon(QIcon("icons/full_circle.png"));
     });
 }
 
@@ -442,6 +600,7 @@ void MainWindow::initChangeSlideLayout() {
     this->changeSlideLayout->addStretch(1);
     this->changeSlideLayout->addWidget(this->tasksSlideButton);
     this->changeSlideLayout->addWidget(this->calendarSlideButton);
+    this->changeSlideLayout->addWidget(this->historyTasksSlideButton);
     this->changeSlideLayout->addStretch(1);
 }
 
@@ -463,11 +622,26 @@ void MainWindow::initCalendarLayout() {
     this->calendarLayout->addWidget(this->calendar);
 }
 
+void MainWindow::initHistoryTasksLayout() {
+    this->historyTasksSlide = new QWidget(this);
+
+    this->historyTasksLayout = new QVBoxLayout(this->historyTasksSlide);
+    // this->tasksSlideLayout->addLayout(this->tasksLayout);
+    // this->tasksSlideLayout->addLayout(this->inputsLayout);
+    // this->tasksSlideLayout->addLayout(this->widgetLayout);
+    this->historyTasksLayout->setContentsMargins(0,0,0,0);
+    this->historyTasksLayout->addStretch(0);
+
+    this->displayInfoBlocks();
+}
+
+
 void MainWindow::initCarousel() {
     this->carousel = new QStackedWidget(this);
 
     this->carousel->addWidget(this->tasksSlide);
     this->carousel->addWidget(this->calendarSlide);
+    this->carousel->addWidget(this->historyTasksSlide);
 }
 
 void MainWindow::initMainLayout() {
@@ -477,7 +651,10 @@ void MainWindow::initMainLayout() {
     this->mainLayout->addLayout(this->btnsLayout);
     this->mainLayout->addLayout(this->topLayout);
     this->mainLayout->addWidget(this->carousel);
+    // this->mainLayout->addWidget(this->carousel);
     this->mainLayout->addLayout(this->changeSlideLayout);
+
+    // this->displayInfoBlocks();
 }
 
 void MainWindow::showModalWindow() {
@@ -503,90 +680,252 @@ void MainWindow::performAction() {
     this->modal->close();
     this->carousel->setCurrentIndex(1);
     this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+    this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
     this->calendarSlideButton->setIcon(QIcon("icons/full_circle.png"));
 
     qDebug() << "action complete!";
 }
 
-void MainWindow::saveTasksToFile() {
+void MainWindow::loadTasksFromFile() {
     QFile file("other_data.txt");
-    QString day = this->API->getCurrentDayOfWeek();  // Текущий день недели
-    QStringList lines;  // Список строк из файла
-    QVector<TaskWidget*> updatedList;  // Список для хранения всех задач
-
-    bool dayFound = false; // Переменная для поиска дня
-
-    qDebug() << "Opening file for reading...";
-
-    // Чтение файла
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QTextStream in(&file);
-        QString currentLine;
-
-        bool dayFound = false;
-        QStringList tasksForCurrentDay;  // Список строк для текущего дня (не виджетов)
-
-        while (!in.atEnd()) {
-            currentLine = in.readLine().trimmed();  // Читаем строку и убираем лишние пробелы
-            lines.append(currentLine);  // Сохраняем строки из файла
-
-            // Проверяем, если строка с днем недели
-            if (currentLine.startsWith("Day: ")) {
-                qDebug() << "Found day: " << currentLine.mid(4).trimmed();
-
-                // Если нашли день, проверяем, что это текущий день
-                if (currentLine.mid(4).trimmed() == day) {
-                    dayFound = true;  // Устанавливаем флаг, что день найден
-                    qDebug() << "Day found: " << day;
-                } else if (dayFound) {
-                    // Если день найден, сохраняем задачи для текущего дня
-                    // Прерываем, так как мы уже нашли нужный день, и дальше уже не нужно читать задачи для других дней
-                    break;
-                }
-            } else if (dayFound) {
-                // Если день найден, сохраняем задачи для этого дня
-                updatedList.append(new TaskWidget(currentLine, this));  // Добавляем задачу как виджет
-            }
-        }
-        file.close();  // Закрытие файла после чтения
-        qDebug() << "Finished reading file.";
-    } else {
-        QMessageBox::warning(this, "File Error", "Failed to open the file for reading.");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Не удалось открыть файл для чтения!";
         return;
     }
 
-    // Добавим новые задачи из widgets в updatedList
-    for (int i = 0; i < this->widgets.size(); ++i) {
-        updatedList.append(new TaskWidget(this->widgets[i]->getFullText(), this));  // Добавляем новые задачи
+    QTextStream in(&file);
+    QString content = in.readAll();
+    // Здесь можно добавить логику для обработки и создания виджетов на основе содержимого файла
+    qDebug() << "Загруженные данные:\n" << content;
+}
+
+void MainWindow::saveTasksToFile(const QString& widgetText) {
+    QString today = this->API->getCurrentDayOfWeek(); // Текущий день недели
+    QString filename = "other_data.txt";
+    QString WidgetText = widgetText;
+
+    // Проверяем, существует ли уже файл
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        qWarning() << "Не удалось открыть файл для записи!";
+        return;
     }
 
-    // Открываем файл для записи с очисткой
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        QTextStream out(&file);
+    QTextStream in(&file);
+    QString fileContent = in.readAll();
 
-        // Перезаписываем файл, если текущий день найден
-        if (dayFound) {
-            // Перезаписываем только новый день и задачи
-            out << "Day: " << day << "\n";
+    // Проверка, существует ли запись для сегодняшнего дня
+    QString dayMarker = "day: " + today;
+     // Пример новой задачи, которую вы хотите добавить
 
-            // Записываем все задачи без разделителей
-            for (int i = 0; i < updatedList.size(); ++i) {
-                out << updatedList[i]->getFullText() << "\n";  // Записываем задачу, просто с новой строки
-            }
-        } else {
-            // Если день не найден, добавляем новый день с задачами
-            out << "Day: " << day << "\n";
-            for (int i = 0; i < this->widgets.size(); ++i) {
-                out << this->widgets[i]->getFullText() << "\n";  // Записываем задачу
-            }
+    // Если запись для текущего дня уже существует
+    if (fileContent.contains(dayMarker)) {
+        // Находим секцию с сегодняшним днем
+        int pos = fileContent.indexOf(dayMarker);
+        int endOfDay = fileContent.indexOf("\nday:", pos + 1);
+        if (endOfDay == -1) {
+            endOfDay = fileContent.length(); // Если следующий день не найден, до конца файла
         }
 
-        file.close();  // Закрытие файла после записи
-        qDebug() << "Finished writing data to file.";
+        // Извлекаем задачи для сегодняшнего дня (не включая строку с днем)
+        QString tasksForToday = fileContent.mid(pos, endOfDay - pos);
+        QStringList lines = tasksForToday.split("\n", QString::SkipEmptyParts);
+        lines.removeFirst(); // Удаляем строку "Day: <текущий день>"
+
+        // Добавляем новую задачу
+        lines.append(WidgetText);
+
+        // Воссоздаем обновленный блок для текущего дня
+        QString updatedDayContent = "day: " + today + "\n" + lines.join("\n");
+
+        // Заменяем старую секцию на обновленную
+        fileContent.replace(tasksForToday, updatedDayContent);
+    } else {
+        // Если записи нет, создаем новую секцию для сегодняшнего дня
+        fileContent.append("\nday: " + today + "\n" + WidgetText);
     }
-    else {
-        QMessageBox::warning(this, "File Error", "Failed to open the file for writing.");
+
+    // Перезаписываем файл
+    file.resize(0);  // Очищаем файл перед записью
+    QTextStream out(&file);
+    out << fileContent;
+
+    file.close();
+
+
+
+
+
+
+
+    // QFile file("other_data.txt");
+    // QString day = this->API->getCurrentDayOfWeek();  // Текущий день недели
+    // QStringList lines;  // Список строк из файла
+    // QVector<TaskWidget*> updatedList;  // Список для хранения всех задач
+
+    // bool dayFound = false; // Переменная для поиска дня
+
+    // qDebug() << "Opening file for reading...";
+
+    // // Чтение файла
+    // if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    //     QTextStream in(&file);
+    //     QString currentLine;
+
+    //     bool dayFound = false;
+    //     QStringList tasksForCurrentDay;  // Список строк для текущего дня (не виджетов)
+
+    //     while (!in.atEnd()) {
+    //         currentLine = in.readLine().trimmed();  // Читаем строку и убираем лишние пробелы
+    //         lines.append(currentLine);  // Сохраняем строки из файла
+
+    //         // Проверяем, если строка с днем недели
+    //         if (currentLine.startsWith("Day: ")) {
+    //             qDebug() << "Found day: " << currentLine.mid(4).trimmed();
+
+    //             // Если нашли день, проверяем, что это текущий день
+    //             if (currentLine.mid(4).trimmed() == day) {
+    //                 dayFound = true;  // Устанавливаем флаг, что день найден
+    //                 qDebug() << "Day found: " << day;
+    //             } else if (dayFound) {
+    //                 // Если день найден, сохраняем задачи для текущего дня
+    //                 // Прерываем, так как мы уже нашли нужный день, и дальше уже не нужно читать задачи для других дней
+    //                 break;
+    //             }
+    //         } else if (dayFound) {
+    //             // Если день найден, сохраняем задачи для этого дня
+    //             updatedList.append(new TaskWidget(currentLine, this));  // Добавляем задачу как виджет
+    //         }
+    //     }
+    //     file.close();  // Закрытие файла после чтения
+    //     qDebug() << "Finished reading file.";
+    // } else {
+    //     QMessageBox::warning(this, "File Error", "Failed to open the file for reading.");
+    //     return;
+    // }
+
+    // // Добавим новые задачи из widgets в updatedList
+    // for (int i = 0; i < this->widgets.size(); ++i) {
+    //     updatedList.append(new TaskWidget(this->widgets[i]->getFullText(), this));  // Добавляем новые задачи
+    // }
+
+    // // Открываем файл для записи с очисткой
+    // if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+    //     QTextStream out(&file);
+
+    //     // Перезаписываем файл, если текущий день найден
+    //     if (dayFound) {
+    //         // Перезаписываем только новый день и задачи
+    //         out << "Day: " << day << "\n";
+
+    //         // Записываем все задачи без разделителей
+    //         for (int i = 0; i < updatedList.size(); ++i) {
+    //             out << updatedList[i]->getFullText() << "\n";  // Записываем задачу, просто с новой строки
+    //         }
+    //     } else {
+    //         // Если день не найден, добавляем новый день с задачами
+    //         out << "Day: " << day << "\n";
+    //         for (int i = 0; i < updatedList.size(); ++i) {
+    //             out << updatedList[i]->getFullText() << "\n";  // Записываем задачу
+    //         }
+    //     }
+
+    //     file.close();  // Закрытие файла после записи
+    //     qDebug() << "Finished writing data to file.";
+    // }
+    // else {
+    //     QMessageBox::warning(this, "File Error", "Failed to open the file for writing.");
+    // }
+}
+
+QPair<int, QStringList> MainWindow::countDaysAndListInFile(const QString &fileName) {
+    QFile file(fileName);
+
+    // Проверяем, открылся ли файл
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Failed to open file for reading.";
+        return QPair<int, QStringList>(-1, QStringList());  // Возвращаем -1 и пустой список в случае ошибки
     }
+
+    QTextStream in(&file);
+    int dayCount = 0;
+    QString currentLine;
+    QStringList daysList;
+
+    // Чтение файла построчно
+    while (!in.atEnd()) {
+        currentLine = in.readLine().trimmed();  // Читаем строку и убираем лишние пробелы
+
+        // Если строка начинается с "Day:", увеличиваем счетчик дней
+        if (currentLine.startsWith("Day:", Qt::CaseInsensitive)) {
+            dayCount++;
+            QString day = currentLine.mid(4).trimmed();  // Извлекаем день недели (после "Day: ")
+            daysList.append(day);  // Добавляем день в список
+        }
+    }
+
+    file.close();  // Закрываем файл после чтения
+    return QPair<int, QStringList>(dayCount, daysList);  // Возвращаем пару: количество дней и список дней
+}
+
+QVector<InfoBlock*> MainWindow::createInfoBlocksFromFile(const QString &fileName, QWidget *parentWidget) {
+    QFile file(fileName);
+
+    // Проверяем, открылся ли файл
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Failed to open file for reading.";
+        return QVector<InfoBlock*>();  // Возвращаем пустой вектор в случае ошибки
+    }
+
+    QTextStream in(&file);
+    QString currentLine;
+    QString currentDay;
+    QStringList currentTasks;
+    QVector<InfoBlock*> infoBlocks;
+
+    // Чтение файла построчно
+    while (!in.atEnd()) {
+        currentLine = in.readLine().trimmed();  // Читаем строку и убираем лишние пробелы
+
+        // Если строка начинается с "Day:", это начало нового дня
+        if (currentLine.startsWith("Day:", Qt::CaseInsensitive)) {
+            // Если уже были задачи для дня, создаем InfoBlock для предыдущего дня
+            if (!currentDay.isEmpty()) {
+                InfoBlock *block = new InfoBlock(currentDay, currentTasks, parentWidget);
+                infoBlocks.append(block);  // Добавляем новый InfoBlock
+            }
+
+            // Обновляем текущий день
+            currentDay = currentLine.mid(4).trimmed();  // Извлекаем день недели
+            currentTasks.clear();  // Очищаем список задач
+        } else if (!currentLine.isEmpty()) {
+            // Если строка не пустая, это задача для текущего дня
+            currentTasks.append(currentLine);  // Добавляем задачу в список задач
+        }
+    }
+
+    // Добавляем последний день и задачи
+    if (!currentDay.isEmpty()) {
+        if (currentDay == this->API->getCurrentDayOfWeek())
+            currentDay = "Today:";
+
+        InfoBlock *block = new InfoBlock(currentDay, currentTasks, parentWidget);
+        infoBlocks.append(block);
+    }
+
+    file.close();  // Закрываем файл после чтения
+    return infoBlocks;  // Возвращаем вектор InfoBlock
+}
+
+void MainWindow::displayInfoBlocks() {
+    QVector<InfoBlock*> infoBlocks = createInfoBlocksFromFile("other_data.txt", this);
+
+    // Создаем и добавляем блоки на страницу
+    for (InfoBlock *block : infoBlocks) {
+        this->historyTasksLayout->addWidget(block);
+    }
+
+    this->historyTasksSlide->setLayout(historyTasksLayout);
 }
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(new QNetworkAccessManager(this))
@@ -633,8 +972,20 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(ne
     this->initWidgetLayout();
     this->initChangeSlideLayout();
     this->initTasksSlideLayout();
+    this->initHistoryTasksLayout();
     this->initCalendarLayout();
     this->initCarousel();
+
+    QDate today = QDate::currentDate();
+
+    qDebug() << "current date: " << today.dayOfWeek();
+
+    QPair<int, QStringList> res = this->countDaysAndListInFile("other_data.txt");
+
+    qDebug() << "Number of days in the file:" << res.first;  // Количество дней
+    qDebug() << "Days in the file:" << res.second.join(", ");  // Список дней
+
+
 
     // NetworkManager* manager = new NetworkManager(this);
     QFile file("other_data.txt");  // Путь к файлу. Убедитесь, что файл существует.
@@ -649,6 +1000,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(ne
 
         QStringList tasks;  // Список задач
         QString currentLine;
+        bool todayTasks=false;
 
         in.readLine();
 
@@ -658,19 +1010,54 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(ne
         while (!in.atEnd()) {
             currentLine = in.readLine().trimmed();  // Читаем строку и убираем лишние пробелы
 
+            if (currentLine.startsWith("day: ")) {
+                if (currentLine.mid(5) == this->API->getCurrentDayOfWeek())
+                {
+                    todayTasks=true;
+                    qDebug() << "return true";
+                }
+                else
+                {
+                    todayTasks=false;
+                    qDebug() << "return false";
+                }
+            }
+
             // Если строка соответствует дню недели, пропускаем её
             if (daysOfWeek.contains(currentLine)) {
                 continue;  // Пропускаем строки с днями недели
             }
 
+            if (todayTasks && !currentLine.startsWith("day: "))
+            {
+                TaskWidget* oldWidget = new TaskWidget(currentLine, this);
+                this->widgets.append(oldWidget);
+                this->widgetLayout->addWidget(oldWidget);
+                connect(oldWidget, &TaskWidget::deleteClicked, this, &MainWindow::onDeleteText);
+                tasks.append(currentLine);
+            }
+
+
             qDebug() << "write started";
 
             // Если это строка с задачей (не пустая), добавляем её в список задач
             if (!currentLine.isEmpty()) {
-                tasks.append(currentLine);
-                TaskWidget* oldWidget = new TaskWidget(currentLine, this);
-                this->widgets.append(oldWidget);
-                this->widgetLayout->addWidget(oldWidget);
+
+
+
+
+                if (currentLine.startsWith("day: ")) {
+                    qDebug() << "date in currentLine: " << currentLine.mid(5);
+                    qDebug() << "date in API: " << this->API->getCurrentDayOfWeek();
+                }
+
+                // if (currentLine.startsWith("day: ") && currentLine.mid(5) == this->API->getCurrentDayOfWeek())
+                // {
+                //     todayTasks = true;
+                //     qDebug() << "today: " << this->API->getCurrentDayOfWeek();
+                // }
+
+
 
                 for (int i = 0; i < this->widgets.size(); ++i) {
                     connect(this->widgets[i], &TaskWidget::deleteClicked, this, &MainWindow::onDeleteText);
@@ -691,14 +1078,17 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(ne
 
         QString currentDay = this->API->getCurrentDayOfWeek();
 
-        this->infoBlock = new InfoBlock(currentDay, tasks, this);
+
+        this->tasksFile.setFileName("other_data.txt");
+
+        this->loadTasksFromFile();
 
     } else {
         qDebug() << "Не удалось открыть файл для чтения!";
     }
 
     this->initMainLayout();
-    this->mainLayout->addWidget(infoBlock);
+    // this->mainLayout->addWidget(infoBlock);
 
     //////////////////////////////////// FIX ZONE ////////////////////////////////////
 

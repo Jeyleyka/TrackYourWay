@@ -20,7 +20,7 @@ InfoBlock::InfoBlock(const QString &mainHeader, const QStringList &subItems, QWi
 
     // Главный заголовок
     mainHeaderLabel->setText(mainHeader);
-    mainHeaderLabel->setStyleSheet("font-size: 18px; font-weight: bold;");
+    mainHeaderLabel->setStyleSheet("font-size: 18px; font-weight: boldж");
 
     // Подпункты
     subItemLabels.clear();
@@ -42,6 +42,9 @@ InfoBlock::InfoBlock(const QString &mainHeader, const QStringList &subItems, QWi
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(frame);
     setLayout(mainLayout);
+
+    QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+    setSizePolicy(sizePolicy);
 }
 
 InfoBlock::~InfoBlock()

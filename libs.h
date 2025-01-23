@@ -44,6 +44,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QDate>
+#include <QPair>
+#include <QScrollArea>
 
 #include <map>
 

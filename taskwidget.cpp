@@ -5,7 +5,6 @@ void TaskWidget::initFont() {
 }
 
 void TaskWidget::initLabel() {
-    this->id->setStyleSheet("color: #000; font-size: 19px; font-weight: 600;");
     this->label->setStyleSheet("color: #000; font-size: 19px; font-weight: 600; max-width: 100px");  // Убираем отступы
     this->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);  // Выравниваем по левому краю, без отступов
     this->label->setWordWrap(true);  // Разрешаем перенос текста
@@ -90,7 +89,6 @@ void TaskWidget::initSpacer() {
 void TaskWidget::initPreTextLayout() {
     this->initSpacer();
     this->preTextLayout = new QHBoxLayout();
-    this->preTextLayout->addWidget(this->id);
     // this->preTextLayout->addItem(this->spacer);
     this->preTextLayout->addWidget(this->label);
     this->preTextLayout->addWidget(this->input);
@@ -122,7 +120,7 @@ void TaskWidget::initMainLayout() {
 }
 
 TaskWidget::TaskWidget(const QString& id, const QString &text, QWidget *parent)
-    : QWidget(parent), id(new QLabel(id)), label(new QLabel(text, this)), buttonEdit(new QPushButton(this)), buttonDelete(new QPushButton(this)), line(new QFrame(this)),
+    : QWidget(parent), label(new QLabel(text, this)), buttonEdit(new QPushButton(this)), buttonDelete(new QPushButton(this)), line(new QFrame(this)),
     input(new QLineEdit(this))    {
 
     this->initFont();
@@ -142,6 +140,9 @@ TaskWidget::TaskWidget(const QString& id, const QString &text, QWidget *parent)
 TaskWidget::TaskWidget(QString text, QWidget *parent)
     : QWidget(parent), label(new QLabel(text, this)), buttonEdit(new QPushButton(this)), buttonDelete(new QPushButton(this)), line(new QFrame(this)),
     input(new QLineEdit(this))    {
+
+    static int currentId = 0; // Статический счетчик для уникальных идентификаторов
+    id = QString::number(currentId++);
 
     this->initFont();
     // this->id->setStyleSheet("color: #000; font-size: 19px; font-weight: 600;");
@@ -169,15 +170,51 @@ TaskWidget::TaskWidget(QString text, QWidget *parent)
     setMouseTracking(true); // Включаем отслеживание движения мыши
 }
 
-QString TaskWidget::getFullTextI() {
-    QString text = this->id->text() + this->label->text();
+TaskWidget::TaskWidget(TaskWidget* other, QWidget *parent)
+    : QWidget(parent), label(other->label), buttonEdit(other->buttonEdit), buttonDelete(other->buttonDelete), line(other->line),
+    input(other->input)    {
+
+    static int currentId = 0; // Статический счетчик для уникальных идентификаторов
+    id = QString::number(currentId++);
+
+    this->initFont();
+    // this->id->setStyleSheet("color: #000; font-size: 19px; font-weight: 600;");
+    this->label->setStyleSheet("color: #000; font-size: 19px; font-weight: 600; max-width: 100px");  // Убираем отступы
+    this->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);  // Выравниваем по левому краю, без отступов
+    this->label->setWordWrap(true);  // Разрешаем перенос текста
+    this->label->setTextInteractionFlags(Qt::TextEditorInteraction);
+    this->initLine();
+    this->initEditButton();
+    this->initInput();
+    this->initDeleteButton();
+    this->initSpacer();
+    this->preTextLayout = new QHBoxLayout();
+    // this->preTextLayout->addWidget(this->id);
+    // this->preTextLayout->addItem(this->spacer);
+    this->preTextLayout->addWidget(this->label);
+    this->preTextLayout->addWidget(this->input);
+    this->textLayout = new QVBoxLayout();
+    this->textLayout->addLayout(this->preTextLayout);
+    this->textLayout->addWidget(this->line);
+    this->initButtonsLayout();
+    this->initMainLayout();
+
+    setLayout(this->mainLayout);
+    setMouseTracking(true); // Включаем отслеживание движения мыши
+}
+
+void TaskWidget::setText(const QString& text) {
+    this->label->setText(text);
+}
+
+QString TaskWidget::getFullText() {
+    QString text = this->label->text();
     qDebug() << "Returning full text: " << text;  // Для отладки
     return text;
 }
 
-QString TaskWidget::getFullText() {
-    qDebug() << "Returning full text: " << this->label->text();  // Для отладки
-    return this->label->text();
+QString TaskWidget::getId() const {
+    return id;  // Возвращаем уникальный идентификатор
 }
 
 const QPushButton* TaskWidget::getDeleteButton() const
@@ -185,14 +222,9 @@ const QPushButton* TaskWidget::getDeleteButton() const
     return this->buttonDelete;
 }
 
-void TaskWidget::setId(const QString& _id) {
-    this->id->setText(_id);
-}
-
 void TaskWidget::setLabelColor(const QString& color)
 {
     this->label->setStyleSheet("font-size: 19px; font-weight: 600;" + color);
-    this->id->setStyleSheet("font-size: 19px; font-weight: 600;" + color);
     this->input->setStyleSheet("font-size: 19px; font-weight: 600;" + color);
 }
 
@@ -209,10 +241,16 @@ void TaskWidget::leaveEvent(QEvent *event) {
 }
 
 void TaskWidget::onDeleteClicked() {
+    QString taskText = this->getFullText();
     this->label->clear();
     this->input->clear();
     this->label->setVisible(false);
     this->input->setVisible(false);
+    this->line->clearMask();
+    this->line->setVisible(false);
 
-    emit deleteClicked(this);  // Отправляем сигнал на удаление
+    qDebug() << "Удаляем задачу с текстом: " << taskText;  // Для отладки
+
+    emit deleteClicked(taskText);  // Отправляем сигнал на удаление
+    delete this;
 }
