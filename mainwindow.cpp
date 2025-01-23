@@ -137,6 +137,7 @@ void MainWindow::onEnterPressed() {
 
 
         connect(newWidget, &TaskWidget::deleteClicked, this, &MainWindow::onDeleteText);
+        connect(newWidget, &TaskWidget::changeTask, this, &MainWindow::changeTaskInFile);
         this->saveTasksToFile(newWidget->getFullText());
         qDebug() << "NEW WIDGET TEXT: " << newWidget->getFullText();
 
@@ -158,6 +159,7 @@ void MainWindow::onEnterPressed() {
 }
 
 void MainWindow::onDeleteText(const QString& taskId) {
+    QString today = this->API->getCurrentDayOfWeek();
     TaskWidget* itemToDelete = new TaskWidget(taskId, this);
 
     widgetLayout->removeWidget(itemToDelete);
@@ -175,12 +177,34 @@ void MainWindow::onDeleteText(const QString& taskId) {
     // Читаем строки из файла
     QTextStream in(&file);
     QStringList lines;
+    bool curDay = false;
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();  // Читаем строку и удаляем лишние пробелы
-        if (line != taskId) {  // Добавляем строку, если она не совпадает с удаляемой
-            lines.append(line);
+
+        // if (line.startsWith("day: "))
+        // {
+        //     qDebug() << "IT'S LINE: " << line;
+        //     qDebug() << "IT'S DAY: " << line.mid(4).trimmed();
+        //     qDebug() << "TODAY: " << today;
+        //     if (line.mid(4).trimmed() == today)
+        //     {
+        //         qDebug() << "FIND DAY: " << line;
+        //     }
+        // }
+
+        if (line.startsWith("day: ") && line.mid(4).trimmed() == today) {  // Добавляем строку, если она не совпадает с удаляемой
+            curDay = true;
         }
+
+        if (curDay && line == taskId)
+        {
+            qDebug() << "FIND TASKS TO DELETE: " << line;
+            continue;
+        }
+
+        lines.append(line);
     }
+
     file.close();
 
     // Открываем файл для записи, чтобы перезаписать его
@@ -256,6 +280,114 @@ void MainWindow::onDeleteText(const QString& taskId) {
     // }
     // file.close();
 }
+
+void MainWindow::changeTaskInFile(const QString& newText) {
+    qDebug() << "NEW TEXT: " << newText;
+
+    QString today = this->API->getCurrentDayOfWeek();
+    QFile file("other_data.txt");
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Не удалось открыть файл для чтения.";
+        return;
+    }
+
+    QTextStream in(&file);
+    QStringList todayTasks;
+    QStringList finalTasksList;
+    bool readTasks=false;
+
+    while(!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+
+        if (line.startsWith("day: ") && line.mid(4).trimmed() == today) {  // Добавляем строку, если она не совпадает с удаляемой
+            readTasks = true;
+            continue;
+        }
+
+        if (readTasks)
+        {
+            qDebug() << "FIND TASKS TO DELETE: " << line;
+            break;
+        }
+
+        finalTasksList.append(line);
+
+
+    }
+    file.close();
+
+    qDebug() << "DATA FROM FILE: " << todayTasks;
+
+    for (int i = 0; i < this->widgets.size(); ++i) {
+        qDebug() << "item: " << this->widgets[i]->getFullText();
+    }
+
+    todayTasks.clear();
+
+    for (int i = 0; i < this->widgets.size(); ++i) {
+        todayTasks.append(this->widgets[i]->getFullText());
+    }
+
+    qDebug() << "NEW TASKS: " << todayTasks;
+
+
+    // for (int i = 0; i < todayTasks.size(); ++i) {
+    //     finalTasksList.append(todayTasks[i]);
+    // }
+
+    for (int i = 0; i < finalTasksList.size(); ++i) {
+        qDebug() << "FINAL: " << finalTasksList;
+    }
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+        qDebug() << "Не удалось открыть файл для записи.";
+        return;
+    }
+
+    finalTasksList.append("day: " + today);
+
+    for (int i = 0; i < this->widgets.size(); ++i) {
+        finalTasksList.append(this->widgets[i]->getFullText());
+    }
+
+    // Записываем оставшиеся строки обратно в файл
+    QTextStream out(&file);
+    for (const QString &line : finalTasksList) {
+        out << line << "\n";  // Записываем строку в файл
+    }
+    file.close();
+
+    // while(!in.atEnd()) {
+    //     QString line = in.readLine().trimmed();
+
+    //     if (line.startsWith("day: "))
+    //     {
+    //         qDebug() << "DAY IN FILE:" << line.mid(4).trimmed();
+    //         qDebug() << "DAY:" << today;
+    //     }
+
+    //     if (line.startsWith("day: ") && line.mid(4).trimmed() == today)
+    //     {
+    //         qDebug() << "FIND THIS DAY";
+    //         continue;
+    //     }
+
+    //     if (readTasks)
+    //     {
+    //         qDebug() << "CHANGING FILE";
+    //         for (const QString &line : todayTasks) {
+    //             in << line << "\n";  // Записываем строку в файл
+    //         }
+    //     }
+
+    //     // if (loadNewtasks)
+    //     //     todayTasks.append(line);
+    // }
+
+    // file.close();
+}
+
 
 void MainWindow::updateFileAfterDeletion(const QString& taskId) {
     QString today = this->API->getCurrentDayOfWeek();  // Текущий день недели
@@ -625,12 +757,13 @@ void MainWindow::initCalendarLayout() {
 void MainWindow::initHistoryTasksLayout() {
     this->historyTasksSlide = new QWidget(this);
 
-    this->historyTasksLayout = new QVBoxLayout(this->historyTasksSlide);
+    this->historyTasksLayout = new QHBoxLayout(this->historyTasksSlide);
     // this->tasksSlideLayout->addLayout(this->tasksLayout);
     // this->tasksSlideLayout->addLayout(this->inputsLayout);
-    // this->tasksSlideLayout->addLayout(this->widgetLayout);
-    this->historyTasksLayout->setContentsMargins(0,0,0,0);
-    this->historyTasksLayout->addStretch(0);
+    // this->tasksSlideLayout->addLayout(this->widgetLayout)
+    this->historyTasksLayout->setAlignment(Qt::AlignTop);
+    // this->historyTasksLayout->setContentsMargins(0,100,0,0);
+    // this->historyTasksLayout->addStretch(0);
 
     this->displayInfoBlocks();
 }
@@ -1034,6 +1167,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(ne
                 this->widgets.append(oldWidget);
                 this->widgetLayout->addWidget(oldWidget);
                 connect(oldWidget, &TaskWidget::deleteClicked, this, &MainWindow::onDeleteText);
+                connect(oldWidget, &TaskWidget::changeTask, this, &MainWindow::changeTaskInFile);
                 tasks.append(currentLine);
             }
 
@@ -1098,7 +1232,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(ne
     setCentralWidget(centralWidget);
     // setLayout(this->mainLayout);
 
-    resize(750, 800); // Устанавливаем фиксированный размер окна (опционально)
+    resize(900, 800); // Устанавливаем фиксированный размер окна (опционально)
 }
 
 MainWindow::~MainWindow() {}

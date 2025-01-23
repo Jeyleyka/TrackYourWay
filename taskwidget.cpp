@@ -68,6 +68,7 @@ void TaskWidget::initInput() {
         this->input->setVisible(false);
         this->preTextLayout->addStretch();
         this->initLine();
+        this->onChangeClicked(newText);
     });
 }
 
@@ -240,6 +241,10 @@ void TaskWidget::leaveEvent(QEvent *event) {
     buttonDelete->setVisible(false); // Скрываем кнопку, когда курсор уходит
 }
 
+void TaskWidget::onChangeClicked(const QString& newText) {
+    emit changeTask(newText);  // Отправляем сигнал на удаление
+}
+
 void TaskWidget::onDeleteClicked() {
     QString taskText = this->getFullText();
     this->label->clear();
@@ -249,7 +254,7 @@ void TaskWidget::onDeleteClicked() {
     this->line->clearMask();
     this->line->setVisible(false);
 
-    qDebug() << "Удаляем задачу с текстом: " << taskText;  // Для отладки
+
 
     emit deleteClicked(taskText);  // Отправляем сигнал на удаление
     delete this;

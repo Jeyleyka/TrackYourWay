@@ -1,4 +1,15 @@
 day: Monday
-gey
-gay
+working
+cleaning
+reading
+day: Tuesday
+working
+cleaning
+reading
+day: Wednesday
+working
+cleaning
+reading
 day: Thursday
+work
+read

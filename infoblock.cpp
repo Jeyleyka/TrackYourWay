@@ -16,16 +16,17 @@ InfoBlock::InfoBlock(const QString &mainHeader, const QStringList &subItems, QWi
                          "padding: 10px;"
                          "}");
 
-    setFixedWidth(500);
+    setFixedWidth(200);
 
     // Главный заголовок
     mainHeaderLabel->setText(mainHeader);
-    mainHeaderLabel->setStyleSheet("font-size: 18px; font-weight: boldж");
+    mainHeaderLabel->setStyleSheet("font-size: 18px; font-weight: bold; max-height: 20px");
 
     // Подпункты
     subItemLabels.clear();
     for (const QString &item : subItems) {
         QLabel *subItemLabel = new QLabel(item, this);
+        subItemLabel->setStyleSheet("max-height: 20px");
         subItemLabels.append(subItemLabel);
     }
 
@@ -43,8 +44,9 @@ InfoBlock::InfoBlock(const QString &mainHeader, const QStringList &subItems, QWi
     mainLayout->addWidget(frame);
     setLayout(mainLayout);
 
-    QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+    QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     setSizePolicy(sizePolicy);
+    setMaximumHeight(mainHeaderLabel->height() * 6 + subItemLabels.size() * 30);
 }
 
 InfoBlock::~InfoBlock()

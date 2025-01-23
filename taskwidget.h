@@ -48,6 +48,7 @@ public:
     void setLabelColor(const QString& color);
 
 signals:
+    void changeTask(const QString& task);
     void deleteClicked(const QString& task);
 
 protected:
@@ -55,6 +56,7 @@ protected:
     void leaveEvent(QEvent *event) override;
 
 private slots:
+    void onChangeClicked(const QString& newText);
     void onDeleteClicked();
 };
 

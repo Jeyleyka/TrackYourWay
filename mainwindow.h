@@ -36,7 +36,7 @@ private:
     QHBoxLayout *tasksLayout;
     QVBoxLayout* tasksSlideLayout;
     QVBoxLayout *calendarLayout;
-    QVBoxLayout *historyTasksLayout;
+    QHBoxLayout *historyTasksLayout;
     QVBoxLayout *mainLayout;
     QVBoxLayout* widgetLayout;
     QVBoxLayout *testL;
@@ -87,6 +87,7 @@ private:
     void onCreateInputClicked();
     void onEnterPressed();
     void onDeleteText(const QString& taskId);
+    void changeTaskInFile(const QString& newText);
     void updateFileAfterDeletion(const QString& taskId);
     void updatePostsLabel();
     void showButton(QLabel* label);
