@@ -63,6 +63,7 @@ private:
     QVector<QLabel *> taskLabels;
     QVector<TaskWidget*> widgets;
     QVector<InfoBlock*> m_blocks;
+    QVector<InfoBlock*> infoBlocks;
 
     QString stringIndex;
     QString stringOfWeek;
@@ -118,6 +119,7 @@ private slots:
     QPair<int, QStringList> countDaysAndListInFile(const QString &fileName);
     QVector<InfoBlock*> createInfoBlocksFromFile(const QString &fileName, QWidget *parentWidget);
     void displayInfoBlocks();
+    void loadDataFromFile();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

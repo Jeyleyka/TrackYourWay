@@ -2,14 +2,20 @@ day: Monday
 working
 cleaning
 reading
+
 day: Tuesday
 working
 cleaning
 reading
+
 day: Wednesday
 working
 cleaning
 reading
+
 day: Thursday
 work
 read
+
+day: Saturday
+w

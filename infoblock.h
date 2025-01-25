@@ -12,6 +12,7 @@ public:
     ~InfoBlock();
 
     void updateMainHeader(const QString &newHeader);
+    void setBackgroundColor(const QString &Bgcolor, const QString &color);
 
 private:
     QLabel *mainHeaderLabel;

@@ -16,7 +16,11 @@ InfoBlock::InfoBlock(const QString &mainHeader, const QStringList &subItems, QWi
                          "padding: 10px;"
                          "}");
 
+
+
     setFixedWidth(200);
+
+    // frame->setStyleSheet("background-color: " + color);
 
     // Главный заголовок
     mainHeaderLabel->setText(mainHeader);
@@ -56,4 +60,13 @@ InfoBlock::~InfoBlock()
 
 void InfoBlock::updateMainHeader(const QString &newHeader) {
     mainHeaderLabel->setText(newHeader);
+}
+
+void InfoBlock::setBackgroundColor(const QString &Bgcolor, const QString &color) {
+    frame->setStyleSheet("border: 2px solid black; border-radius: 10px; background-color: #f0f0f0; padding: 10px; background-color: " + Bgcolor);
+    this->mainHeaderLabel->setStyleSheet("font-size: 18px; font-weight: bold; max-height: 20px; color: " + color);
+
+    for (QLabel *item : subItemLabels) {
+        item->setStyleSheet("max-height: 20px; color: " + color);
+    }
 }

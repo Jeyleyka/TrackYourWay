@@ -18,33 +18,48 @@ void MainWindow::changeBackgroundColor()
             this->widgets[i]->setLabelColor("color: #fff");
         }
 
+        for (InfoBlock *block : infoBlocks) {
+            block->setBackgroundColor("#333338", "#fff");
+        }
+
         if (this->carousel->currentIndex() == 0)
         {
             this->tasksSlideButton->setIcon(QIcon("icons/red_circle_2.png"));
             this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
         }
-        else
+        if (this->carousel->currentIndex() == 1)
         {
             this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
             this->calendarSlideButton->setIcon(QIcon("icons/red_circle_2.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+        }
+        if (this->carousel->currentIndex() == 2)
+        {
+            this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/red_circle_2.png"));
         }
 
         connect(this->tasksSlideButton, &QPushButton::clicked, this, [=]() {
             this->carousel->setCurrentIndex(0);
             this->tasksSlideButton->setIcon(QIcon("icons/red_circle_2.png"));
             this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
         });
 
         connect(this->calendarSlideButton, &QPushButton::clicked, this, [=]() {
             this->carousel->setCurrentIndex(1);
             this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
             this->calendarSlideButton->setIcon(QIcon("icons/red_circle_2.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
         });
 
         connect(this->historyTasksSlideButton, &QPushButton::clicked, this, [=]() {
             this->carousel->setCurrentIndex(2);
             this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
-            this->calendarSlideButton->setIcon(QIcon("icons/red_circle_2.png"));
+            this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/red_circle_2.png"));
         });
     }
     else
@@ -54,6 +69,7 @@ void MainWindow::changeBackgroundColor()
         this->tasks->setStyleSheet("color: #000");
         this->inputField->setStyleSheet("color: #000");
         this->savedTextLabel->setStyleSheet("color: #000");
+        // this->infoBlock->setBackgroundColor("#EAE2F9", "#000");
         // this->modal->setBackgroundColor(QColor(219,211,233));
         QIcon icon("icons/moon.png");
         button->setIcon(icon);
@@ -61,15 +77,27 @@ void MainWindow::changeBackgroundColor()
             this->widgets[i]->setLabelColor("color: #000");
         }
 
+        for (InfoBlock *block : infoBlocks) {
+            block->setBackgroundColor("#DBD3E9", "#000");
+        }
+
         if (this->carousel->currentIndex() == 0)
         {
             this->tasksSlideButton->setIcon(QIcon("icons/full_circle.png"));
             this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
         }
-        else
+        else if (this->carousel->currentIndex() == 1)
         {
             this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
             this->calendarSlideButton->setIcon(QIcon("icons/full_circle.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+        }
+        else if (this->carousel->currentIndex() == 2)
+        {
+            this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+            this->historyTasksSlideButton->setIcon(QIcon("icons/full_circle.png"));
         }
 
         connect(this->tasksSlideButton, &QPushButton::clicked, this, [=]() {
@@ -93,6 +121,7 @@ void MainWindow::changeBackgroundColor()
             this->historyTasksSlideButton->setIcon(QIcon("icons/full_circle.png"));
         });
     }
+
 
     if (!toggle)
         currentBackgroundColor = Qt::white;
@@ -884,91 +913,6 @@ void MainWindow::saveTasksToFile(const QString& widgetText) {
     out << fileContent;
 
     file.close();
-
-
-
-
-
-
-
-    // QFile file("other_data.txt");
-    // QString day = this->API->getCurrentDayOfWeek();  // Текущий день недели
-    // QStringList lines;  // Список строк из файла
-    // QVector<TaskWidget*> updatedList;  // Список для хранения всех задач
-
-    // bool dayFound = false; // Переменная для поиска дня
-
-    // qDebug() << "Opening file for reading...";
-
-    // // Чтение файла
-    // if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    //     QTextStream in(&file);
-    //     QString currentLine;
-
-    //     bool dayFound = false;
-    //     QStringList tasksForCurrentDay;  // Список строк для текущего дня (не виджетов)
-
-    //     while (!in.atEnd()) {
-    //         currentLine = in.readLine().trimmed();  // Читаем строку и убираем лишние пробелы
-    //         lines.append(currentLine);  // Сохраняем строки из файла
-
-    //         // Проверяем, если строка с днем недели
-    //         if (currentLine.startsWith("Day: ")) {
-    //             qDebug() << "Found day: " << currentLine.mid(4).trimmed();
-
-    //             // Если нашли день, проверяем, что это текущий день
-    //             if (currentLine.mid(4).trimmed() == day) {
-    //                 dayFound = true;  // Устанавливаем флаг, что день найден
-    //                 qDebug() << "Day found: " << day;
-    //             } else if (dayFound) {
-    //                 // Если день найден, сохраняем задачи для текущего дня
-    //                 // Прерываем, так как мы уже нашли нужный день, и дальше уже не нужно читать задачи для других дней
-    //                 break;
-    //             }
-    //         } else if (dayFound) {
-    //             // Если день найден, сохраняем задачи для этого дня
-    //             updatedList.append(new TaskWidget(currentLine, this));  // Добавляем задачу как виджет
-    //         }
-    //     }
-    //     file.close();  // Закрытие файла после чтения
-    //     qDebug() << "Finished reading file.";
-    // } else {
-    //     QMessageBox::warning(this, "File Error", "Failed to open the file for reading.");
-    //     return;
-    // }
-
-    // // Добавим новые задачи из widgets в updatedList
-    // for (int i = 0; i < this->widgets.size(); ++i) {
-    //     updatedList.append(new TaskWidget(this->widgets[i]->getFullText(), this));  // Добавляем новые задачи
-    // }
-
-    // // Открываем файл для записи с очисткой
-    // if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-    //     QTextStream out(&file);
-
-    //     // Перезаписываем файл, если текущий день найден
-    //     if (dayFound) {
-    //         // Перезаписываем только новый день и задачи
-    //         out << "Day: " << day << "\n";
-
-    //         // Записываем все задачи без разделителей
-    //         for (int i = 0; i < updatedList.size(); ++i) {
-    //             out << updatedList[i]->getFullText() << "\n";  // Записываем задачу, просто с новой строки
-    //         }
-    //     } else {
-    //         // Если день не найден, добавляем новый день с задачами
-    //         out << "Day: " << day << "\n";
-    //         for (int i = 0; i < updatedList.size(); ++i) {
-    //             out << updatedList[i]->getFullText() << "\n";  // Записываем задачу
-    //         }
-    //     }
-
-    //     file.close();  // Закрытие файла после записи
-    //     qDebug() << "Finished writing data to file.";
-    // }
-    // else {
-    //     QMessageBox::warning(this, "File Error", "Failed to open the file for writing.");
-    // }
 }
 
 QPair<int, QStringList> MainWindow::countDaysAndListInFile(const QString &fileName) {
@@ -1043,7 +987,7 @@ QVector<InfoBlock*> MainWindow::createInfoBlocksFromFile(const QString &fileName
             currentDay = "Today:";
 
         InfoBlock *block = new InfoBlock(currentDay, currentTasks, parentWidget);
-        infoBlocks.append(block);
+        infoBlocks.append(block);  // Добавляем новый InfoBlock
     }
 
     file.close();  // Закрываем файл после чтения
@@ -1051,7 +995,7 @@ QVector<InfoBlock*> MainWindow::createInfoBlocksFromFile(const QString &fileName
 }
 
 void MainWindow::displayInfoBlocks() {
-    QVector<InfoBlock*> infoBlocks = createInfoBlocksFromFile("other_data.txt", this);
+    this->infoBlocks = createInfoBlocksFromFile("other_data.txt", this);
 
     // Создаем и добавляем блоки на страницу
     for (InfoBlock *block : infoBlocks) {
@@ -1061,66 +1005,7 @@ void MainWindow::displayInfoBlocks() {
     this->historyTasksSlide->setLayout(historyTasksLayout);
 }
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(new QNetworkAccessManager(this))
-{
-    setWindowTitle("Track Your Day");
-    setWindowFlags(Qt::FramelessWindowHint);
-    setWindowIcon(QIcon("icons/logo.png"));
-    this->setWindowFlags(this->windowFlags() & ~Qt::WindowMinimizeButtonHint);
-    this->installEventFilter(this);
-    setMouseTracking(true);
-
-    // QStringList subItems = {"fwsdfs", "fsdfsadf"};
-
-
-    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Space), this);
-    connect(shortcut, &QShortcut::activated, this, []() {
-        // Обрабатываем нажатие клавиши Space, но не сворачиваем окно
-    });
-
-    //////////////////////////////////// FIX ZONE ////////////////////////////////////
-
-    // this->getDayOfWeek();
-
-    QWidget* centralWidget = new QWidget;
-
-    this->initCloseWindowButton();
-    this->initHideWindowButton();
-    this->initModalUserMenuBtn();
-
-    this->label = new QLabel("Let's start the day by making a plan for today", this);
-    this->label->setAlignment(Qt::AlignCenter); // Центрируем текст
-
-    // Изменяем шрифт для текста
-    this->basicFont = this->label->font();
-    this->basicFont.setPointSize(17);    // Устанавливаем размер шрифта
-    this->label->setFont(this->basicFont);   // Применяем шрифт к метке
-
-    this->initChangeThemeButton();
-    this->initAddTasks();
-    this->initBtnsLayout();
-    this->initTopLayout();
-    this->initInputsLayout();
-    this->initTasksLayout();
-    this->initWidgetLayout();
-    this->initChangeSlideLayout();
-    this->initTasksSlideLayout();
-    this->initHistoryTasksLayout();
-    this->initCalendarLayout();
-    this->initCarousel();
-
-    QDate today = QDate::currentDate();
-
-    qDebug() << "current date: " << today.dayOfWeek();
-
-    QPair<int, QStringList> res = this->countDaysAndListInFile("other_data.txt");
-
-    qDebug() << "Number of days in the file:" << res.first;  // Количество дней
-    qDebug() << "Days in the file:" << res.second.join(", ");  // Список дней
-
-
-
-    // NetworkManager* manager = new NetworkManager(this);
+void MainWindow::loadDataFromFile() {
     QFile file("other_data.txt");  // Путь к файлу. Убедитесь, что файл существует.
 
     if (!file.exists()) {
@@ -1171,33 +1056,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(ne
                 tasks.append(currentLine);
             }
 
-
-            qDebug() << "write started";
-
             // Если это строка с задачей (не пустая), добавляем её в список задач
             if (!currentLine.isEmpty()) {
-
-
-
-
-                if (currentLine.startsWith("day: ")) {
-                    qDebug() << "date in currentLine: " << currentLine.mid(5);
-                    qDebug() << "date in API: " << this->API->getCurrentDayOfWeek();
-                }
-
-                // if (currentLine.startsWith("day: ") && currentLine.mid(5) == this->API->getCurrentDayOfWeek())
-                // {
-                //     todayTasks = true;
-                //     qDebug() << "today: " << this->API->getCurrentDayOfWeek();
-                // }
-
-
-
                 for (int i = 0; i < this->widgets.size(); ++i) {
                     connect(this->widgets[i], &TaskWidget::deleteClicked, this, &MainWindow::onDeleteText);
                 }
 
-                qDebug() << "count of widgets: " << this->widgets.size();
                 updatePostsLabel();
 
                 // Очищаем поле ввода
@@ -1205,26 +1069,62 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(ne
                 this->inputField->setVisible(false);
             }
         }
-        qDebug() << "write is success";
+
         file.close();
 
-        // Выводим все задачи
-
-        QString currentDay = this->API->getCurrentDayOfWeek();
-
-
         this->tasksFile.setFileName("other_data.txt");
-
         this->loadTasksFromFile();
 
     } else {
         qDebug() << "Не удалось открыть файл для чтения!";
     }
+}
+
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(new QNetworkAccessManager(this))
+{
+    setWindowTitle("Track Your Day");
+    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowIcon(QIcon("icons/logo.png"));
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowMinimizeButtonHint);
+    this->installEventFilter(this);
+    setMouseTracking(true);
+
+
+    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Space), this);
+    connect(shortcut, &QShortcut::activated, this, []() {
+        // Обрабатываем нажатие клавиши Space, но не сворачиваем окно
+    });
+
+    QWidget* centralWidget = new QWidget;
+
+    this->initCloseWindowButton();
+    this->initHideWindowButton();
+    this->initModalUserMenuBtn();
+
+    this->label = new QLabel("Let's start the day by making a plan for today", this);
+    this->label->setAlignment(Qt::AlignCenter); // Центрируем текст
+
+    // Изменяем шрифт для текста
+    this->basicFont = this->label->font();
+    this->basicFont.setPointSize(17);    // Устанавливаем размер шрифта
+    this->label->setFont(this->basicFont);   // Применяем шрифт к метке
+
+    this->initChangeThemeButton();
+    this->initAddTasks();
+    this->initBtnsLayout();
+    this->initTopLayout();
+    this->initInputsLayout();
+    this->initTasksLayout();
+    this->initWidgetLayout();
+    this->initChangeSlideLayout();
+    this->initTasksSlideLayout();
+    this->initHistoryTasksLayout();
+    this->initCalendarLayout();
+    this->initCarousel();
+
+    this->loadDataFromFile();
 
     this->initMainLayout();
-    // this->mainLayout->addWidget(infoBlock);
-
-    //////////////////////////////////// FIX ZONE ////////////////////////////////////
 
 
     // Устанавливаем макет для окна
