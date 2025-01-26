@@ -4,6 +4,7 @@ debug/login.o
 debug/main.o
 debug/mainwindow.o
 debug/modalwindow.o
+debug/qwraplayout.o
 debug/taskwidget.o
 debug/welcomewnd.o
 debug/untitled1_plugin_import.o

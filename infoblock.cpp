@@ -4,8 +4,8 @@ InfoBlock::InfoBlock(const QString &mainHeader, const QStringList &subItems, QWi
     : QWidget(parent),
     mainHeaderLabel(new QLabel(this)),
     frame(new QFrame(this)),
-    layout(new QVBoxLayout(frame))
-{
+    layout(new QVBoxLayout(frame)), countOfCompleteTasks(0), countOfTasks(0)
+{    
     // Настроим рамку с закругленными углами
     frame->setFrameShape(QFrame::StyledPanel);
     frame->setFrameShadow(QFrame::Raised);
@@ -16,11 +16,7 @@ InfoBlock::InfoBlock(const QString &mainHeader, const QStringList &subItems, QWi
                          "padding: 10px;"
                          "}");
 
-
-
     setFixedWidth(200);
-
-    // frame->setStyleSheet("background-color: " + color);
 
     // Главный заголовок
     mainHeaderLabel->setText(mainHeader);
@@ -30,9 +26,30 @@ InfoBlock::InfoBlock(const QString &mainHeader, const QStringList &subItems, QWi
     subItemLabels.clear();
     for (const QString &item : subItems) {
         QLabel *subItemLabel = new QLabel(item, this);
-        subItemLabel->setStyleSheet("max-height: 20px");
+        // subItemLabel->setStyleSheet("font-size: 14px; font-weight: 400; max-height: 20px");
+
+        if (item.contains(" - complete"))
+        {
+            this->countOfCompleteTasks++;
+            subItemLabel->setStyleSheet("font-size: 14px; font-weight: 400; max-height: 20px; color: #077e2d");
+        }
+        else
+            subItemLabel->setStyleSheet("font-size: 14px; font-weight: 400; max-height: 20px; color: #e00018");
+
+        int index = item.indexOf("-");
+        subItemLabel->setText(item.left(index));
+
         subItemLabels.append(subItemLabel);
     }
+
+    for (int i = 0; i < this->subItemLabels.size(); ++i) {
+        this->countOfTasks++;
+
+        // if (this->subItemLabels[i]->text().contains(" - complete"))
+        //     this->countOfCompleteTasks++;
+    }
+
+
 
     // Добавляем виджеты в layout
     layout->addWidget(mainHeaderLabel);
@@ -66,7 +83,16 @@ void InfoBlock::setBackgroundColor(const QString &Bgcolor, const QString &color)
     frame->setStyleSheet("border: 2px solid black; border-radius: 10px; background-color: #f0f0f0; padding: 10px; background-color: " + Bgcolor);
     this->mainHeaderLabel->setStyleSheet("font-size: 18px; font-weight: bold; max-height: 20px; color: " + color);
 
-    for (QLabel *item : subItemLabels) {
-        item->setStyleSheet("max-height: 20px; color: " + color);
-    }
+    // for (QLabel *item : subItemLabels) {
+    //     item->setStyleSheet("font-size: 14px; font-weight: 500; max-height: 20px; color: " + color);
+    // }
 }
+
+const int& InfoBlock::getCountOfTasks() const {
+    return this->countOfTasks;
+}
+
+const int& InfoBlock::getCountOfCompleteTasks() const {
+    return this->countOfCompleteTasks;
+}
+

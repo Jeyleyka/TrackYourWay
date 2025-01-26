@@ -46,6 +46,8 @@
 #include <QDate>
 #include <QPair>
 #include <QScrollArea>
+#include <QRect>
+#include <QSpacerItem>
 
 #include <map>
 

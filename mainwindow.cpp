@@ -15,7 +15,7 @@ void MainWindow::changeBackgroundColor()
         button->setIcon(icon);
 
         for (int i = 0; i < widgets.size(); ++i) {
-            this->widgets[i]->setLabelColor("color: #fff");
+            this->widgets[i]->setColor("#1e1e20", "color: #fff");
         }
 
         for (InfoBlock *block : infoBlocks) {
@@ -74,7 +74,7 @@ void MainWindow::changeBackgroundColor()
         QIcon icon("icons/moon.png");
         button->setIcon(icon);
         for (int i = 0; i < widgets.size(); ++i) {
-            this->widgets[i]->setLabelColor("color: #000");
+            this->widgets[i]->setColor("#EAE2F9", "color: #000");
         }
 
         for (InfoBlock *block : infoBlocks) {
@@ -167,6 +167,7 @@ void MainWindow::onEnterPressed() {
 
         connect(newWidget, &TaskWidget::deleteClicked, this, &MainWindow::onDeleteText);
         connect(newWidget, &TaskWidget::changeTask, this, &MainWindow::changeTaskInFile);
+        connect(newWidget, &TaskWidget::completeTask, this, &MainWindow::setTaskToCompelete);
         this->saveTasksToFile(newWidget->getFullText());
         qDebug() << "NEW WIDGET TEXT: " << newWidget->getFullText();
 
@@ -386,35 +387,40 @@ void MainWindow::changeTaskInFile(const QString& newText) {
         out << line << "\n";  // Записываем строку в файл
     }
     file.close();
+}
 
-    // while(!in.atEnd()) {
-    //     QString line = in.readLine().trimmed();
+void MainWindow::setTaskToCompelete(const QString& taskText, const bool& toggle) {
+    QString today = this->API->getCurrentDayOfWeek();  // Текущий день недели
+    QFile file("other_data.txt");
 
-    //     if (line.startsWith("day: "))
-    //     {
-    //         qDebug() << "DAY IN FILE:" << line.mid(4).trimmed();
-    //         qDebug() << "DAY:" << today;
-    //     }
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Не удалось открыть файл для чтения.";
+        return;
+    }
 
-    //     if (line.startsWith("day: ") && line.mid(4).trimmed() == today)
-    //     {
-    //         qDebug() << "FIND THIS DAY";
-    //         continue;
-    //     }
+    QTextStream in(&file);
+    bool curDay = false;
 
-    //     if (readTasks)
-    //     {
-    //         qDebug() << "CHANGING FILE";
-    //         for (const QString &line : todayTasks) {
-    //             in << line << "\n";  // Записываем строку в файл
-    //         }
-    //     }
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
 
-    //     // if (loadNewtasks)
-    //     //     todayTasks.append(line);
-    // }
+        if (line.startsWith("day: ") && line.mid(4).trimmed() == today) {  // Добавляем строку, если она не совпадает с удаляемой
+            curDay = true;
+        }
 
-    // file.close();
+        if (curDay && line == taskText)
+        {
+            if (toggle)
+                this->completeTasks.append(taskText);
+            else
+                this->completeTasks.removeOne(taskText);
+
+        }
+    }
+
+    file.close();
+
+    qDebug() << "COMPLETE TASKS: " << this->completeTasks;
 }
 
 
@@ -590,7 +596,73 @@ void MainWindow::initCloseWindowButton() {
                                           "border: none;"
                                           "}").arg(32 / 2));
 
-    connect(this->closeBtn,&QPushButton::clicked, this, &MainWindow::close);
+    connect(this->closeBtn,&QPushButton::clicked, this, [=]() {
+        QString today = this->API->getCurrentDayOfWeek();
+        QFile file("other_data.txt");
+
+        qDebug() << "CO TASKS: " << this->completeTasks;
+
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            return;
+        }
+
+        QTextStream in(&file);
+        QStringList lines;
+        QString completeTask;
+        bool curDay = false;
+        bool taskComp = false;
+
+        while (!in.atEnd()) {
+            QString line = in.readLine().trimmed();
+
+            if (line.startsWith("day: ") && line.mid(4).trimmed() == today) {  // Добавляем строку, если она не совпадает с удаляемой
+                curDay = true;
+                qDebug() << "LINE: " << line;
+            }
+
+            if (curDay)
+            {
+                for (int i = 0; i < this->completeTasks.size(); ++i) {
+                    if (line == this->completeTasks[i])
+                    {
+                        taskComp=true;
+                        break;
+                        // line + " - complete";
+                        // qDebug() << "NEW LINE: " << line;
+                    }
+                    taskComp=false;
+                }
+            }
+
+            if (taskComp)
+            {
+                if (!line.contains(" - complete"))
+                    lines.append(line + " - complete");
+            }
+            else
+                lines.append(line);
+        }
+
+        file.close();
+
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+        {
+            return;
+        }
+
+        QTextStream out(&file);
+        for (const QString &line : lines) {
+            out << line << "\n";  // Записываем строку в файл
+        }
+
+        file.close();
+
+        qDebug() << "LIST: " << lines;
+
+        // this->completeTasks;
+
+        this->close();
+    });
 }
 
 void MainWindow::initHideWindowButton() {
@@ -786,11 +858,28 @@ void MainWindow::initCalendarLayout() {
 void MainWindow::initHistoryTasksLayout() {
     this->historyTasksSlide = new QWidget(this);
 
-    this->historyTasksLayout = new QHBoxLayout(this->historyTasksSlide);
+
+
+    // qDebug() << "PROCENT: " << procent;
+
+    // QLabel *information = new QLabel;
+
+    // information->setText("your procent of complete task equal " /*+ QString::number(procent)*/);
+
+    // QWrapLayout* historyTasksLayout = new QWrapLayout();
+    this->historyTasksLayout = new QVBoxLayout(this->historyTasksSlide);
+    this->daysLayout = new QWrapLayout;
+    this->informationLayout = new QHBoxLayout;
+    this->informationLayout->addStretch(0);
     // this->tasksSlideLayout->addLayout(this->tasksLayout);
     // this->tasksSlideLayout->addLayout(this->inputsLayout);
     // this->tasksSlideLayout->addLayout(this->widgetLayout)
+    // this->historyTasksLayout->addWidget(information);
+
     this->historyTasksLayout->setAlignment(Qt::AlignTop);
+    this->historyTasksLayout->addLayout(this->daysLayout);
+    this->historyTasksLayout->addLayout(this->informationLayout);
+
     // this->historyTasksLayout->setContentsMargins(0,100,0,0);
     // this->historyTasksLayout->addStretch(0);
 
@@ -835,15 +924,42 @@ void MainWindow::showModalWindow() {
     this->modal->show();
     this->modal->slideIn();  // Запуск анимации выдвижения
 
-    connect(this->modal, &ModalWindow::actionPerformed, this, &MainWindow::performAction);
+    connect(this->modal, &ModalWindow::showCalendar, this, &MainWindow::onShowCalendar);
+    connect(this->modal, &ModalWindow::showHistory, this, &MainWindow::onShowHistory);
 }
 
-void MainWindow::performAction() {
+void MainWindow::onShowCalendar() {
     this->modal->close();
     this->carousel->setCurrentIndex(1);
-    this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
-    this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
-    this->calendarSlideButton->setIcon(QIcon("icons/full_circle.png"));
+    if (toggle)
+    {
+        this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+        this->calendarSlideButton->setIcon(QIcon("icons/full_circle.png"));
+        this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+    }else
+    {
+        this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+        this->calendarSlideButton->setIcon(QIcon("icons/red_circle_2.png"));
+        this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+    }
+
+    qDebug() << "action complete!";
+}
+
+void MainWindow::onShowHistory() {
+    this->modal->close();
+    this->carousel->setCurrentIndex(2);
+    if (toggle)
+    {
+        this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+        this->calendarSlideButton->setIcon(QIcon("icons/full_circle.png"));
+        this->historyTasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+    }else
+    {
+        this->tasksSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+        this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
+        this->historyTasksSlideButton->setIcon(QIcon("icons/red_circle_2.png"));
+    }
 
     qDebug() << "action complete!";
 }
@@ -977,6 +1093,8 @@ QVector<InfoBlock*> MainWindow::createInfoBlocksFromFile(const QString &fileName
             currentTasks.clear();  // Очищаем список задач
         } else if (!currentLine.isEmpty()) {
             // Если строка не пустая, это задача для текущего дня
+
+
             currentTasks.append(currentLine);  // Добавляем задачу в список задач
         }
     }
@@ -990,6 +1108,13 @@ QVector<InfoBlock*> MainWindow::createInfoBlocksFromFile(const QString &fileName
         infoBlocks.append(block);  // Добавляем новый InfoBlock
     }
 
+    // for (int i = 0; i < this->infoBlocks.size(); ++i) {
+    //     this->countOfTasks+=this->infoBlock[i].getCountOfTasks();
+    //     this->countOfCompleteTasks+=this->infoBlock[i].getCountOfCompleteTasks();
+    // }
+
+
+
     file.close();  // Закрываем файл после чтения
     return infoBlocks;  // Возвращаем вектор InfoBlock
 }
@@ -997,12 +1122,64 @@ QVector<InfoBlock*> MainWindow::createInfoBlocksFromFile(const QString &fileName
 void MainWindow::displayInfoBlocks() {
     this->infoBlocks = createInfoBlocksFromFile("other_data.txt", this);
 
+    // QIcon infIcon("icons/exclamation.png");
+
+
+    // information->setText( /*+ QString::number(procent)*/);
+
+    // this->historyTasksLayout->addWidget(information);
+
     // Создаем и добавляем блоки на страницу
     for (InfoBlock *block : infoBlocks) {
-        this->historyTasksLayout->addWidget(block);
+        this->daysLayout->addWidget(block);
+        this->countOfTasks+=block->getCountOfTasks();
+        this->countOfCompleteTasks+=block->getCountOfCompleteTasks();
     }
 
-    this->historyTasksSlide->setLayout(historyTasksLayout);
+    qDebug() << "COUNT OF TASKS: " <<this->countOfTasks;
+    qDebug() << "COUNT OF COMPLETE TASKS: " <<this->countOfCompleteTasks;
+
+    float procent = static_cast<float>(this->countOfCompleteTasks / this->countOfTasks) * 100.f;
+
+    qDebug() << "PROCENT: " <<procent;
+
+    this->information = new QLabel("your procent of complete tasks equal " + QString::number(procent).left(1) + "%", this);
+    this->infBtn = new QPushButton(this);
+
+    if (procent <= 50.f)
+    {
+        // this->infIcon.addFile("icons/exclamation.png");
+        this->infBtn->setIcon(QIcon("icons/exclamation.png"));
+        this->infBtn->setIconSize(QSize(25,25));
+        this->infBtn->setStyleSheet(QString("QPushButton {"
+                                              "border-radius: %1px;"
+                                              "border: none;"
+                                              "}").arg(25 / 2));
+
+        this->information->setStyleSheet("font-size: 13px; font-weight: 500; margin-right: 80px; color: #e00018");
+        this->information->setText(
+            "Your procent of complete tasks equal " + QString::number(procent).left(2) + "%.You should try harder to get all the things done"
+            );
+    } else if (procent > 50.f && procent < 65.f)
+    {
+        // this->infIcon.addFile("icons/exclamation.png");
+        this->infBtn->setIcon(QIcon("icons/warning.png"));
+        this->infBtn->setIconSize(QSize(25,25));
+        this->infBtn->setStyleSheet(QString("QPushButton {"
+                                            "border-radius: %1px;"
+                                            "border: none;"
+                                            "}").arg(25 / 2));
+
+        this->information->setStyleSheet("font-size: 13px; font-weight: 500; margin-right: 80px; color: #ef8506");
+        this->information->setText(
+            "Your procent of complete tasks equal " + QString::number(procent).left(2) + "%.Most of the tasks are finished, you just need to be a little more diligent"
+            );
+    }
+
+    this->informationLayout->addWidget(this->infBtn);
+    this->informationLayout->addWidget(this->information);
+
+    this->historyTasksSlide->setLayout(daysLayout);
 }
 
 void MainWindow::loadDataFromFile() {
@@ -1018,6 +1195,7 @@ void MainWindow::loadDataFromFile() {
 
         QStringList tasks;  // Список задач
         QString currentLine;
+
         bool todayTasks=false;
 
         in.readLine();
@@ -1048,11 +1226,27 @@ void MainWindow::loadDataFromFile() {
 
             if (todayTasks && !currentLine.startsWith("day: "))
             {
-                TaskWidget* oldWidget = new TaskWidget(currentLine, this);
+                int index = currentLine.indexOf("-");
+
+                QString result = currentLine.left(index);
+
+                TaskWidget* oldWidget = new TaskWidget(result, this);
+
+                if (currentLine.contains(" - complete"))
+                {
+                    if (!toggle)
+                        oldWidget->setColor("#EAE2F9", "color: #077e2d");
+                    else
+                        oldWidget->setColor("#1e1e20", "color: #077e2d");
+
+                    oldWidget->setToggle(true);
+                }
+
                 this->widgets.append(oldWidget);
                 this->widgetLayout->addWidget(oldWidget);
                 connect(oldWidget, &TaskWidget::deleteClicked, this, &MainWindow::onDeleteText);
                 connect(oldWidget, &TaskWidget::changeTask, this, &MainWindow::changeTaskInFile);
+                connect(oldWidget, &TaskWidget::completeTask, this, &MainWindow::setTaskToCompelete);
                 tasks.append(currentLine);
             }
 
@@ -1089,7 +1283,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(ne
     this->installEventFilter(this);
     setMouseTracking(true);
 
-
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Space), this);
     connect(shortcut, &QShortcut::activated, this, []() {
         // Обрабатываем нажатие клавиши Space, но не сворачиваем окно
@@ -1108,6 +1301,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(ne
     this->basicFont = this->label->font();
     this->basicFont.setPointSize(17);    // Устанавливаем размер шрифта
     this->label->setFont(this->basicFont);   // Применяем шрифт к метке
+
+
 
     this->initChangeThemeButton();
     this->initAddTasks();

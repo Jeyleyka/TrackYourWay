@@ -5,6 +5,7 @@
 #include "modalwindow.h"
 #include "infoblock.h"
 #include "dayofweekapi.h"
+#include "qwraplayout.h"
 
 class MainWindow : public QMainWindow
 {
@@ -29,6 +30,7 @@ private:
     QLabel *tasks;
     QLabel *savedTextLabel;
     QLabel *dayOfTheWeek;
+    QLabel* information;
 
     QHBoxLayout *topLayout;
     QHBoxLayout *btnsLayout;
@@ -36,7 +38,9 @@ private:
     QHBoxLayout *tasksLayout;
     QVBoxLayout* tasksSlideLayout;
     QVBoxLayout *calendarLayout;
-    QHBoxLayout *historyTasksLayout;
+    QVBoxLayout *historyTasksLayout;
+    QHBoxLayout *informationLayout;
+    QWrapLayout *daysLayout;
     QVBoxLayout *mainLayout;
     QVBoxLayout* widgetLayout;
     QVBoxLayout *testL;
@@ -51,6 +55,7 @@ private:
     QPushButton *tasksSlideButton;
     QPushButton *calendarSlideButton;
     QPushButton *historyTasksSlideButton;
+    QPushButton *infBtn;
 
     QFont basicFont;
     QFont inputFont;
@@ -78,7 +83,11 @@ private:
 
     QFile tasksFile;
 
-    int countOfTasks = 1;
+    QStringList completeTasks;
+
+    float countOfTasks = 0;
+    float countOfCompleteTasks=0;
+
     // int index;
     bool dragging = false;  // Флаг для отслеживания, перетаскивается ли окно
     bool openModal = false;
@@ -89,6 +98,7 @@ private:
     void onEnterPressed();
     void onDeleteText(const QString& taskId);
     void changeTaskInFile(const QString& newText);
+    void setTaskToCompelete(const QString& taskText, const bool& toggle);
     void updateFileAfterDeletion(const QString& taskId);
     void updatePostsLabel();
     void showButton(QLabel* label);
@@ -113,7 +123,8 @@ private:
 
 private slots:
     void showModalWindow();
-    void performAction();
+    void onShowCalendar();
+    void onShowHistory();
     void loadTasksFromFile();
     void saveTasksToFile(const QString& widgetText);
     QPair<int, QStringList> countDaysAndListInFile(const QString &fileName);

@@ -5,17 +5,28 @@ reading
 
 day: Tuesday
 working
-cleaning
-reading
+cleaning - complete
+reading - complete
 
 day: Wednesday
-working
-cleaning
-reading
+working - complete
+cleaning - complete
+reading - complete
 
 day: Thursday
-work
-read
+work - complete
+read - complete
+
+day: Friday
+working - complete
+cleaning - complete
+reading - complete
+gym - complete
 
 day: Saturday
-w
+vz - complete
+working
+reading
+
+day: Sunday
+eqweq

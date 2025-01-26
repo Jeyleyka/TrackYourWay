@@ -18,6 +18,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     modalwindow.cpp \
+    qwraplayout.cpp \
     taskwidget.cpp \
     welcomewnd.cpp
 
@@ -28,6 +29,7 @@ HEADERS += \
     login.h \
     mainwindow.h \
     modalwindow.h \
+    qwraplayout.h \
     taskwidget.h \
     welcomewnd.h
 

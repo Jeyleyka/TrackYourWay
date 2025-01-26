@@ -11,19 +11,6 @@ void TaskWidget::initLabel() {
     this->label->setTextInteractionFlags(Qt::TextEditorInteraction);
 }
 
-void TaskWidget::initLine() {
-    QFontMetrics fm(font);
-    int textWidth = fm.horizontalAdvance(this->label->text());
-
-    this->line->setFrameShape(QFrame::HLine);
-    this->line->setFrameShadow(QFrame::Sunken);
-    // Устанавливаем фиксированную ширину для линии
-    this->line->setFixedWidth(textWidth * 2);
-
-    // Ограничиваем ширину QLabel, чтобы текст не выходил за рамки
-    // this->label->setFixedWidth(300); // Установите нужную ширину
-}
-
 void TaskWidget::initEditButton() {
     QIcon changeIco("icons/pencil.png");
     this->buttonEdit->setIcon(changeIco);
@@ -67,7 +54,6 @@ void TaskWidget::initInput() {
         this->label->setVisible(true);
         this->input->setVisible(false);
         this->preTextLayout->addStretch();
-        this->initLine();
         this->onChangeClicked(newText);
     });
 }
@@ -81,6 +67,17 @@ void TaskWidget::initDeleteButton() {
     this->buttonDelete->setVisible(false);
 
     connect(this->buttonDelete, &QPushButton::clicked, this, &TaskWidget::onDeleteClicked);
+}
+
+void TaskWidget::initCompleteTaskButton() {
+    QIcon completeIco("icons/checked.png");
+    this->completeTaskButton->setIcon(completeIco);
+    this->completeTaskButton->setIconSize(QSize(52,31));
+    this->completeTaskButton->setFixedSize(52,31);
+    this->completeTaskButton->setStyleSheet("background-color: transparent;");
+    this->completeTaskButton->setVisible(false);
+
+    connect(this->completeTaskButton, &QPushButton::clicked, this, &TaskWidget::onCompleteTask);
 }
 
 void TaskWidget::initSpacer() {
@@ -99,7 +96,7 @@ void TaskWidget::initTextLayout() {
     this->initPreTextLayout();
     this->textLayout = new QVBoxLayout();
     this->textLayout->addLayout(this->preTextLayout);
-    this->textLayout->addWidget(this->line);
+    // this->textLayout->addWidget(this->line);
 
     // Установим фиксированную ширину для текстового блока, чтобы окно не расширялось
     this->label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -110,26 +107,45 @@ void TaskWidget::initButtonsLayout() {
     this->buttonsLayout = new QHBoxLayout();
     this->buttonsLayout->addWidget(this->buttonEdit);
     this->buttonsLayout->addWidget(this->buttonDelete);
+    this->buttonsLayout->addWidget(this->completeTaskButton);
 }
 
 void TaskWidget::initMainLayout() {
     // Основной layout, размещаем текст слева и кнопки справа
+
+    this->frame = new QFrame(this);
+
+    this->frame->setFrameShape(QFrame::StyledPanel);
+    this->frame->setFrameShadow(QFrame::Raised);
+    this->frame->setStyleSheet("QFrame {"
+                         "border: 2px solid black;"
+                         "border-radius: 10px;"
+                         "background-color: #EAE2F9;"
+                         "padding: 10px;"
+                         "}");
+
     this->mainLayout = new QHBoxLayout(this);
-    this->mainLayout->addLayout(this->textLayout);
-    this->mainLayout->addStretch();  // Добавляем растяжку, чтобы кнопки были справа
-    this->mainLayout->addLayout(this->buttonsLayout);
+
+    this->connectLayout = new QHBoxLayout(frame);
+    this->connectLayout->addLayout(this->textLayout);
+    // this->mainLayout->setLayout(this->textLayout);
+    this->connectLayout->addStretch();  // Добавляем растяжку, чтобы кнопки были справа
+    // this->frame->setLayout(this->buttonsLayout);
+    this->connectLayout->addLayout(this->buttonsLayout);
+    // this->frame->setLayout(this->connectLayout);
+    // this->mainLayout->addWidget(this->frame);
 }
 
 TaskWidget::TaskWidget(const QString& id, const QString &text, QWidget *parent)
-    : QWidget(parent), label(new QLabel(text, this)), buttonEdit(new QPushButton(this)), buttonDelete(new QPushButton(this)), line(new QFrame(this)),
-    input(new QLineEdit(this))    {
-
+    : QWidget(parent), label(new QLabel(text, this)), buttonEdit(new QPushButton(this)), buttonDelete(new QPushButton(this)),
+    completeTaskButton(new QPushButton(this)), input(new QLineEdit(this)), toggle(false)
+{
     this->initFont();
     this->initLabel();
-    this->initLine();
     this->initEditButton();
     this->initInput();
     this->initDeleteButton();
+    this->initCompleteTaskButton();
     this->initTextLayout();
     this->initButtonsLayout();
     this->initMainLayout();
@@ -139,8 +155,9 @@ TaskWidget::TaskWidget(const QString& id, const QString &text, QWidget *parent)
 }
 
 TaskWidget::TaskWidget(QString text, QWidget *parent)
-    : QWidget(parent), label(new QLabel(text, this)), buttonEdit(new QPushButton(this)), buttonDelete(new QPushButton(this)), line(new QFrame(this)),
-    input(new QLineEdit(this))    {
+    : QWidget(parent), label(new QLabel(text, this)), buttonEdit(new QPushButton(this)), buttonDelete(new QPushButton(this)),
+    completeTaskButton(new QPushButton(this)), input(new QLineEdit(this)), toggle(false)
+{
 
     static int currentId = 0; // Статический счетчик для уникальных идентификаторов
     id = QString::number(currentId++);
@@ -151,10 +168,10 @@ TaskWidget::TaskWidget(QString text, QWidget *parent)
     this->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);  // Выравниваем по левому краю, без отступов
     this->label->setWordWrap(true);  // Разрешаем перенос текста
     this->label->setTextInteractionFlags(Qt::TextEditorInteraction);
-    this->initLine();
     this->initEditButton();
     this->initInput();
     this->initDeleteButton();
+    this->initCompleteTaskButton();
     this->initSpacer();
     this->preTextLayout = new QHBoxLayout();
     // this->preTextLayout->addWidget(this->id);
@@ -163,17 +180,18 @@ TaskWidget::TaskWidget(QString text, QWidget *parent)
     this->preTextLayout->addWidget(this->input);
     this->textLayout = new QVBoxLayout();
     this->textLayout->addLayout(this->preTextLayout);
-    this->textLayout->addWidget(this->line);
+    // this->textLayout->addWidget(this->line);
     this->initButtonsLayout();
     this->initMainLayout();
 
+    this->mainLayout->addWidget(this->frame);
     setLayout(this->mainLayout);
     setMouseTracking(true); // Включаем отслеживание движения мыши
 }
 
 TaskWidget::TaskWidget(TaskWidget* other, QWidget *parent)
-    : QWidget(parent), label(other->label), buttonEdit(other->buttonEdit), buttonDelete(other->buttonDelete), line(other->line),
-    input(other->input)    {
+    : QWidget(parent), label(other->label), buttonEdit(other->buttonEdit), buttonDelete(other->buttonDelete),
+    input(other->input), toggle(false)    {
 
     static int currentId = 0; // Статический счетчик для уникальных идентификаторов
     id = QString::number(currentId++);
@@ -184,7 +202,6 @@ TaskWidget::TaskWidget(TaskWidget* other, QWidget *parent)
     this->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);  // Выравниваем по левому краю, без отступов
     this->label->setWordWrap(true);  // Разрешаем перенос текста
     this->label->setTextInteractionFlags(Qt::TextEditorInteraction);
-    this->initLine();
     this->initEditButton();
     this->initInput();
     this->initDeleteButton();
@@ -196,7 +213,7 @@ TaskWidget::TaskWidget(TaskWidget* other, QWidget *parent)
     this->preTextLayout->addWidget(this->input);
     this->textLayout = new QVBoxLayout();
     this->textLayout->addLayout(this->preTextLayout);
-    this->textLayout->addWidget(this->line);
+    // this->textLayout->addWidget(this->line);
     this->initButtonsLayout();
     this->initMainLayout();
 
@@ -223,22 +240,29 @@ const QPushButton* TaskWidget::getDeleteButton() const
     return this->buttonDelete;
 }
 
-void TaskWidget::setLabelColor(const QString& color)
+void TaskWidget::setColor(const QString& bgColor, const QString& color)
 {
+    frame->setStyleSheet("border: 2px solid black; border-radius: 10px; background-color: #f0f0f0; padding: 10px; background-color: " + bgColor);
     this->label->setStyleSheet("font-size: 19px; font-weight: 600;" + color);
     this->input->setStyleSheet("font-size: 19px; font-weight: 600;" + color);
+}
+
+void TaskWidget::setToggle(const bool &toggle) {
+    this->toggle = toggle;
 }
 
 void TaskWidget::enterEvent(QEvent *event) {
     QWidget::enterEvent(event);
     buttonEdit->setVisible(true); // Показываем кнопку при наведении
     buttonDelete->setVisible(true); // Показываем кнопку при наведении
+    completeTaskButton->setVisible(true);
 }
 
 void TaskWidget::leaveEvent(QEvent *event) {
     QWidget::leaveEvent(event);
     buttonEdit->setVisible(false); // Скрываем кнопку, когда курсор уходит
     buttonDelete->setVisible(false); // Скрываем кнопку, когда курсор уходит
+    completeTaskButton->setVisible(false);
 }
 
 void TaskWidget::onChangeClicked(const QString& newText) {
@@ -251,11 +275,22 @@ void TaskWidget::onDeleteClicked() {
     this->input->clear();
     this->label->setVisible(false);
     this->input->setVisible(false);
-    this->line->clearMask();
-    this->line->setVisible(false);
+    // this->line->clearMask();
+    // this->line->setVisible(false);
 
 
 
     emit deleteClicked(taskText);  // Отправляем сигнал на удаление
     delete this;
+}
+
+void TaskWidget::onCompleteTask() {
+    if (!toggle)
+        this->label->setStyleSheet("font-size: 19px; font-weight: 600; color: #077e2d");
+    else
+        this->label->setStyleSheet("font-size: 19px; font-weight: 600;");
+
+    toggle = !toggle;
+
+    emit completeTask(this->label->text(), this->toggle);
 }

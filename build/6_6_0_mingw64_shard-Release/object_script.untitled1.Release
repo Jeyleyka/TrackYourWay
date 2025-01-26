@@ -4,6 +4,7 @@ release/login.o
 release/main.o
 release/mainwindow.o
 release/modalwindow.o
+release/qwraplayout.o
 release/taskwidget.o
 release/welcomewnd.o
 release/untitled1_plugin_import.o

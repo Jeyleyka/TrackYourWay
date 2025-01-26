@@ -20,10 +20,12 @@ private:
     void initCloseBtn();
 
 signals:
-    void actionPerformed();
+    void showCalendar();
+    void showHistory();
 
 private slots:
-    void onActionButtonClicked();
+    void onShowCalendarClicked();
+    void onShowHistoryClicked();
 
 
 protected:

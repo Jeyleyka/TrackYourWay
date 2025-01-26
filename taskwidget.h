@@ -11,21 +11,26 @@ private:
     QLabel *label;
     QPushButton *buttonEdit;
     QPushButton *buttonDelete;
-    QFrame *line;
+    QPushButton *completeTaskButton;
+    // QFrame *line;
+    QFrame *frame;
     QLineEdit *input;
     QFont font;
     QHBoxLayout *preTextLayout;
     QVBoxLayout *textLayout;
     QHBoxLayout *buttonsLayout;
+    QHBoxLayout *connectLayout;
     QHBoxLayout *mainLayout;
     QSpacerItem* spacer;
 
+    bool toggle;
+
     void initFont();
     void initLabel();
-    void initLine();
     void initEditButton();
     void initInput();
     void initDeleteButton();
+    void initCompleteTaskButton();
     void initSpacer();
     void initPreTextLayout();
     void initTextLayout();
@@ -45,11 +50,13 @@ public:
 
     const QPushButton* getDeleteButton() const;
     void setId(const QString& _id);
-    void setLabelColor(const QString& color);
+    void setColor(const QString& bgColor, const QString& color);
+    void setToggle(const bool& toggle);
 
 signals:
     void changeTask(const QString& task);
     void deleteClicked(const QString& task);
+    void completeTask(const QString& task, const bool& toggle);
 
 protected:
     void enterEvent(QEvent *event) override;
@@ -58,6 +65,7 @@ protected:
 private slots:
     void onChangeClicked(const QString& newText);
     void onDeleteClicked();
+    void onCompleteTask();
 };
 
 #endif // TASKWIDGET_H
