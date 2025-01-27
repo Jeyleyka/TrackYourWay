@@ -49,8 +49,10 @@ public:
     QString getId() const; // Получаем идентификатор
 
     const QPushButton* getDeleteButton() const;
+    const bool& getToggle() const;
     void setId(const QString& _id);
     void setColor(const QString& bgColor, const QString& color);
+    void setLabelColor(const QString& color);
     void setToggle(const bool& toggle);
 
 signals:

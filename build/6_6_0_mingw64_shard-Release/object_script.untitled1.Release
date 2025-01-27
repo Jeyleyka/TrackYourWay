@@ -1,3 +1,4 @@
+release/calendarwidget.o
 release/dayofweekapi.o
 release/infoblock.o
 release/login.o
@@ -8,6 +9,7 @@ release/qwraplayout.o
 release/taskwidget.o
 release/welcomewnd.o
 release/untitled1_plugin_import.o
+release/moc_calendarwidget.o
 release/moc_infoblock.o
 release/moc_login.o
 release/moc_mainwindow.o

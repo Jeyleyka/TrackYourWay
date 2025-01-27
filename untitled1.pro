@@ -12,6 +12,7 @@ TEMPLATE = app
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    calendarwidget.cpp \
     dayofweekapi.cpp \
     infoblock.cpp \
     login.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
     welcomewnd.cpp
 
 HEADERS += \
+    calendarwidget.h \
     dayofweekapi.h \
     infoblock.h \
     libs.h \

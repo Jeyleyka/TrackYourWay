@@ -1,32 +1,6 @@
+
 day: Monday
-working
-cleaning
 reading
-
-day: Tuesday
-working
-cleaning - complete
-reading - complete
-
-day: Wednesday
-working - complete
-cleaning - complete
-reading - complete
-
-day: Thursday
-work - complete
-read - complete
-
-day: Friday
-working - complete
-cleaning - complete
-reading - complete
-gym - complete
-
-day: Saturday
-vz - complete
-working
-reading
-
-day: Sunday
-eqweq
+programming - complete
+go to school
+fsdafsdsadl'khsdfkhsdfowreyuwgwep[giadl;sfghsdf;pd;erpigerhluheouheauie

@@ -164,9 +164,11 @@ TaskWidget::TaskWidget(QString text, QWidget *parent)
 
     this->initFont();
     // this->id->setStyleSheet("color: #000; font-size: 19px; font-weight: 600;");
-    this->label->setStyleSheet("color: #000; font-size: 19px; font-weight: 600; max-width: 100px");  // Убираем отступы
+    this->label->setStyleSheet("color: #000; font-size: 19px; font-weight: 600; max-width: 250px");  // Убираем отступы
+
     this->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);  // Выравниваем по левому краю, без отступов
     this->label->setWordWrap(true);  // Разрешаем перенос текста
+    // this->label->setFixedWidth(300);
     this->label->setTextInteractionFlags(Qt::TextEditorInteraction);
     this->initEditButton();
     this->initInput();
@@ -198,9 +200,9 @@ TaskWidget::TaskWidget(TaskWidget* other, QWidget *parent)
 
     this->initFont();
     // this->id->setStyleSheet("color: #000; font-size: 19px; font-weight: 600;");
-    this->label->setStyleSheet("color: #000; font-size: 19px; font-weight: 600; max-width: 100px");  // Убираем отступы
+    this->label->setStyleSheet("color: #000; font-size: 19px; font-weight: 600; max-width: 200px");  // Убираем отступы
+    this->label->setWordWrap(true);
     this->label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);  // Выравниваем по левому краю, без отступов
-    this->label->setWordWrap(true);  // Разрешаем перенос текста
     this->label->setTextInteractionFlags(Qt::TextEditorInteraction);
     this->initEditButton();
     this->initInput();
@@ -240,11 +242,22 @@ const QPushButton* TaskWidget::getDeleteButton() const
     return this->buttonDelete;
 }
 
+const bool& TaskWidget::getToggle() const {
+    return this->toggle;
+}
+
 void TaskWidget::setColor(const QString& bgColor, const QString& color)
 {
     frame->setStyleSheet("border: 2px solid black; border-radius: 10px; background-color: #f0f0f0; padding: 10px; background-color: " + bgColor);
-    this->label->setStyleSheet("font-size: 19px; font-weight: 600;" + color);
+    if (!toggle)
+        this->label->setStyleSheet("font-size: 19px; font-weight: 600; max-width: 250px;" + color);
+
     this->input->setStyleSheet("font-size: 19px; font-weight: 600;" + color);
+}
+
+void TaskWidget::setLabelColor(const QString& color)
+{
+    this->label->setStyleSheet("font-size: 19px; font-weight: 600; max-width: 250px;" + color);
 }
 
 void TaskWidget::setToggle(const bool &toggle) {

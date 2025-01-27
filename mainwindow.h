@@ -6,6 +6,7 @@
 #include "infoblock.h"
 #include "dayofweekapi.h"
 #include "qwraplayout.h"
+#include "calendarwidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -16,6 +17,7 @@ private:
     TaskWidget* taskWidget;
     InfoBlock* infoBlock;
     DayOfWeekAPI* API;
+    CalendarWidget* calendar;
 
     QWidget *modalWidget;
     QWidget *tasksSlide;
@@ -77,7 +79,7 @@ private:
 
     QStackedWidget* carousel;
 
-    QCalendarWidget *calendar;
+    // QCalendarWidget *calendar;
 
     QNetworkAccessManager *networkManager;
 

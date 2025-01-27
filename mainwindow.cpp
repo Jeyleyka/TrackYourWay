@@ -851,7 +851,7 @@ void MainWindow::initTasksSlideLayout() {
 void MainWindow::initCalendarLayout() {
     this->calendarSlide = new QWidget(this);
     this->calendarLayout = new QVBoxLayout(this->calendarSlide);
-    this->calendar = new QCalendarWidget(calendarSlide);
+    this->calendar = new CalendarWidget(calendarSlide);
     this->calendarLayout->addWidget(this->calendar);
 }
 
@@ -982,7 +982,11 @@ void MainWindow::saveTasksToFile(const QString& widgetText) {
     QString filename = "other_data.txt";
     QString WidgetText = widgetText;
 
-    // Проверяем, существует ли уже файл
+    // Получаем текущую дату
+    QDate currentDate = QDate::currentDate();
+    int currentWeekNumber = currentDate.weekNumber();
+
+    // Читаем содержимое файла
     QFile file(filename);
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
         qWarning() << "Не удалось открыть файл для записи!";
@@ -992,9 +996,26 @@ void MainWindow::saveTasksToFile(const QString& widgetText) {
     QTextStream in(&file);
     QString fileContent = in.readAll();
 
-    // Проверка, существует ли запись для сегодняшнего дня
+    // Проверка на смену недели
+    // Читаем метку последней недели из файла (например, "week: 1")
+    int lastWeekNumber = -1;
+    if (fileContent.contains("week:")) {
+        QRegExp weekRegex("week: (\\d+)");
+        int pos = fileContent.indexOf(weekRegex);
+        if (pos != -1) {
+            weekRegex.indexIn(fileContent, pos);
+            lastWeekNumber = weekRegex.cap(1).toInt();
+        }
+    }
+
+    // Если текущая неделя отличается от предыдущей, очищаем файл
+    if (lastWeekNumber != currentWeekNumber) {
+        qDebug() << "Новая неделя, очищаем данные старой недели.";
+        fileContent.clear();  // Очищаем файл
+    }
+
+    // Теперь обрабатываем задачи для текущего дня
     QString dayMarker = "day: " + today;
-     // Пример новой задачи, которую вы хотите добавить
 
     // Если запись для текущего дня уже существует
     if (fileContent.contains(dayMarker)) {
@@ -1234,10 +1255,10 @@ void MainWindow::loadDataFromFile() {
 
                 if (currentLine.contains(" - complete"))
                 {
-                    if (!toggle)
-                        oldWidget->setColor("#EAE2F9", "color: #077e2d");
-                    else
-                        oldWidget->setColor("#1e1e20", "color: #077e2d");
+                    // if (oldWidget->getToggle())
+                    oldWidget->setLabelColor("color: #077e2d");
+                    // else
+                    //     oldWidget->setLabelColor("color: #077e2d");
 
                     oldWidget->setToggle(true);
                 }

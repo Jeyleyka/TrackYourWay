@@ -48,6 +48,8 @@
 #include <QScrollArea>
 #include <QRect>
 #include <QSpacerItem>
+#include <QTimer>
+#include <QGridLayout>
 
 #include <map>
 
