@@ -7,6 +7,7 @@
 #include "dayofweekapi.h"
 #include "qwraplayout.h"
 #include "calendarwidget.h"
+#include "schedulewidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -18,6 +19,7 @@ private:
     InfoBlock* infoBlock;
     DayOfWeekAPI* API;
     CalendarWidget* calendar;
+    ScheduleWidget* schedule;
 
     QWidget *modalWidget;
     QWidget *tasksSlide;
@@ -127,12 +129,19 @@ private slots:
     void showModalWindow();
     void onShowCalendar();
     void onShowHistory();
+    void onShowLogin();
+    void onChangeIcon();
     void loadTasksFromFile();
     void saveTasksToFile(const QString& widgetText);
     QPair<int, QStringList> countDaysAndListInFile(const QString &fileName);
     QVector<InfoBlock*> createInfoBlocksFromFile(const QString &fileName, QWidget *parentWidget);
     void displayInfoBlocks();
     void loadDataFromFile();
+    void saveIcon(const QString &filePath);
+    void loadIcon();
+
+signals:
+    void showLoginByClicked();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

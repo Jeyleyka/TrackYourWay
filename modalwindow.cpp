@@ -14,8 +14,12 @@ ModalWindow::ModalWindow(QColor color, QWidget* parent) : QDialog(parent) {
     this->menuLayout = new QVBoxLayout;
     this->menuLayout->addWidget(this->visitingCalendarBtn);
     this->menuLayout->addWidget(this->showTasksOfPastDaysBtn);
-    this->menuLayout->setContentsMargins(0,0,0,670);
-    this->menuLayout->setSpacing(0);
+    this->menuLayout->addWidget(this->changeIco);
+    this->menuLayout->setSpacing(20);
+    this->menuLayout->addStretch(4);
+    this->menuLayout->addWidget(this->logOut);
+    this->menuLayout->setContentsMargins(0,0,0,500);
+
     this->currentBackgroundColor = color;
     // this->label->setStyle(color);
 
@@ -51,6 +55,7 @@ void ModalWindow::initCloseBtn() {
                                  "}"
                                  "QPushButton:hover {"
                                  "color: #EAE2F9;"  // Меняем цвет текста на серый при наведении
+                                 "text-decoration: underline;"
                                  "}");
 
     connect(this->visitingCalendarBtn, &QPushButton::clicked, this, &ModalWindow::onShowCalendarClicked);
@@ -64,10 +69,31 @@ void ModalWindow::initCloseBtn() {
                                              "font-size: 16px;"
                                              "}"
                                              "QPushButton:hover {"
-                                             "color: #EAE2F9;"  // Меняем цвет текста на серый при наведении
+                                             "color: blue;"  // Меняем цвет текста на серый при наведении
+                                             "text-decoration: underline;"
                                              "}");
 
     connect(this->showTasksOfPastDaysBtn, &QPushButton::clicked, this, &ModalWindow::onShowHistoryClicked);
+
+    this->changeIco = new QPushButton("Change profile icon", this);
+    this->changeIco->setStyleSheet("QPushButton {"
+                                "background: transparent;"
+                                "border: none;"
+                                "color: black;"
+                                "font-size: 16px;"
+                                "}");
+
+    connect(this->changeIco, &QPushButton::clicked, this, &ModalWindow::onChangeIcon);
+
+    this->logOut = new QPushButton("log out", this);
+    this->logOut->setStyleSheet("QPushButton {"
+                                                "background: transparent;"
+                                                "border: none;"
+                                                "color: red;"
+                                                "font-size: 16px;"
+                                                "}");
+
+    connect(this->logOut, &QPushButton::clicked, this, &ModalWindow::onLogOutOfProfileClicked);
 }
 
 void ModalWindow::onShowCalendarClicked() {
@@ -76,6 +102,14 @@ void ModalWindow::onShowCalendarClicked() {
 
 void ModalWindow::onShowHistoryClicked() {
     emit showHistory();
+}
+
+void ModalWindow::onLogOutOfProfileClicked() {
+    emit showLogin();
+}
+
+void ModalWindow::onChangeIcon() {
+    emit changeIcon();
 }
 
 void ModalWindow::paintEvent(QPaintEvent *event) {

@@ -100,7 +100,13 @@ int main(int argc, char *argv[]) {
 
     } else if (handleReadPassword() == 2 || haveAccountAndShowLogin() == 2) {
         WelcomeWnd *window = new WelcomeWnd();
+
         window->show();
+
+        Login *loginWnd = new Login();
+        QObject::connect(window, &WelcomeWnd::mainByClick, loginWnd, &Login::showLoginWindow);
+
+
     }
 
 

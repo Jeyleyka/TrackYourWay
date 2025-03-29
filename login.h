@@ -1,7 +1,7 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-#include "mainwindow.h"
+#include "changeusernamewnd.h"
 
 class Login : public QMainWindow
 {
@@ -11,6 +11,11 @@ public:
     explicit Login(QWidget *parent = nullptr);
 
     const bool& getOpenMainWnd() const;
+
+public slots:
+    void showLoginWindow() {
+        QWidget::show();
+    }
 
 signals:
     void loginSuccessful();  // Сигнал успешного входа
@@ -30,16 +35,22 @@ private:
     void initBtnsLayout();
     void initLogoLayout();
     void initPasswordLayout();
+    void initCheckData();
+    void initChangeUsrWnd();
     void initMainLayout();
 
     bool checkCorrectlyData();
     void handleLogin();
+    void handleData();
     int haveAccountAndShowLogin();  // Функция, которая проверяет наличие аккаунта
-    void logout();
 
     bool openWnd = false;  // Флаг открытия главного окна
-    bool passwordVisible;
+    bool passwordVisible = false;
     bool dragging = false;
+
+    ModalWindow* mdlWnd;
+    ChangeUsernameWnd *changeUsrWnd;
+
     QPoint offset;
     QString usernameData;
     QString passwordData;
@@ -49,6 +60,7 @@ private:
     QWidget *centralWidget;
     QPushButton *closeBtn;
     QPushButton *hideBtn;
+    QPushButton *changeUsername;
     QLabel *logoLabel;
     QLineEdit *username;
     QLineEdit *password;
@@ -59,7 +71,6 @@ private:
     QHBoxLayout *passwordLayout;
     QVBoxLayout *mainLayout;
 
-    // Новая переменная для хранения масштабированного логотипа
     QPixmap scaledLogo;
 };
 

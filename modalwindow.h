@@ -10,9 +10,13 @@ class ModalWindow : public QDialog
 private:
     QPropertyAnimation *openAnimation;
     QPropertyAnimation *closeAnimation;
+
     QPushButton* closeBtn;
     QPushButton* visitingCalendarBtn;
     QPushButton* showTasksOfPastDaysBtn;
+    QPushButton* changeIco;
+    QPushButton* logOut;
+
     QHBoxLayout *btnLayout;
     QVBoxLayout *menuLayout;
     QVBoxLayout* mainLayout;
@@ -22,10 +26,15 @@ private:
 signals:
     void showCalendar();
     void showHistory();
+    void showLogin();
+    void changeIcon();
+
 
 private slots:
     void onShowCalendarClicked();
     void onShowHistoryClicked();
+    void onLogOutOfProfileClicked();
+    void onChangeIcon();
 
 
 protected:

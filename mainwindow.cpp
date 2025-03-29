@@ -697,7 +697,8 @@ void MainWindow::initModalUserMenuBtn() {
     this->modal = new ModalWindow(QColor(219,211,233), this);
 
     this->modalUser = new QPushButton(this);
-    this->modalUser->setIcon(QIcon("icons/user.png"));
+    // this->modalUser->setIcon(QIcon("icons/user.png"));
+    this->loadIcon();
     this->modalUser->setIconSize(QSize(52,52));
     this->modalUser->setStyleSheet(QString("QPushButton {"
                                            "border-radius: %1px;"
@@ -705,7 +706,6 @@ void MainWindow::initModalUserMenuBtn() {
                                            "}").arg(52 / 2));
 
     connect(this->modalUser, &QPushButton::clicked, this, &MainWindow::showModalWindow);
-
 }
 
 void MainWindow::initAddTasks() {
@@ -757,9 +757,9 @@ void MainWindow::initCarouselBtns() {
     this->historyTasksSlideButton = new QPushButton(this);
     this->historyTasksSlideButton->setFixedSize(20,20);
     this->historyTasksSlideButton->setStyleSheet(QString("QPushButton {"
-                                                     "border-radius: %1px;"
-                                                     "border: none;"
-                                                     "}").arg(20 / 2));
+                                                         "border-radius: %1px;"
+                                                         "border: none;"
+                                                         "}").arg(20 / 2));
 
     this->tasksSlideButton->setIcon(QIcon("icons/full_circle.png"));
     this->calendarSlideButton->setIcon(QIcon("icons/empty_circle.png"));
@@ -851,37 +851,21 @@ void MainWindow::initTasksSlideLayout() {
 void MainWindow::initCalendarLayout() {
     this->calendarSlide = new QWidget(this);
     this->calendarLayout = new QVBoxLayout(this->calendarSlide);
-    this->calendar = new CalendarWidget(calendarSlide);
-    this->calendarLayout->addWidget(this->calendar);
+    this->schedule = new ScheduleWidget(calendarSlide);
+    this->calendarLayout->addWidget(this->schedule);
 }
 
 void MainWindow::initHistoryTasksLayout() {
     this->historyTasksSlide = new QWidget(this);
 
-
-
-    // qDebug() << "PROCENT: " << procent;
-
-    // QLabel *information = new QLabel;
-
-    // information->setText("your procent of complete task equal " /*+ QString::number(procent)*/);
-
-    // QWrapLayout* historyTasksLayout = new QWrapLayout();
     this->historyTasksLayout = new QVBoxLayout(this->historyTasksSlide);
     this->daysLayout = new QWrapLayout;
     this->informationLayout = new QHBoxLayout;
     this->informationLayout->addStretch(0);
-    // this->tasksSlideLayout->addLayout(this->tasksLayout);
-    // this->tasksSlideLayout->addLayout(this->inputsLayout);
-    // this->tasksSlideLayout->addLayout(this->widgetLayout)
-    // this->historyTasksLayout->addWidget(information);
 
     this->historyTasksLayout->setAlignment(Qt::AlignTop);
     this->historyTasksLayout->addLayout(this->daysLayout);
     this->historyTasksLayout->addLayout(this->informationLayout);
-
-    // this->historyTasksLayout->setContentsMargins(0,100,0,0);
-    // this->historyTasksLayout->addStretch(0);
 
     this->displayInfoBlocks();
 }
@@ -926,6 +910,9 @@ void MainWindow::showModalWindow() {
 
     connect(this->modal, &ModalWindow::showCalendar, this, &MainWindow::onShowCalendar);
     connect(this->modal, &ModalWindow::showHistory, this, &MainWindow::onShowHistory);
+    connect(this->modal, &ModalWindow::showLogin, this, &MainWindow::onShowLogin);
+    connect(this->modal, &ModalWindow::changeIcon, this, &MainWindow::onChangeIcon);
+    // connect(this->modal, &ModalWindow::showLogin, this, &MainWindow::close);
 }
 
 void MainWindow::onShowCalendar() {
@@ -962,6 +949,58 @@ void MainWindow::onShowHistory() {
     }
 
     qDebug() << "action complete!";
+}
+
+void MainWindow::onShowLogin() {
+    emit showLoginByClicked();
+
+    QFile file("login_data.txt");
+
+    // Открываем файл для чтения и записи
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        QMessageBox::critical(nullptr, "File Error", "Failed to open file for reading and writing.");
+        return;
+    }
+
+    QTextStream in(&file);
+    QString fileContent = in.readAll();
+
+    // Регулярное выражение для поиска строки "Remember:"
+    QRegExp rememberRegex(R"(Remember:\s*\d)");
+
+    // Если строка "Remember:" существует, заменяем её
+    if (fileContent.contains(rememberRegex)) {
+        fileContent.replace(rememberRegex, "Remember: 0");
+    } else {
+        // Если строки "Remember:" нет, добавляем её в конец
+        fileContent.append("\nRemember: 0");
+    }
+
+    // Очищаем файл перед записью новых данных
+    file.resize(0);  // Очищаем файл
+
+    QTextStream out(&file);
+    out << fileContent;  // Записываем изменённое содержимое
+
+    file.close();  // Закрываем файл после записи
+
+    this->hide();
+    this->modal->hide();
+}
+
+void MainWindow::onChangeIcon() {
+    QString filePath = QFileDialog::getOpenFileName(this, "Выберите иконку", "", "Images (*.png *.jpg *.bmp *.ico)");
+
+    if (!filePath.isEmpty()) {
+        // Загружаем иконку и устанавливаем в метку
+        QIcon icon(filePath);
+        this->modalUser->setIcon(icon);
+        this->saveIcon(filePath);
+        // Можно сохранить путь файла, если нужно
+        qDebug() << "Выбран файл: " << filePath;
+    } else {
+        QMessageBox::warning(this, "Ошибка", "Файл не выбран");
+    }
 }
 
 void MainWindow::loadTasksFromFile() {
@@ -1143,13 +1182,6 @@ QVector<InfoBlock*> MainWindow::createInfoBlocksFromFile(const QString &fileName
 void MainWindow::displayInfoBlocks() {
     this->infoBlocks = createInfoBlocksFromFile("other_data.txt", this);
 
-    // QIcon infIcon("icons/exclamation.png");
-
-
-    // information->setText( /*+ QString::number(procent)*/);
-
-    // this->historyTasksLayout->addWidget(information);
-
     // Создаем и добавляем блоки на страницу
     for (InfoBlock *block : infoBlocks) {
         this->daysLayout->addWidget(block);
@@ -1164,8 +1196,15 @@ void MainWindow::displayInfoBlocks() {
 
     qDebug() << "PROCENT: " <<procent;
 
-    this->information = new QLabel("your procent of complete tasks equal " + QString::number(procent).left(1) + "%", this);
+    this->information = new QLabel("your procent of complete tasks equal " + QString::number(procent) + "%", this);
+    this->information->setStyleSheet("color: green");
     this->infBtn = new QPushButton(this);
+    this->infBtn->setIcon(QIcon("icons/check.png"));
+    this->infBtn->setIconSize(QSize(25,25));
+    this->infBtn->setStyleSheet(QString("QPushButton {"
+                                        "border-radius: %1px;"
+                                        "border: none;"
+                                        "}").arg(25 / 2));
 
     if (procent <= 50.f)
     {
@@ -1173,9 +1212,9 @@ void MainWindow::displayInfoBlocks() {
         this->infBtn->setIcon(QIcon("icons/exclamation.png"));
         this->infBtn->setIconSize(QSize(25,25));
         this->infBtn->setStyleSheet(QString("QPushButton {"
-                                              "border-radius: %1px;"
-                                              "border: none;"
-                                              "}").arg(25 / 2));
+                                            "border-radius: %1px;"
+                                            "border: none;"
+                                            "}").arg(25 / 2));
 
         this->information->setStyleSheet("font-size: 13px; font-weight: 500; margin-right: 80px; color: #e00018");
         this->information->setText(
@@ -1292,6 +1331,25 @@ void MainWindow::loadDataFromFile() {
 
     } else {
         qDebug() << "Не удалось открыть файл для чтения!";
+    }
+}
+
+void MainWindow::saveIcon(const QString &filePath) {
+    QSettings settings("MyApp", "Settings");  // Название приложения и компании
+    settings.setValue("iconPath", filePath);  // Сохраняем путь к иконке
+}
+
+void MainWindow::loadIcon() {
+    QSettings settings("MyApp", "Settings");
+    QString filePath = settings.value("iconPath").toString();  // Загружаем путь из настроек
+
+    if (!filePath.isEmpty()) {
+        // Если путь не пустой, загружаем иконку
+        QIcon icon(filePath);
+        this->modalUser->setIcon(icon);
+    } else
+    {
+        this->modalUser->setIcon(QIcon("icons/user.png"));
     }
 }
 

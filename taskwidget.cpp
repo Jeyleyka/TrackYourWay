@@ -118,11 +118,11 @@ void TaskWidget::initMainLayout() {
     this->frame->setFrameShape(QFrame::StyledPanel);
     this->frame->setFrameShadow(QFrame::Raised);
     this->frame->setStyleSheet("QFrame {"
-                         "border: 2px solid black;"
-                         "border-radius: 10px;"
-                         "background-color: #EAE2F9;"
-                         "padding: 10px;"
-                         "}");
+                               "border: 2px solid black;"
+                               "border-radius: 10px;"
+                               "background-color: #EAE2F9;"
+                               "padding: 10px;"
+                               "}");
 
     this->mainLayout = new QHBoxLayout(this);
 

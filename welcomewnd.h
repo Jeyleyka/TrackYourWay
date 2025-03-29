@@ -8,6 +8,7 @@ class WelcomeWnd : public QMainWindow
     Q_OBJECT
 
 private:
+    ModalWindow* mdlWnd;
     QWidget *centralWidget;
     QColor currentBackgroundColor = QColor(234,226,249);
     QVBoxLayout* mainLayout;
@@ -40,8 +41,12 @@ private:
 
 private slots:
     void openSecondWindow();
+    void MsgToMain();
     // void handleLogin();
     // void handleCheckBoxStateChanged(int state);
+
+signals:
+    void mainByClick();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

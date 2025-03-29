@@ -50,6 +50,10 @@
 #include <QSpacerItem>
 #include <QTimer>
 #include <QGridLayout>
+#include <QGraphicsOpacityEffect>
+#include <QLocale>
+#include <QFileDialog>
+#include <QSettings>
 
 #include <map>
 

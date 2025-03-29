@@ -132,6 +132,13 @@ void WelcomeWnd::openSecondWindow() {
     this->close();
     MainWindow *main = new MainWindow();  // Создаем второе окно
     main->show();           // Открываем его как модальное окно
+    connect(main, &MainWindow::showLoginByClicked, this, &WelcomeWnd::MsgToMain);
+}
+
+void WelcomeWnd::MsgToMain() {
+    emit mainByClick();
+    // this->hide();
+    qDebug() << "ACTION!\n";
 }
 
 WelcomeWnd::WelcomeWnd(QWidget *parent) : QMainWindow(parent), passwordVisible(false) {

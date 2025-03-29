@@ -51,6 +51,7 @@ OBJECTS_DIR   = debug
 ####### Files
 
 SOURCES       = ..\..\calendarwidget.cpp \
+		..\..\changeusernamewnd.cpp \
 		..\..\dayofweekapi.cpp \
 		..\..\infoblock.cpp \
 		..\..\login.cpp \
@@ -58,16 +59,20 @@ SOURCES       = ..\..\calendarwidget.cpp \
 		..\..\mainwindow.cpp \
 		..\..\modalwindow.cpp \
 		..\..\qwraplayout.cpp \
+		..\..\schedulewidget.cpp \
 		..\..\taskwidget.cpp \
 		..\..\welcomewnd.cpp G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/untitled1_plugin_import.cpp \
 		debug\moc_calendarwidget.cpp \
+		debug\moc_changeusernamewnd.cpp \
 		debug\moc_infoblock.cpp \
 		debug\moc_login.cpp \
 		debug\moc_mainwindow.cpp \
 		debug\moc_modalwindow.cpp \
+		debug\moc_schedulewidget.cpp \
 		debug\moc_taskwidget.cpp \
 		debug\moc_welcomewnd.cpp
 OBJECTS       = debug/calendarwidget.o \
+		debug/changeusernamewnd.o \
 		debug/dayofweekapi.o \
 		debug/infoblock.o \
 		debug/login.o \
@@ -75,18 +80,22 @@ OBJECTS       = debug/calendarwidget.o \
 		debug/mainwindow.o \
 		debug/modalwindow.o \
 		debug/qwraplayout.o \
+		debug/schedulewidget.o \
 		debug/taskwidget.o \
 		debug/welcomewnd.o \
 		debug/untitled1_plugin_import.o \
 		debug/moc_calendarwidget.o \
+		debug/moc_changeusernamewnd.o \
 		debug/moc_infoblock.o \
 		debug/moc_login.o \
 		debug/moc_mainwindow.o \
 		debug/moc_modalwindow.o \
+		debug/moc_schedulewidget.o \
 		debug/moc_taskwidget.o \
 		debug/moc_welcomewnd.o
 
 DIST          =  ..\..\calendarwidget.h \
+		..\..\changeusernamewnd.h \
 		..\..\dayofweekapi.h \
 		..\..\infoblock.h \
 		..\..\libs.h \
@@ -94,8 +103,10 @@ DIST          =  ..\..\calendarwidget.h \
 		..\..\mainwindow.h \
 		..\..\modalwindow.h \
 		..\..\qwraplayout.h \
+		..\..\schedulewidget.h \
 		..\..\taskwidget.h \
 		..\..\welcomewnd.h ..\..\calendarwidget.cpp \
+		..\..\changeusernamewnd.cpp \
 		..\..\dayofweekapi.cpp \
 		..\..\infoblock.cpp \
 		..\..\login.cpp \
@@ -103,6 +114,7 @@ DIST          =  ..\..\calendarwidget.h \
 		..\..\mainwindow.cpp \
 		..\..\modalwindow.cpp \
 		..\..\qwraplayout.cpp \
+		..\..\schedulewidget.cpp \
 		..\..\taskwidget.cpp \
 		..\..\welcomewnd.cpp
 QMAKE_TARGET  = untitled1
@@ -124,10 +136,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) untitled1.zip $(SOURCES) $(DIST) ..\..\..\..\untitled1.pro ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\spec_pre.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\qdevice.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\device_config.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\sanitize.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\gcc-base.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\g++-base.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\angle.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\win32\windows_vulkan_sdk.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\windows-vulkan.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\g++-win32.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\windows-desktop.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\qconfig.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext__clip2tri.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext__clipper.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext__poly2tri.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_freetype.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_harfbuzz.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_libjpeg.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_libjpeg12bits.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_libjpeg16bits.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_libpng.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_openwnn.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_pcre2.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_pinyin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_tcime.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3danimation.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3danimation_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dcore.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dcore_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dextras.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dextras_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dinput.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dinput_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dlogic.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dlogic_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquick.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquick_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickanimation.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickanimation_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickextras.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickextras_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickinput.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickinput_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickrender.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickrender_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickscene2d.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickscene2d_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3drender.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3drender_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_accessibility_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axbase.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axbase_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axcontainer.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axcontainer_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axserver.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axserver_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_bluetooth.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_bluetooth_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_bodymovin_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_bootstrap_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_charts.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_charts_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_core.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_core_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_datavisualization.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_datavisualization_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_dbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_dbus_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_designer.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_devicediscovery_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_edid_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_fb_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_fontdatabase_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_gamepad.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_gamepad_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_gui.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_help.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_help_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_location.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_location_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_multimedia.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_multimedia_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_multimediawidgets.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_multimediawidgets_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_network.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_network_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_networkauth.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_networkauth_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_nfc.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_nfc_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_opengl.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_openglextensions.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_openglextensions_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_packetprotocol_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_platformcompositor_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_positioning.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_positioning_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_positioningquick.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_positioningquick_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_purchasing.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_purchasing_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qml.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmldebug_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmldevtools_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmlmodels.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmlmodels_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmlworkerscript.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmlworkerscript_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3d.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3d_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3dassetimport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3dassetimport_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3drender.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3drender_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3druntimerender.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3druntimerender_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3dutils.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3dutils_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickcontrols2.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickcontrols2_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickshapes_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quicktemplates2.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quicktemplates2_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickwidgets.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickwidgets_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_remoteobjects.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_remoteobjects_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_repparser.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_repparser_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_script.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_script_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_scripttools.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_scripttools_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_scxml.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_scxml_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_sensors.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_sensors_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_serialbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_serialbus_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_serialport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_serialport_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_sql.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_svg.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_testlib.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_texttospeech.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_texttospeech_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_theme_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_uiplugin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_uitools.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_virtualkeyboard.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_virtualkeyboard_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_vulkan_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_webchannel.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_webchannel_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_websockets.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_websockets_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_webview.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_webview_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_widgets.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_winextras.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_winextras_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_xml.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_xmlpatterns.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_xmlpatterns_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_assimp.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_assimpsceneimport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_defaultgeometryloader.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_dsengine.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_gltfgeometryloader.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_gltfsceneexport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_gltfsceneimport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_openglrenderer.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qdirect2d.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qgenericbearer.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qgif.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qicns.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qico.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qjpeg.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qminimal.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_debugger.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_inspector.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_local.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_messages.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_native.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_nativedebugger.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_preview.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_profiler.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_quickprofiler.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_server.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_tcp.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qoffscreen.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qsqlite.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qsvg.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qsvgicon.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtaudio_windows.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtexttospeech_sapi.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtga.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtgeoservices_esri.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtgeoservices_itemsoverlay.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtgeoservices_mapbox.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtgeoservices_nokia.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtgeoservices_osm.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtiff.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtmedia_audioengine.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtmultimedia_m3u.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtpassthrucanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtpeakcanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtposition_positionpoll.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtposition_serialnmea.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtsensorgestures_plugin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtsensorgestures_shakeplugin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtsensors_generic.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtsysteccanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qttinycanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtuiotouchplugin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvectorcanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualcanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboard_hangul.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboard_openwnn.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboard_pinyin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboard_tcime.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboard_thai.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboardplugin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qwbmp.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qwebgl.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qwebp.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qwindows.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qwindowsvistastyle.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_scene2d.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_uip.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_windowsprintersupport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_xinputgamepad.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\qt_functions.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\qt_config.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\win32-g++\qmake.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\spec_post.prf .qmake.stash ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\exclusive_builds.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\toolchain.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\default_pre.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\win32\default_pre.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\resolve_config.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\exclusive_builds_post.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\default_post.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\build_pass.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\qtquickcompiler.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\static_runtime.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\precompile_header.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\warn_on.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\qt.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\gc_binaries.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\resources_functions.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\resources.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\moc.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\win32\opengl.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\uic.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\qmake_use.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\file_copies.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\win32\windows.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\testcase_targets.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\exceptions.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\yacc.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\lex.prf ..\..\untitled1.pro ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\styles\qwindowsvistastyle.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\platforms\qwindows.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qgif.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qicns.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qico.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qjpeg.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qtga.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qtiff.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qwbmp.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qwebp.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\bearer\qgenericbearer.prl ..\..\..\..\mingw64\qt5-static\lib\Qt5Widgets.prl ..\..\..\..\mingw64\qt5-static\lib\Qt5Gui.prl ..\..\..\..\mingw64\qt5-static\lib\Qt5Network.prl ..\..\..\..\mingw64\qt5-static\lib\Qt5Core.prl ..\..\..\..\mingw64\qt5-static\lib\qtmain.prl    ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\data\dummy.cpp ..\..\calendarwidget.h ..\..\dayofweekapi.h ..\..\infoblock.h ..\..\libs.h ..\..\login.h ..\..\mainwindow.h ..\..\modalwindow.h ..\..\qwraplayout.h ..\..\taskwidget.h ..\..\welcomewnd.h  ..\..\calendarwidget.cpp ..\..\dayofweekapi.cpp ..\..\infoblock.cpp ..\..\login.cpp ..\..\main.cpp ..\..\mainwindow.cpp ..\..\modalwindow.cpp ..\..\qwraplayout.cpp ..\..\taskwidget.cpp ..\..\welcomewnd.cpp     
+	$(ZIP) untitled1.zip $(SOURCES) $(DIST) ..\..\..\..\untitled1.pro ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\spec_pre.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\qdevice.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\device_config.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\sanitize.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\gcc-base.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\g++-base.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\angle.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\win32\windows_vulkan_sdk.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\windows-vulkan.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\g++-win32.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\common\windows-desktop.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\qconfig.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext__clip2tri.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext__clipper.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext__poly2tri.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_freetype.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_harfbuzz.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_libjpeg.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_libjpeg12bits.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_libjpeg16bits.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_libpng.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_openwnn.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_pcre2.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_pinyin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_ext_tcime.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3danimation.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3danimation_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dcore.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dcore_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dextras.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dextras_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dinput.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dinput_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dlogic.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dlogic_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquick.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquick_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickanimation.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickanimation_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickextras.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickextras_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickinput.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickinput_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickrender.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickrender_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickscene2d.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3dquickscene2d_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3drender.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_3drender_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_accessibility_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axbase.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axbase_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axcontainer.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axcontainer_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axserver.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_axserver_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_bluetooth.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_bluetooth_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_bodymovin_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_bootstrap_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_charts.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_charts_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_core.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_core_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_datavisualization.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_datavisualization_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_dbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_dbus_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_designer.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_devicediscovery_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_edid_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_fb_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_fontdatabase_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_gamepad.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_gamepad_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_gui.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_help.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_help_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_location.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_location_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_multimedia.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_multimedia_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_multimediawidgets.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_multimediawidgets_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_network.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_network_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_networkauth.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_networkauth_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_nfc.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_nfc_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_opengl.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_openglextensions.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_openglextensions_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_packetprotocol_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_platformcompositor_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_positioning.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_positioning_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_positioningquick.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_positioningquick_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_purchasing.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_purchasing_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qml.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmldebug_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmldevtools_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmlmodels.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmlmodels_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmlworkerscript.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qmlworkerscript_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3d.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3d_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3dassetimport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3dassetimport_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3drender.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3drender_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3druntimerender.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3druntimerender_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3dutils.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick3dutils_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickcontrols2.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickcontrols2_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickshapes_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quicktemplates2.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quicktemplates2_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickwidgets.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_quickwidgets_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_remoteobjects.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_remoteobjects_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_repparser.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_repparser_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_script.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_script_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_scripttools.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_scripttools_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_scxml.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_scxml_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_sensors.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_sensors_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_serialbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_serialbus_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_serialport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_serialport_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_sql.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_svg.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_testlib.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_texttospeech.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_texttospeech_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_theme_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_uiplugin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_uitools.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_virtualkeyboard.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_virtualkeyboard_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_vulkan_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_webchannel.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_webchannel_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_websockets.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_websockets_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_webview.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_webview_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_widgets.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_winextras.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_winextras_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_xml.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_xmlpatterns.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_lib_xmlpatterns_private.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_assimp.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_assimpsceneimport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_defaultgeometryloader.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_dsengine.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_gltfgeometryloader.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_gltfsceneexport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_gltfsceneimport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_openglrenderer.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qdirect2d.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qgenericbearer.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qgif.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qicns.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qico.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qjpeg.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qminimal.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_debugger.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_inspector.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_local.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_messages.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_native.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_nativedebugger.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_preview.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_profiler.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_quickprofiler.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_server.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qmldbg_tcp.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qoffscreen.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qsqlite.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qsvg.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qsvgicon.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtaudio_windows.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtexttospeech_sapi.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtga.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtgeoservices_esri.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtgeoservices_itemsoverlay.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtgeoservices_mapbox.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtgeoservices_nokia.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtgeoservices_osm.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtiff.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtmedia_audioengine.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtmultimedia_m3u.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtpassthrucanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtpeakcanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtposition_positionpoll.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtposition_serialnmea.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtsensorgestures_plugin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtsensorgestures_shakeplugin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtsensors_generic.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtsysteccanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qttinycanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtuiotouchplugin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvectorcanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualcanbus.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboard_hangul.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboard_openwnn.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboard_pinyin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboard_tcime.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboard_thai.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qtvirtualkeyboardplugin.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qwbmp.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qwebgl.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qwebp.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qwindows.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_qwindowsvistastyle.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_scene2d.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_uip.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_windowsprintersupport.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\modules\qt_plugin_xinputgamepad.pri ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\qt_functions.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\qt_config.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\win32-g++\qmake.conf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\spec_post.prf .qmake.stash ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\exclusive_builds.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\toolchain.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\default_pre.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\win32\default_pre.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\resolve_config.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\exclusive_builds_post.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\default_post.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\build_pass.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\qtquickcompiler.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\static_runtime.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\precompile_header.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\warn_on.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\qt.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\gc_binaries.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\resources_functions.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\resources.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\moc.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\win32\opengl.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\uic.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\qmake_use.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\file_copies.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\win32\windows.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\testcase_targets.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\exceptions.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\yacc.prf ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\lex.prf ..\..\untitled1.pro ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\styles\qwindowsvistastyle.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\platforms\qwindows.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qgif.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qicns.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qico.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qjpeg.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qtga.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qtiff.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qwbmp.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\imageformats\qwebp.prl ..\..\..\..\mingw64\qt5-static\share\qt5\plugins\bearer\qgenericbearer.prl ..\..\..\..\mingw64\qt5-static\lib\Qt5Widgets.prl ..\..\..\..\mingw64\qt5-static\lib\Qt5Gui.prl ..\..\..\..\mingw64\qt5-static\lib\Qt5Network.prl ..\..\..\..\mingw64\qt5-static\lib\Qt5Core.prl ..\..\..\..\mingw64\qt5-static\lib\qtmain.prl    ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\data\dummy.cpp ..\..\calendarwidget.h ..\..\changeusernamewnd.h ..\..\dayofweekapi.h ..\..\infoblock.h ..\..\libs.h ..\..\login.h ..\..\mainwindow.h ..\..\modalwindow.h ..\..\qwraplayout.h ..\..\schedulewidget.h ..\..\taskwidget.h ..\..\welcomewnd.h  ..\..\calendarwidget.cpp ..\..\changeusernamewnd.cpp ..\..\dayofweekapi.cpp ..\..\infoblock.cpp ..\..\login.cpp ..\..\main.cpp ..\..\mainwindow.cpp ..\..\modalwindow.cpp ..\..\qwraplayout.cpp ..\..\schedulewidget.cpp ..\..\taskwidget.cpp ..\..\welcomewnd.cpp     
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\calendarwidget.o debug\dayofweekapi.o debug\infoblock.o debug\login.o debug\main.o debug\mainwindow.o debug\modalwindow.o debug\qwraplayout.o debug\taskwidget.o debug\welcomewnd.o debug\untitled1_plugin_import.o debug\moc_calendarwidget.o debug\moc_infoblock.o debug\moc_login.o debug\moc_mainwindow.o debug\moc_modalwindow.o debug\moc_taskwidget.o debug\moc_welcomewnd.o
+	-$(DEL_FILE) debug\calendarwidget.o debug\changeusernamewnd.o debug\dayofweekapi.o debug\infoblock.o debug\login.o debug\main.o debug\mainwindow.o debug\modalwindow.o debug\qwraplayout.o debug\schedulewidget.o debug\taskwidget.o debug\welcomewnd.o debug\untitled1_plugin_import.o debug\moc_calendarwidget.o debug\moc_changeusernamewnd.o debug\moc_infoblock.o debug\moc_login.o debug\moc_mainwindow.o debug\moc_modalwindow.o debug\moc_schedulewidget.o debug\moc_taskwidget.o debug\moc_welcomewnd.o
 
 distclean: clean 
 	-$(DEL_FILE) G:\Work\untitled1\build\6_6_0_mingw64_shard-Release\untitled1_plugin_import.cpp .qmake.stash
@@ -152,10 +164,142 @@ compiler_moc_predefs_clean:
 debug/moc_predefs.h: ../../../../mingw64/qt5-static/share/qt5/mkspecs/features/data/dummy.cpp
 	g++ -Wa,-mbig-obj -g -std=gnu++1z -Wall -Wextra -Wextra -Wno-deprecated-declarations -Wno-implicit-fallthrough -Wno-unused-parameter -Wno-class-memaccess -ffunction-sections -fdata-sections -dM -E -o debug\moc_predefs.h ..\..\..\..\mingw64\qt5-static\share\qt5\mkspecs\features\data\dummy.cpp
 
-compiler_moc_header_make_all: debug/moc_calendarwidget.cpp debug/moc_infoblock.cpp debug/moc_login.cpp debug/moc_mainwindow.cpp debug/moc_modalwindow.cpp debug/moc_taskwidget.cpp debug/moc_welcomewnd.cpp
+compiler_moc_header_make_all: debug/moc_calendarwidget.cpp debug/moc_changeusernamewnd.cpp debug/moc_infoblock.cpp debug/moc_login.cpp debug/moc_mainwindow.cpp debug/moc_modalwindow.cpp debug/moc_schedulewidget.cpp debug/moc_taskwidget.cpp debug/moc_welcomewnd.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) debug\moc_calendarwidget.cpp debug\moc_infoblock.cpp debug\moc_login.cpp debug\moc_mainwindow.cpp debug\moc_modalwindow.cpp debug\moc_taskwidget.cpp debug\moc_welcomewnd.cpp
+	-$(DEL_FILE) debug\moc_calendarwidget.cpp debug\moc_changeusernamewnd.cpp debug\moc_infoblock.cpp debug\moc_login.cpp debug\moc_mainwindow.cpp debug\moc_modalwindow.cpp debug\moc_schedulewidget.cpp debug\moc_taskwidget.cpp debug\moc_welcomewnd.cpp
 debug/moc_calendarwidget.cpp: ../../calendarwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QWidget \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtguiglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qconfig-bootstrapped.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qconfig.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtcore-config.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsystemdetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qprocessordetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcompilerdetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtypeinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsysinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlogging.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qflags.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasicatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_bootstrap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qgenericatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_cxx11.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_msvc.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qglobalstatic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmutex.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qnumeric.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qversiontagging.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtgui-config.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtwidgets-config.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qwindowdefs.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobjectdefs.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qnamespace.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobjectdefs_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qwindowdefs_win.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobject.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstring.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qchar.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbytearray.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qrefcount.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qarraydata.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringliteral.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringalgorithms.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringview.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringbuilder.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qalgorithms.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qiterator.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qhashfunctions.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qpair.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvector.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontainertools_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qpoint.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbytearraylist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringlist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qregexp.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringmatcher.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcoreevent.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qscopedpointer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmetatype.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvarlengtharray.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontainerfwd.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobject_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmargins.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpaintdevice.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qrect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsize.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpalette.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qcolor.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qrgb.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qrgba64.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qbrush.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qmatrix.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpolygon.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qregion.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdatastream.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qiodevice.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qline.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtransform.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qimage.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpixelformat.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpixmap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsharedpointer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qshareddata.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qhash.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsharedpointer_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfont.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfontmetrics.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfontinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qsizepolicy.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qcursor.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qkeysequence.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qevent.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvariant.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdebug.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtextstream.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlocale.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qset.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontiguouscache.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qurl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qurlquery.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qfile.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qfiledevice.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qvector2d.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtouchdevice.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgridlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlayoutitem.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qboxlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QLabel \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlabel.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qframe.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QDate \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdatetime.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QPushButton \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qpushbutton.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractbutton.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qicon.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/QPainter \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpainter.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtextoption.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpen.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QFile \
+		../../../../../../mingw64/qt5-static/include/QtCore/QTextStream \
+		../../../../../../mingw64/qt5-static/include/QtCore/QDebug \
+		debug/moc_predefs.h \
+		../../../../mingw64/qt5-static/bin/moc.exe
+	G:\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/debug/moc_predefs.h -IG:/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/mingw64/qt5-static/include -IG:/mingw64/qt5-static/include/QtWidgets -IG:/mingw64/qt5-static/include/QtGui -IG:/mingw64/qt5-static/include/QtNetwork -IG:/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\calendarwidget.h -o debug\moc_calendarwidget.cpp
+
+debug/moc_changeusernamewnd.cpp: ../../changeusernamewnd.h \
 		../../libs.h \
 		../../../../../../mingw64/qt5-static/include/QtWidgets/QApplication \
 		../../../../../../mingw64/qt5-static/include/QtWidgets/qapplication.h \
@@ -393,9 +537,22 @@ debug/moc_calendarwidget.cpp: ../../calendarwidget.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
+		../../mainwindow.h \
+		../../taskwidget.h \
+		../../modalwindow.h \
+		../../infoblock.h \
+		../../dayofweekapi.h \
+		../../qwraplayout.h \
+		../../calendarwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/QPainter \
+		../../schedulewidget.h \
 		debug/moc_predefs.h \
 		../../../../mingw64/qt5-static/bin/moc.exe
-	G:\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/debug/moc_predefs.h -IG:/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/mingw64/qt5-static/include -IG:/mingw64/qt5-static/include/QtWidgets -IG:/mingw64/qt5-static/include/QtGui -IG:/mingw64/qt5-static/include/QtNetwork -IG:/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\calendarwidget.h -o debug\moc_calendarwidget.cpp
+	G:\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/debug/moc_predefs.h -IG:/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/mingw64/qt5-static/include -IG:/mingw64/qt5-static/include/QtWidgets -IG:/mingw64/qt5-static/include/QtGui -IG:/mingw64/qt5-static/include/QtNetwork -IG:/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\changeusernamewnd.h -o debug\moc_changeusernamewnd.cpp
 
 debug/moc_infoblock.cpp: ../../infoblock.h \
 		../../libs.h \
@@ -635,13 +792,16 @@ debug/moc_infoblock.cpp: ../../infoblock.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
 		debug/moc_predefs.h \
 		../../../../mingw64/qt5-static/bin/moc.exe
 	G:\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/debug/moc_predefs.h -IG:/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/mingw64/qt5-static/include -IG:/mingw64/qt5-static/include/QtWidgets -IG:/mingw64/qt5-static/include/QtGui -IG:/mingw64/qt5-static/include/QtNetwork -IG:/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\infoblock.h -o debug\moc_infoblock.cpp
 
 debug/moc_login.cpp: ../../login.h \
-		../../mainwindow.h \
-		../../taskwidget.h \
+		../../changeusernamewnd.h \
 		../../libs.h \
 		../../../../../../mingw64/qt5-static/include/QtWidgets/QApplication \
 		../../../../../../mingw64/qt5-static/include/QtWidgets/qapplication.h \
@@ -879,11 +1039,19 @@ debug/moc_login.cpp: ../../login.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
+		../../mainwindow.h \
+		../../taskwidget.h \
 		../../modalwindow.h \
 		../../infoblock.h \
 		../../dayofweekapi.h \
 		../../qwraplayout.h \
 		../../calendarwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/QPainter \
+		../../schedulewidget.h \
 		debug/moc_predefs.h \
 		../../../../mingw64/qt5-static/bin/moc.exe
 	G:\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/debug/moc_predefs.h -IG:/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/mingw64/qt5-static/include -IG:/mingw64/qt5-static/include/QtWidgets -IG:/mingw64/qt5-static/include/QtGui -IG:/mingw64/qt5-static/include/QtNetwork -IG:/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\login.h -o debug\moc_login.cpp
@@ -1127,11 +1295,17 @@ debug/moc_mainwindow.cpp: ../../mainwindow.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
 		../../modalwindow.h \
 		../../infoblock.h \
 		../../dayofweekapi.h \
 		../../qwraplayout.h \
 		../../calendarwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/QPainter \
+		../../schedulewidget.h \
 		debug/moc_predefs.h \
 		../../../../mingw64/qt5-static/bin/moc.exe
 	G:\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/debug/moc_predefs.h -IG:/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/mingw64/qt5-static/include -IG:/mingw64/qt5-static/include/QtWidgets -IG:/mingw64/qt5-static/include/QtGui -IG:/mingw64/qt5-static/include/QtNetwork -IG:/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\mainwindow.h -o debug\moc_mainwindow.cpp
@@ -1374,9 +1548,163 @@ debug/moc_modalwindow.cpp: ../../modalwindow.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
 		debug/moc_predefs.h \
 		../../../../mingw64/qt5-static/bin/moc.exe
 	G:\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/debug/moc_predefs.h -IG:/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/mingw64/qt5-static/include -IG:/mingw64/qt5-static/include/QtWidgets -IG:/mingw64/qt5-static/include/QtGui -IG:/mingw64/qt5-static/include/QtNetwork -IG:/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\modalwindow.h -o debug\moc_modalwindow.cpp
+
+debug/moc_schedulewidget.cpp: ../../schedulewidget.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QMainWindow \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qmainwindow.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtguiglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qconfig-bootstrapped.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qconfig.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtcore-config.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsystemdetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qprocessordetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcompilerdetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtypeinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsysinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlogging.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qflags.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasicatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_bootstrap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qgenericatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_cxx11.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_msvc.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qglobalstatic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmutex.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qnumeric.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qversiontagging.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtgui-config.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtwidgets-config.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qwindowdefs.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobjectdefs.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qnamespace.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobjectdefs_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qwindowdefs_win.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobject.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstring.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qchar.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbytearray.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qrefcount.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qarraydata.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringliteral.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringalgorithms.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringview.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringbuilder.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qalgorithms.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qiterator.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qhashfunctions.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qpair.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvector.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontainertools_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qpoint.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbytearraylist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringlist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qregexp.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringmatcher.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcoreevent.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qscopedpointer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmetatype.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvarlengtharray.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontainerfwd.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobject_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmargins.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpaintdevice.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qrect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsize.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpalette.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qcolor.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qrgb.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qrgba64.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qbrush.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qmatrix.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpolygon.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qregion.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdatastream.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qiodevice.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qline.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtransform.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qimage.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpixelformat.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpixmap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsharedpointer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qshareddata.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qhash.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsharedpointer_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfont.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfontmetrics.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfontinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qsizepolicy.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qcursor.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qkeysequence.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qevent.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvariant.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdebug.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtextstream.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlocale.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qset.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontiguouscache.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qurl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qurlquery.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qfile.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qfiledevice.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qvector2d.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtouchdevice.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtabwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qicon.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QPushButton \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qpushbutton.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractbutton.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QVBoxLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qboxlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlayoutitem.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgridlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QHBoxLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QLineEdit \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlineedit.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qframe.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtextcursor.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtextformat.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpen.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtextoption.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QListWidget \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlistwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlistview.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractitemview.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractscrollarea.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qabstractitemmodel.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qitemselectionmodel.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qstyleoption.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractspinbox.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qvalidator.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qregularexpression.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qslider.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractslider.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qstyle.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtabbar.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qrubberband.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QLabel \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlabel.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QWidget \
+		../../../../../../mingw64/qt5-static/include/QtCore/QDate \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdatetime.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QDebug \
+		debug/moc_predefs.h \
+		../../../../mingw64/qt5-static/bin/moc.exe
+	G:\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/debug/moc_predefs.h -IG:/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/mingw64/qt5-static/include -IG:/mingw64/qt5-static/include/QtWidgets -IG:/mingw64/qt5-static/include/QtGui -IG:/mingw64/qt5-static/include/QtNetwork -IG:/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\schedulewidget.h -o debug\moc_schedulewidget.cpp
 
 debug/moc_taskwidget.cpp: ../../taskwidget.h \
 		../../libs.h \
@@ -1616,6 +1944,10 @@ debug/moc_taskwidget.cpp: ../../taskwidget.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
 		debug/moc_predefs.h \
 		../../../../mingw64/qt5-static/bin/moc.exe
 	G:\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/debug/moc_predefs.h -IG:/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/mingw64/qt5-static/include -IG:/mingw64/qt5-static/include/QtWidgets -IG:/mingw64/qt5-static/include/QtGui -IG:/mingw64/qt5-static/include/QtNetwork -IG:/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\taskwidget.h -o debug\moc_taskwidget.cpp
@@ -1860,11 +2192,17 @@ debug/moc_welcomewnd.cpp: ../../welcomewnd.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
 		../../modalwindow.h \
 		../../infoblock.h \
 		../../dayofweekapi.h \
 		../../qwraplayout.h \
 		../../calendarwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/QPainter \
+		../../schedulewidget.h \
 		debug/moc_predefs.h \
 		../../../../mingw64/qt5-static/bin/moc.exe
 	G:\mingw64\qt5-static\bin\moc.exe $(DEFINES) --include G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/debug/moc_predefs.h -IG:/mingw64/qt5-static/share/qt5/mkspecs/win32-g++ -IG:/Work/untitled1 -IG:/mingw64/qt5-static/include -IG:/mingw64/qt5-static/include/QtWidgets -IG:/mingw64/qt5-static/include/QtGui -IG:/mingw64/qt5-static/include/QtNetwork -IG:/mingw64/qt5-static/include/QtCore -I. -IG:/msys64/mingw64/include/c++/14.2.0 -IG:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32 -IG:/msys64/mingw64/include/c++/14.2.0/backward -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include -IG:/msys64/mingw64/include -IG:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed ..\..\welcomewnd.h -o debug\moc_welcomewnd.cpp
@@ -1888,6 +2226,136 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 ####### Compile
 
 debug/calendarwidget.o: ../../calendarwidget.cpp ../../calendarwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QWidget \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtguiglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qconfig-bootstrapped.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qconfig.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtcore-config.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsystemdetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qprocessordetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcompilerdetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtypeinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsysinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlogging.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qflags.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasicatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_bootstrap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qgenericatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_cxx11.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_msvc.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qglobalstatic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmutex.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qnumeric.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qversiontagging.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtgui-config.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtwidgets-config.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qwindowdefs.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobjectdefs.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qnamespace.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobjectdefs_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qwindowdefs_win.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobject.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstring.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qchar.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbytearray.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qrefcount.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qarraydata.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringliteral.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringalgorithms.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringview.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringbuilder.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qalgorithms.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qiterator.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qhashfunctions.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qpair.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvector.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontainertools_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qpoint.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbytearraylist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringlist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qregexp.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringmatcher.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcoreevent.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qscopedpointer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmetatype.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvarlengtharray.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontainerfwd.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobject_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmargins.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpaintdevice.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qrect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsize.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpalette.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qcolor.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qrgb.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qrgba64.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qbrush.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qmatrix.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpolygon.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qregion.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdatastream.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qiodevice.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qline.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtransform.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qimage.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpixelformat.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpixmap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsharedpointer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qshareddata.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qhash.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsharedpointer_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfont.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfontmetrics.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfontinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qsizepolicy.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qcursor.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qkeysequence.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qevent.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvariant.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdebug.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtextstream.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlocale.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qset.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontiguouscache.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qurl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qurlquery.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qfile.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qfiledevice.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qvector2d.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtouchdevice.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgridlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlayoutitem.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qboxlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QLabel \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlabel.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qframe.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QDate \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdatetime.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QPushButton \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qpushbutton.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractbutton.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qicon.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/QPainter \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpainter.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtextoption.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpen.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QFile \
+		../../../../../../mingw64/qt5-static/include/QtCore/QTextStream \
+		../../../../../../mingw64/qt5-static/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\calendarwidget.o ..\..\calendarwidget.cpp
+
+debug/changeusernamewnd.o: ../../changeusernamewnd.cpp ../../changeusernamewnd.h \
 		../../libs.h \
 		../../../../../../mingw64/qt5-static/include/QtWidgets/QApplication \
 		../../../../../../mingw64/qt5-static/include/QtWidgets/qapplication.h \
@@ -2124,8 +2592,21 @@ debug/calendarwidget.o: ../../calendarwidget.cpp ../../calendarwidget.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QRect \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
-		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\calendarwidget.o ..\..\calendarwidget.cpp
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
+		../../mainwindow.h \
+		../../taskwidget.h \
+		../../modalwindow.h \
+		../../infoblock.h \
+		../../dayofweekapi.h \
+		../../qwraplayout.h \
+		../../calendarwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/QPainter \
+		../../schedulewidget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\changeusernamewnd.o ..\..\changeusernamewnd.cpp
 
 debug/dayofweekapi.o: ../../dayofweekapi.cpp ../../dayofweekapi.h \
 		../../libs.h \
@@ -2364,7 +2845,11 @@ debug/dayofweekapi.o: ../../dayofweekapi.cpp ../../dayofweekapi.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QRect \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
-		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\dayofweekapi.o ..\..\dayofweekapi.cpp
 
 debug/infoblock.o: ../../infoblock.cpp ../../infoblock.h \
@@ -2604,12 +3089,15 @@ debug/infoblock.o: ../../infoblock.cpp ../../infoblock.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QRect \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
-		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\infoblock.o ..\..\infoblock.cpp
 
 debug/login.o: ../../login.cpp ../../login.h \
-		../../mainwindow.h \
-		../../taskwidget.h \
+		../../changeusernamewnd.h \
 		../../libs.h \
 		../../../../../../mingw64/qt5-static/include/QtWidgets/QApplication \
 		../../../../../../mingw64/qt5-static/include/QtWidgets/qapplication.h \
@@ -2847,11 +3335,19 @@ debug/login.o: ../../login.cpp ../../login.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
+		../../mainwindow.h \
+		../../taskwidget.h \
 		../../modalwindow.h \
 		../../infoblock.h \
 		../../dayofweekapi.h \
 		../../qwraplayout.h \
-		../../calendarwidget.h
+		../../calendarwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/QPainter \
+		../../schedulewidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\login.o ..\..\login.cpp
 
 debug/main.o: ../../main.cpp ../../../../../../mingw64/qt5-static/include/QtWidgets/QApplication \
@@ -2970,8 +3466,7 @@ debug/main.o: ../../main.cpp ../../../../../../mingw64/qt5-static/include/QtWidg
 		../../../../../../mingw64/qt5-static/include/QtWidgets/qdialog.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QDebug \
 		../../login.h \
-		../../mainwindow.h \
-		../../taskwidget.h \
+		../../changeusernamewnd.h \
 		../../libs.h \
 		../../../../../../mingw64/qt5-static/include/QtWidgets/QWidget \
 		../../../../../../mingw64/qt5-static/include/QtWidgets/QLabel \
@@ -3094,11 +3589,19 @@ debug/main.o: ../../main.cpp ../../../../../../mingw64/qt5-static/include/QtWidg
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
+		../../mainwindow.h \
+		../../taskwidget.h \
 		../../modalwindow.h \
 		../../infoblock.h \
 		../../dayofweekapi.h \
 		../../qwraplayout.h \
 		../../calendarwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/QPainter \
+		../../schedulewidget.h \
 		../../welcomewnd.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\..\main.cpp
 
@@ -3341,11 +3844,17 @@ debug/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
 		../../modalwindow.h \
 		../../infoblock.h \
 		../../dayofweekapi.h \
 		../../qwraplayout.h \
-		../../calendarwidget.h
+		../../calendarwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/QPainter \
+		../../schedulewidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\..\mainwindow.cpp
 
 debug/modalwindow.o: ../../modalwindow.cpp ../../modalwindow.h \
@@ -3585,7 +4094,11 @@ debug/modalwindow.o: ../../modalwindow.cpp ../../modalwindow.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QRect \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
-		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\modalwindow.o ..\..\modalwindow.cpp
 
 debug/qwraplayout.o: ../../qwraplayout.cpp ../../qwraplayout.h \
@@ -3825,8 +4338,160 @@ debug/qwraplayout.o: ../../qwraplayout.cpp ../../qwraplayout.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QRect \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
-		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\qwraplayout.o ..\..\qwraplayout.cpp
+
+debug/schedulewidget.o: ../../schedulewidget.cpp ../../schedulewidget.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QMainWindow \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qmainwindow.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtguiglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qglobal.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qconfig-bootstrapped.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qconfig.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtcore-config.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsystemdetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qprocessordetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcompilerdetection.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtypeinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsysinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlogging.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qflags.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasicatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_bootstrap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qgenericatomic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_cxx11.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qatomic_msvc.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qglobalstatic.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmutex.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qnumeric.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qversiontagging.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtgui-config.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtwidgets-config.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qwindowdefs.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobjectdefs.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qnamespace.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobjectdefs_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qwindowdefs_win.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobject.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstring.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qchar.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbytearray.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qrefcount.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qarraydata.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringliteral.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringalgorithms.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringview.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringbuilder.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qalgorithms.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qiterator.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qhashfunctions.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qpair.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvector.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontainertools_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qpoint.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qbytearraylist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringlist.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qregexp.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qstringmatcher.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcoreevent.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qscopedpointer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmetatype.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvarlengtharray.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontainerfwd.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qobject_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmargins.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpaintdevice.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qrect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsize.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpalette.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qcolor.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qrgb.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qrgba64.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qbrush.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qmatrix.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpolygon.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qregion.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdatastream.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qiodevice.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qline.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtransform.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qimage.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpixelformat.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpixmap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsharedpointer.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qshareddata.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qhash.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qsharedpointer_impl.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfont.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfontmetrics.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qfontinfo.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qsizepolicy.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qcursor.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qkeysequence.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qevent.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qvariant.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qmap.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdebug.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qtextstream.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qlocale.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qset.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qcontiguouscache.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qurl.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qurlquery.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qfile.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qfiledevice.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qvector2d.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtouchdevice.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtabwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qicon.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QPushButton \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qpushbutton.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractbutton.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QVBoxLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qboxlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlayoutitem.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgridlayout.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QHBoxLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QLineEdit \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlineedit.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qframe.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtextcursor.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtextformat.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qpen.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qtextoption.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QListWidget \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlistwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlistview.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractitemview.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractscrollarea.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qabstractitemmodel.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qitemselectionmodel.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qstyleoption.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractspinbox.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/qvalidator.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/qregularexpression.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qslider.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qabstractslider.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qstyle.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qtabbar.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qrubberband.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QLabel \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qlabel.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QWidget \
+		../../../../../../mingw64/qt5-static/include/QtCore/QDate \
+		../../../../../../mingw64/qt5-static/include/QtCore/qdatetime.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\schedulewidget.o ..\..\schedulewidget.cpp
 
 debug/taskwidget.o: ../../taskwidget.cpp ../../taskwidget.h \
 		../../libs.h \
@@ -4065,7 +4730,11 @@ debug/taskwidget.o: ../../taskwidget.cpp ../../taskwidget.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QRect \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
-		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h
+		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\taskwidget.o ..\..\taskwidget.cpp
 
 debug/welcomewnd.o: ../../welcomewnd.cpp ../../welcomewnd.h \
@@ -4308,11 +4977,17 @@ debug/welcomewnd.o: ../../welcomewnd.cpp ../../welcomewnd.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/QTimer \
 		../../../../../../mingw64/qt5-static/include/QtCore/qtimer.h \
 		../../../../../../mingw64/qt5-static/include/QtCore/qbasictimer.h \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGridLayout \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/QGraphicsOpacityEffect \
+		../../../../../../mingw64/qt5-static/include/QtWidgets/qgraphicseffect.h \
+		../../../../../../mingw64/qt5-static/include/QtCore/QLocale \
 		../../modalwindow.h \
 		../../infoblock.h \
 		../../dayofweekapi.h \
 		../../qwraplayout.h \
-		../../calendarwidget.h
+		../../calendarwidget.h \
+		../../../../../../mingw64/qt5-static/include/QtGui/QPainter \
+		../../schedulewidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\welcomewnd.o ..\..\welcomewnd.cpp
 
 debug/untitled1_plugin_import.o: G:/Work/untitled1/build/6_6_0_mingw64_shard-Release/untitled1_plugin_import.cpp 
@@ -4320,6 +4995,9 @@ debug/untitled1_plugin_import.o: G:/Work/untitled1/build/6_6_0_mingw64_shard-Rel
 
 debug/moc_calendarwidget.o: debug/moc_calendarwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_calendarwidget.o debug\moc_calendarwidget.cpp
+
+debug/moc_changeusernamewnd.o: debug/moc_changeusernamewnd.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_changeusernamewnd.o debug\moc_changeusernamewnd.cpp
 
 debug/moc_infoblock.o: debug/moc_infoblock.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_infoblock.o debug\moc_infoblock.cpp
@@ -4332,6 +5010,9 @@ debug/moc_mainwindow.o: debug/moc_mainwindow.cpp
 
 debug/moc_modalwindow.o: debug/moc_modalwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_modalwindow.o debug\moc_modalwindow.cpp
+
+debug/moc_schedulewidget.o: debug/moc_schedulewidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_schedulewidget.o debug\moc_schedulewidget.cpp
 
 debug/moc_taskwidget.o: debug/moc_taskwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_taskwidget.o debug\moc_taskwidget.cpp

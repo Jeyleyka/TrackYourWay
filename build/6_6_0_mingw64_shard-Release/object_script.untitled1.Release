@@ -1,4 +1,5 @@
 release/calendarwidget.o
+release/changeusernamewnd.o
 release/dayofweekapi.o
 release/infoblock.o
 release/login.o
@@ -6,13 +7,16 @@ release/main.o
 release/mainwindow.o
 release/modalwindow.o
 release/qwraplayout.o
+release/schedulewidget.o
 release/taskwidget.o
 release/welcomewnd.o
 release/untitled1_plugin_import.o
 release/moc_calendarwidget.o
+release/moc_changeusernamewnd.o
 release/moc_infoblock.o
 release/moc_login.o
 release/moc_mainwindow.o
 release/moc_modalwindow.o
+release/moc_schedulewidget.o
 release/moc_taskwidget.o
 release/moc_welcomewnd.o

@@ -13,6 +13,7 @@ TEMPLATE = app
 
 SOURCES += \
     calendarwidget.cpp \
+    changeusernamewnd.cpp \
     dayofweekapi.cpp \
     infoblock.cpp \
     login.cpp \
@@ -20,11 +21,13 @@ SOURCES += \
     mainwindow.cpp \
     modalwindow.cpp \
     qwraplayout.cpp \
+    schedulewidget.cpp \
     taskwidget.cpp \
     welcomewnd.cpp
 
 HEADERS += \
     calendarwidget.h \
+    changeusernamewnd.h \
     dayofweekapi.h \
     infoblock.h \
     libs.h \
@@ -32,6 +35,7 @@ HEADERS += \
     mainwindow.h \
     modalwindow.h \
     qwraplayout.h \
+    schedulewidget.h \
     taskwidget.h \
     welcomewnd.h
 
