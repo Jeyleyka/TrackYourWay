@@ -8,7 +8,7 @@ void ScheduleWidget::initAddTasksBtn() {
                                     "border-radius: 5px;"
                                     "color: #fff;"
                                     "min-width: 120px;"
-                                    "height: 30px;"
+                                    "height: 25px;"
                                     "font-size: 14px;"
                                     "font-weight: bold;"
                                     "}"
@@ -26,43 +26,43 @@ void ScheduleWidget::initMainLayout() {
     this->mainLayout->setAlignment(this->newTaskBtn, Qt::AlignRight | Qt::AlignTop);  // Выравнивание кнопки по центру
 }
 
-ScheduleWidget::ScheduleWidget(QWidget *parent) : QWidget(parent)
-{
-    this->initAddTasksBtn();
-    this->initMainLayout();
-
-    this->setLayout(this->mainLayout);
-}
-
-void ScheduleWidget::createNewTask() {
+void ScheduleWidget::initTaskWidgetAndLayout() {
     this->taskWidget = new QWidget(this);
     this->taskWidget->setFixedWidth(500);
-    this->taskWidget->setFixedHeight(700);
+    // this->taskWidget->setMinimumHeight(800);
+    this->taskWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     this->taskWidget->setStyleSheet("background-color: #fff; border-radius: 5px; border: 1px solid #ccc; padding: 15px");
 
     this->taskLayout = new QVBoxLayout(this->taskWidget);
+}
 
+void ScheduleWidget::initDeleteTaskBtn() {
     this->deleteTaskBtn = new QPushButton("Delete", taskWidget);
     this->deleteTaskBtn->setStyleSheet("background-color: #f44336; padding: 10px; color: white; border-radius: 5px; margin-bottom: 20px;");
     this->deleteTaskBtn->setFixedWidth(100);
 
-    this->taskLayout->addWidget(this->deleteTaskBtn, 0, Qt::AlignRight);  // Добавляем кнопку снизу
-
-    this->line = new QFrame(this->taskWidget);
-    this->line->setFrameShape(QFrame::HLine);
-    this->line->setFrameShadow(QFrame::Sunken);
-    this->taskLayout->addWidget(this->line);
-
-    // Кнопка для удаления задачи
     connect(this->deleteTaskBtn, &QPushButton::clicked, this, [this]() {
         this->taskWidget->deleteLater();
     });
 
+    this->taskLayout->addWidget(this->deleteTaskBtn, 0, Qt::AlignRight);  // Добавляем кнопку снизу
+}
+
+void ScheduleWidget::initLine() {
+    this->line = new QFrame(this->taskWidget);
+    this->line->setFrameShape(QFrame::HLine);
+    this->line->setFrameShadow(QFrame::Sunken);
+    this->taskLayout->addWidget(this->line);
+}
+
+void ScheduleWidget::initInputTask() {
     this->inputTask = new QLineEdit(this->taskWidget);
     this->inputTask->setPlaceholderText("input task...");
     this->inputTask->setStyleSheet("margin-top: 20px; ");
     this->taskLayout->addWidget(this->inputTask, 0, Qt::AlignTop);
+}
 
+void ScheduleWidget::initTaskLabel() {
     this->task = new QLabel(this->taskWidget);
     this->task->setStyleSheet("font-size: 21px; margin-top: 20px; font-weight: 500; border: none; background-color: transparent");
     this->task->setVisible(false);
@@ -79,7 +79,9 @@ void ScheduleWidget::createNewTask() {
     });
 
     this->taskLayout->addWidget(this->task, 0, Qt::AlignTop);
+}
 
+void ScheduleWidget::initAddSubTaskBtn() {
     this->addSubTask = new QPushButton("+", this->taskWidget);
     this->addSubTask->setStyleSheet("QPushButton {"
                                     "background-color: #cac9c4;"
@@ -90,6 +92,7 @@ void ScheduleWidget::createNewTask() {
                                     "min-width: 400px;"
                                     "max-width: 400px;"
                                     "max-height: 20px;"
+                                    "margin-bottom: 100px;"
                                     "}"
                                     "QPushButton:hover {"
                                     "background-color: #e0dfdc;"
@@ -98,15 +101,13 @@ void ScheduleWidget::createNewTask() {
 
 
     this->taskLayout->addWidget(this->addSubTask, 0, Qt::AlignHCenter | Qt::AlignTop);
-    this->taskLayout->addStretch(0);
-    this->taskLayout->setSpacing(0);
+}
 
-    // Создаем layout для подзадач
-    this->subTaskLayout = new QVBoxLayout();
-
+void ScheduleWidget::initSubTaskWidget() {
     connect(this->addSubTask, &QPushButton::clicked, this, [this]() {
         // Создаем новый subWidget для каждой пары чекбокса и лейбла
         QWidget *subWidget = new QWidget(this->taskWidget);
+        subWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         subWidget->setFixedHeight(60);
         subWidget->setFixedWidth(400);
         QHBoxLayout *subWidgetLayout = new QHBoxLayout(subWidget);
@@ -161,14 +162,51 @@ void ScheduleWidget::createNewTask() {
         this->taskWidget->adjustSize();
         this->taskWidget->update();
     });
+}
+
+void ScheduleWidget::initCompleteTaskBtn() {
+    this->completeTaskBtn = new QPushButton("✓ Complete", this->taskWidget);
+    this->completeTaskBtn->setStyleSheet("QPushButton {"
+                                    "background-color: #18aa03;"
+                                    "padding: 10px;"
+                                    "border-radius: 5px;"
+                                    "color: #fff;"
+                                    "max-width: 120px;"
+                                    "height: 20px;"
+                                    "margin-top: 10px;"
+                                    "font-size: 14px;"
+                                    "font-weight: bold;"
+                                    "}"
+                                    "QPushButton:hover {"
+                                    "background-color: #1dcd04;"
+                                    "}");
+
+    this->taskLayout->addWidget(this->completeTaskBtn);
+}
+
+ScheduleWidget::ScheduleWidget(QWidget *parent) : QWidget(parent)
+{
+    this->initAddTasksBtn();
+    this->initMainLayout();
+
+    this->setLayout(this->mainLayout);
+}
+
+void ScheduleWidget::createNewTask() {
+    this->initTaskWidgetAndLayout();
+    this->initDeleteTaskBtn();
+    this->initLine();
+    this->initInputTask();
+    this->initTaskLabel();
+    this->subTaskLayout = new QVBoxLayout();
+
+    this->initAddSubTaskBtn();
+    this->initSubTaskWidget();
+    this->taskLayout->addStretch(0);
+    this->taskLayout->setSpacing(0);
+    this->initLine();
+    this->initCompleteTaskBtn();
 
     layout()->addWidget(taskWidget);
     layout()->setAlignment(Qt::AlignRight);
 }
-
-
-
-
-
-
-

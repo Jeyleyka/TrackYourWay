@@ -10,6 +10,15 @@ class ScheduleWidget : public QWidget
 public:
     void initAddTasksBtn();
     void initMainLayout();
+    void initTaskWidgetAndLayout();
+    void initDeleteTaskBtn();
+    void initLine();
+    void initInputTask();
+    void initTaskLabel();
+    void initAddSubTaskBtn();
+    void initSubTaskWidget();
+    void initCompleteTaskBtn();
+
     explicit ScheduleWidget(QWidget *parent = nullptr);
 
 private slots:
@@ -19,14 +28,13 @@ private:
     QPushButton* newTaskBtn;
     QPushButton* deleteTaskBtn;
     QPushButton* addSubTask;
+    QPushButton* completeTaskBtn;
 
     QVBoxLayout* mainLayout;
     QVBoxLayout* taskLayout;
-
     QVBoxLayout* subTaskLayout;
 
     QWidget *taskWidget;
-    QWidget* subWidget;
 
     QLineEdit* inputTask;
     QLineEdit* inputSubTask;

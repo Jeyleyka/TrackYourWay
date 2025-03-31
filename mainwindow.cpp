@@ -1406,7 +1406,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), networkManager(ne
     setCentralWidget(centralWidget);
     // setLayout(this->mainLayout);
 
-    resize(1200, 800); // Устанавливаем фиксированный размер окна (опционально)
+    resize(1100, 800); // Устанавливаем фиксированный размер окна (опционально)
 }
 
 MainWindow::~MainWindow() {}
