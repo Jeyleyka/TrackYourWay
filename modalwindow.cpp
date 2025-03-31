@@ -18,10 +18,9 @@ ModalWindow::ModalWindow(QColor color, QWidget* parent) : QDialog(parent) {
     this->menuLayout->setSpacing(20);
     this->menuLayout->addStretch(4);
     this->menuLayout->addWidget(this->logOut);
-    this->menuLayout->setContentsMargins(0,0,0,500);
+    this->menuLayout->setContentsMargins(0,0,0,0);
 
     this->currentBackgroundColor = color;
-    // this->label->setStyle(color);
 
     this->mainLayout = new QVBoxLayout(this);
     this->mainLayout->addLayout(this->btnLayout);
