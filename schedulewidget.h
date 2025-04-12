@@ -18,6 +18,12 @@ public:
     void initAddSubTaskBtn();
     void initSubTaskWidget();
     void initCompleteTaskBtn();
+    void initTaskCommentBtns();
+    void initStackedWidget();
+    void initTaskView(QVBoxLayout *layout);
+    void initCommentView(QVBoxLayout *layout);
+    void showTaskView();
+    void showCommentView();
 
     explicit ScheduleWidget(QWidget *parent = nullptr);
 
@@ -29,15 +35,20 @@ private:
     QPushButton* deleteTaskBtn;
     QPushButton* addSubTask;
     QPushButton* completeTaskBtn;
+    QPushButton* tasksBtn;
+    QPushButton* commentsBtn;
 
     QVBoxLayout* mainLayout;
     QVBoxLayout* taskLayout;
     QVBoxLayout* subTaskLayout;
 
     QWidget *taskWidget;
+    QWidget* taskViewWidget;
+    QWidget* commentViewWidget;
 
     QLineEdit* inputTask;
     QLineEdit* inputSubTask;
+    QLineEdit* commentInput;
 
     QLabel* task;
     QLabel* subTask;
@@ -45,6 +56,8 @@ private:
     QFrame *line;
 
     QCheckBox* checkBox;
+
+    QStackedWidget* stackedWidget;
 };
 
 #endif // SCHEDULEWIDGET_H

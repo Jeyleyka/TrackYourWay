@@ -1,4 +1,13 @@
 #include "schedulewidget.h"
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QLabel>
+#include <QCheckBox>
+#include <QMessageBox>
+#include <QFrame>
+#include <QStackedWidget>
 
 void ScheduleWidget::initAddTasksBtn() {
     this->newTaskBtn = new QPushButton("+ New Task", this);
@@ -16,20 +25,105 @@ void ScheduleWidget::initAddTasksBtn() {
                                     "background-color: #596ade;"
                                     "}");
 
-
     connect(this->newTaskBtn, &QPushButton::clicked, this, &ScheduleWidget::createNewTask);
+}
+
+void ScheduleWidget::initTaskCommentBtns() {
+    // Создаем кнопку "Задачи"
+    this->tasksBtn = new QPushButton("Задачи", this);
+    this->tasksBtn->setStyleSheet("QPushButton {"
+                                  "background-color: #3a4ed9;"
+                                  "padding: 10px;"
+                                  "border-radius: 5px;"
+                                  "color: #fff;"
+                                  "min-width: 120px;"
+                                  "height: 25px;"
+                                  "font-size: 14px;"
+                                  "font-weight: bold;"
+                                  "} QPushButton:hover {"
+                                  "background-color: #596ade;"
+                                  "}");
+
+    // Создаем кнопку "Комментарии"
+    this->commentsBtn = new QPushButton("Комментарии", this);
+    this->commentsBtn->setStyleSheet("QPushButton {"
+                                     "background-color: #3a4ed9;"
+                                     "padding: 10px;"
+                                     "border-radius: 5px;"
+                                     "color: #fff;"
+                                     "min-width: 120px;"
+                                     "height: 25px;"
+                                     "font-size: 14px;"
+                                     "font-weight: bold;"
+                                     "} QPushButton:hover {"
+                                     "background-color: #596ade;"
+                                     "}");
+
+    // Подключаем кнопки к слотам для переключения между видами
+    connect(this->tasksBtn, &QPushButton::clicked, this, &ScheduleWidget::showTaskView);
+    connect(this->commentsBtn, &QPushButton::clicked, this, &ScheduleWidget::showCommentView);
+}
+
+void ScheduleWidget::initStackedWidget() {
+    // Создаем stacked widget для переключения между видами
+    this->stackedWidget = new QStackedWidget(this);
+
+    // Создаем виджет для задач (с подзадачами)
+    this->taskViewWidget = new QWidget();
+    QVBoxLayout *taskLayout = new QVBoxLayout(taskViewWidget);
+    this->initTaskView(taskLayout);  // Инициализируем вид задач
+    this->stackedWidget->addWidget(this->taskViewWidget);
+
+    // Создаем виджет для комментариев (с большим полем ввода)
+    this->commentViewWidget = new QWidget();
+    QVBoxLayout *commentLayout = new QVBoxLayout(commentViewWidget);
+    this->initCommentView(commentLayout);  // Инициализируем вид комментариев
+    this->stackedWidget->addWidget(this->commentViewWidget);
+}
+
+void ScheduleWidget::initTaskView(QVBoxLayout *layout) {
+    // Инициализируем интерфейс для задач
+    layout->addWidget(this->addSubTask);  // Кнопка для добавления подзадачи
+    layout->addWidget(this->inputTask);   // Поле ввода задачи
+    layout->addWidget(this->deleteTaskBtn); // Кнопка для удаления задачи
+    layout->addWidget(this->completeTaskBtn); // Кнопка для завершения задачи
+    layout->addWidget(this->line);  // Линия между элементами
+}
+
+void ScheduleWidget::initCommentView(QVBoxLayout *layout) {
+    // Инициализируем интерфейс для комментариев
+    this->commentInput = new QLineEdit(this);
+    this->commentInput->setPlaceholderText("Введите ваш комментарий...");
+    this->commentInput->setStyleSheet("font-size: 16px; height: 100px;");
+    layout->addWidget(this->commentInput);  // Большое поле для ввода комментария
+}
+
+void ScheduleWidget::showTaskView() {
+    this->stackedWidget->setCurrentWidget(this->taskViewWidget);  // Отображаем вид задач
+}
+
+void ScheduleWidget::showCommentView() {
+    this->stackedWidget->setCurrentWidget(this->commentViewWidget);  // Отображаем вид комментариев
 }
 
 void ScheduleWidget::initMainLayout() {
     this->mainLayout = new QVBoxLayout(this);
-    this->mainLayout->addWidget(this->newTaskBtn);
-    this->mainLayout->setAlignment(this->newTaskBtn, Qt::AlignRight | Qt::AlignTop);  // Выравнивание кнопки по центру
+
+    // Добавляем кнопки переключения "Задачи" и "Комментарии"
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->addWidget(this->tasksBtn);
+    buttonLayout->addWidget(this->commentsBtn);
+    this->mainLayout->addLayout(buttonLayout);
+
+    // Добавляем stacked widget (вид с задачами или комментариями)
+    this->mainLayout->addWidget(this->stackedWidget);
+
+    this->setLayout(this->mainLayout);
 }
 
 void ScheduleWidget::initTaskWidgetAndLayout() {
     this->taskWidget = new QWidget(this);
     this->taskWidget->setFixedWidth(500);
-    // this->taskWidget->setMinimumHeight(800);
     this->taskWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     this->taskWidget->setStyleSheet("background-color: #fff; border-radius: 5px; border: 1px solid #ccc; padding: 15px");
 
@@ -38,7 +132,7 @@ void ScheduleWidget::initTaskWidgetAndLayout() {
 
 void ScheduleWidget::initDeleteTaskBtn() {
     this->deleteTaskBtn = new QPushButton("Delete", taskWidget);
-    this->deleteTaskBtn->setStyleSheet("background-color: #f44336; padding: 10px; color: white; border-radius: 5px; margin-bottom: 20px;");
+    this->deleteTaskBtn->setStyleSheet("background-color: #f44336; padding: 10px; color: white; border-radius: 5px; margin-bottom: 20px; ");
     this->deleteTaskBtn->setFixedWidth(100);
 
     connect(this->deleteTaskBtn, &QPushButton::clicked, this, [this]() {
@@ -93,12 +187,10 @@ void ScheduleWidget::initAddSubTaskBtn() {
                                     "max-width: 400px;"
                                     "max-height: 20px;"
                                     "margin-bottom: 100px;"
-                                    "}"
+                                    "} "
                                     "QPushButton:hover {"
                                     "background-color: #e0dfdc;"
                                     "}");
-
-
 
     this->taskLayout->addWidget(this->addSubTask, 0, Qt::AlignHCenter | Qt::AlignTop);
 }
@@ -156,9 +248,7 @@ void ScheduleWidget::initSubTaskWidget() {
         });
 
         // Добавляем новый subWidget в layout
-        this->subTaskLayout->addWidget(subWidget, 0, Qt::AlignHCenter);
-        this->taskLayout->insertLayout(4, this->subTaskLayout);
-
+        this->taskLayout->addWidget(subWidget, 0, Qt::AlignHCenter);
         this->taskWidget->adjustSize();
         this->taskWidget->update();
     });
@@ -167,29 +257,28 @@ void ScheduleWidget::initSubTaskWidget() {
 void ScheduleWidget::initCompleteTaskBtn() {
     this->completeTaskBtn = new QPushButton("✓ Complete", this->taskWidget);
     this->completeTaskBtn->setStyleSheet("QPushButton {"
-                                    "background-color: #18aa03;"
-                                    "padding: 10px;"
-                                    "border-radius: 5px;"
-                                    "color: #fff;"
-                                    "max-width: 120px;"
-                                    "height: 20px;"
-                                    "margin-top: 10px;"
-                                    "font-size: 14px;"
-                                    "font-weight: bold;"
-                                    "}"
-                                    "QPushButton:hover {"
-                                    "background-color: #1dcd04;"
-                                    "}");
+                                         "background-color: #18aa03;"
+                                         "padding: 10px;"
+                                         "border-radius: 5px;"
+                                         "color: #fff;"
+                                         "max-width: 120px;"
+                                         "height: 20px;"
+                                         "margin-top: 10px;"
+                                         "font-size: 14px;"
+                                         "font-weight: bold;"
+                                         "} "
+                                         "QPushButton:hover {"
+                                         "background-color: #1dcd04;"
+                                         "}");
 
     this->taskLayout->addWidget(this->completeTaskBtn);
 }
 
 ScheduleWidget::ScheduleWidget(QWidget *parent) : QWidget(parent)
 {
-    this->initAddTasksBtn();
-    this->initMainLayout();
-
-    this->setLayout(this->mainLayout);
+    this->initTaskCommentBtns();   // Инициализируем кнопки переключения
+    this->initStackedWidget();     // Инициализируем stacked widget для переключаемых видов
+    this->initMainLayout();        // Устанавливаем основной layout
 }
 
 void ScheduleWidget::createNewTask() {
@@ -198,6 +287,7 @@ void ScheduleWidget::createNewTask() {
     this->initLine();
     this->initInputTask();
     this->initTaskLabel();
+
     this->subTaskLayout = new QVBoxLayout();
 
     this->initAddSubTaskBtn();
